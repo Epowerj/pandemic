@@ -1,7 +1,7 @@
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -39,16 +39,10 @@ public class GameState {
     //read all the cities and other board info from text file
     private void parseInfo(String filename){
 
-        URL url = ClassLoader.getSystemClassLoader().getResource(filename);
-        //File file = new File(url.getPath());
-        File file = new File("cities.txt");
-
-        System.out.println(file.getAbsolutePath());
-
         List<String> lines = null;
 
         try{
-            Scanner input = new Scanner(new FileInputStream(file));
+            Scanner input = new Scanner(new FileInputStream(new File(filename)));
             lines = Files.readAllLines(Paths.get(filename));
         } catch(IOException e){
             e.printStackTrace();
@@ -313,11 +307,8 @@ public class GameState {
         System.out.print("\n");
     }
 
-    public static Deck getPlayerdeck(){
+    public static Deck getPlayerDeck(){
         return playerdeck;
     }
 
-    public static void getCubes(){
-
-    }
 }
