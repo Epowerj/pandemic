@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31d0ef35-c145-409a-85f4-6c27f0e05e84" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/pandemic_main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/pandemic_main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/pandemic_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/pandemic_test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PandemicGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PandemicGame.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -64,11 +60,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="PandemicGame.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PandemicGame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/PandemicGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="153" selection-start-line="153" selection-end-line="153" />
+            <state relative-caret-position="144">
+              <caret line="49" column="62" lean-forward="true" selection-start-line="49" selection-start-column="62" selection-end-line="49" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -76,11 +72,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="InfectionCard.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/InfectionCard.java">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file leaf-file-name="GameState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/GameState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="706">
-              <caret line="309" column="33" selection-start-line="309" selection-start-column="33" selection-end-line="309" selection-end-column="33" />
+            <state relative-caret-position="599">
+              <caret line="309" column="5" selection-start-line="309" selection-start-column="5" selection-end-line="309" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#244#258#0" expanded="true" />
@@ -90,29 +91,20 @@
                 <element signature="e#1204#1205#0" expanded="true" />
                 <element signature="e#1824#1832#0" expanded="true" />
                 <element signature="e#2485#2493#0" expanded="true" />
-                <element signature="e#6447#6448#0" expanded="true" />
-                <element signature="e#6477#6478#0" expanded="true" />
-                <element signature="e#7916#7917#0" expanded="true" />
-                <element signature="e#7964#7965#0" expanded="true" />
-                <element signature="e#8018#8019#0" expanded="true" />
-                <element signature="e#8046#8047#0" expanded="true" />
-                <element signature="e#8111#8112#0" expanded="true" />
-                <element signature="e#8162#8163#0" expanded="true" />
-                <element signature="e#9327#9328#0" expanded="true" />
-                <element signature="e#9358#9359#0" expanded="true" />
-                <element signature="e#9399#9400#0" expanded="true" />
-                <element signature="e#9440#9441#0" expanded="true" />
-                <element signature="e#9722#9723#0" expanded="true" />
-                <element signature="e#9755#9756#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="EpidemicCard.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/EpidemicCard.java">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-357">
+            <state relative-caret-position="495">
               <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -121,10 +113,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
+            <state relative-caret-position="345">
               <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
             </state>
           </provider>
@@ -132,11 +124,6 @@
       </file>
       <file leaf-file-name="cities.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cities.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="PlayerCard.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/PlayerCard.java">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
@@ -341,9 +328,9 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4584644083402" />
+        <entry key="$PROJECT_DIR$" value="4584657243000" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="1149773417" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="2064718365" />
         <entry key="$PROJECT_DIR$/settings.gradle" value="296595203" />
       </map>
     </option>
@@ -460,9 +447,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/Player.java" />
-        <option value="$PROJECT_DIR$/src/main/java/PandemicGame.java" />
         <option value="$PROJECT_DIR$/src/main/java/GameState.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/PandemicGame.java" />
       </list>
     </option>
   </component>
@@ -478,29 +465,27 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="pandemic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pandemic" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="pandemic-new" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandemic-new" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
-              <item name="pandemic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pandemic" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="pandemic-new" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandemic-new" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="pandemic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pandemic" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="pandemic-new" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandemic-new" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
-              <item name="pandemic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pandemic" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="pandemic-new" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandemic-new" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -509,7 +494,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -632,23 +619,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="773" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.24760893" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.0" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32988167" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947916" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.32837406" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info anchor="right" id="Gradle" order="3" weight="0.15565032" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -661,13 +647,74 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32837406" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Messages" order="7" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ComputerPlayer.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/PandemicGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2295">
+          <caret line="153" selection-start-line="153" selection-end-line="153" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GameState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4455">
+          <caret line="309" column="5" lean-forward="true" selection-start-line="309" selection-start-column="5" selection-end-line="309" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#244#258#0" expanded="true" />
+            <element signature="e#1056#1057#0" expanded="true" />
+            <element signature="e#1092#1093#0" expanded="true" />
+            <element signature="e#1157#1158#0" expanded="true" />
+            <element signature="e#1204#1205#0" expanded="true" />
+            <element signature="e#1824#1832#0" expanded="true" />
+            <element signature="e#2485#2493#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cities.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/PlayerCard.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Card.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/City.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ComputerPlayer.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -694,20 +741,6 @@
             <element signature="e#1204#1205#0" expanded="true" />
             <element signature="e#1824#1832#0" expanded="true" />
             <element signature="e#2485#2493#0" expanded="true" />
-            <element signature="e#6447#6448#0" expanded="true" />
-            <element signature="e#6477#6478#0" expanded="true" />
-            <element signature="e#7916#7917#0" expanded="true" />
-            <element signature="e#7964#7965#0" expanded="true" />
-            <element signature="e#8018#8019#0" expanded="true" />
-            <element signature="e#8046#8047#0" expanded="true" />
-            <element signature="e#8111#8112#0" expanded="true" />
-            <element signature="e#8162#8163#0" expanded="true" />
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9358#9359#0" expanded="true" />
-            <element signature="e#9399#9400#0" expanded="true" />
-            <element signature="e#9440#9441#0" expanded="true" />
-            <element signature="e#9722#9723#0" expanded="true" />
-            <element signature="e#9755#9756#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -802,20 +835,6 @@
             <element signature="e#1204#1205#0" expanded="true" />
             <element signature="e#1824#1832#0" expanded="true" />
             <element signature="e#2485#2493#0" expanded="true" />
-            <element signature="e#6447#6448#0" expanded="true" />
-            <element signature="e#6477#6478#0" expanded="true" />
-            <element signature="e#7916#7917#0" expanded="true" />
-            <element signature="e#7964#7965#0" expanded="true" />
-            <element signature="e#8018#8019#0" expanded="true" />
-            <element signature="e#8046#8047#0" expanded="true" />
-            <element signature="e#8111#8112#0" expanded="true" />
-            <element signature="e#8162#8163#0" expanded="true" />
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9358#9359#0" expanded="true" />
-            <element signature="e#9399#9400#0" expanded="true" />
-            <element signature="e#9440#9441#0" expanded="true" />
-            <element signature="e#9722#9723#0" expanded="true" />
-            <element signature="e#9755#9756#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -823,16 +842,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Deck.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/EpidemicCard.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/InfectionCard.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/PlayerCard.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Card.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/City.java">
@@ -844,53 +854,9 @@
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ComputerPlayer.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/PandemicGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GameState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="706">
-          <caret line="309" column="33" selection-start-line="309" selection-start-column="33" selection-end-line="309" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#244#258#0" expanded="true" />
-            <element signature="e#1056#1057#0" expanded="true" />
-            <element signature="e#1092#1093#0" expanded="true" />
-            <element signature="e#1157#1158#0" expanded="true" />
-            <element signature="e#1204#1205#0" expanded="true" />
-            <element signature="e#1824#1832#0" expanded="true" />
-            <element signature="e#2485#2493#0" expanded="true" />
-            <element signature="e#6447#6448#0" expanded="true" />
-            <element signature="e#6477#6478#0" expanded="true" />
-            <element signature="e#7916#7917#0" expanded="true" />
-            <element signature="e#7964#7965#0" expanded="true" />
-            <element signature="e#8018#8019#0" expanded="true" />
-            <element signature="e#8046#8047#0" expanded="true" />
-            <element signature="e#8111#8112#0" expanded="true" />
-            <element signature="e#8162#8163#0" expanded="true" />
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9358#9359#0" expanded="true" />
-            <element signature="e#9399#9400#0" expanded="true" />
-            <element signature="e#9440#9441#0" expanded="true" />
-            <element signature="e#9722#9723#0" expanded="true" />
-            <element signature="e#9755#9756#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-357">
+        <state relative-caret-position="495">
           <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -900,8 +866,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
+        <state relative-caret-position="345">
           <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/InfectionCard.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GameState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="599">
+          <caret line="309" column="5" selection-start-line="309" selection-start-column="5" selection-end-line="309" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#244#258#0" expanded="true" />
+            <element signature="e#1056#1057#0" expanded="true" />
+            <element signature="e#1092#1093#0" expanded="true" />
+            <element signature="e#1157#1158#0" expanded="true" />
+            <element signature="e#1204#1205#0" expanded="true" />
+            <element signature="e#1824#1832#0" expanded="true" />
+            <element signature="e#2485#2493#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/EpidemicCard.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ComputerPlayer.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Card.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/PandemicGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="49" column="62" lean-forward="true" selection-start-line="49" selection-start-column="62" selection-end-line="49" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
