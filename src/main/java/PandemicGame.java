@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 //Main Game
@@ -52,10 +53,13 @@ public class PandemicGame{
                         }
                         if (response.equals("cubes")){
                             System.out.println("Getting the cube count");
-                            //HashMap<String, City> cities = gamestate.getCities();
+                            HashMap<String, City> cities = gamestate.getCities();
+                          //  for (HashMap.Entry<String, City> cit: cities.entrySet()){
+                            //    System.out.println("Entry: " + cit.getKey() + "Count" + cit.getKe);
+                            //}
 
-                            // for (City city : cities.values()){
-                            //      System.out.println(city + "" + city.getCubeCount());
+                            //for (City city : cities.values()){
+                              //    System.out.println(city + "" + city.getCubeCount());
                             //}
                         }
                         System.out.println("Would you like anything else");
@@ -77,7 +81,6 @@ public class PandemicGame{
                     System.out.print(card.getCardInfoString() + ", ");
                 }
                 System.out.print("\n");*/
-
 
                 if (player.getHand().size() > 7){
                     for (int j=0; j < player.getHand().size()-7; j++){
