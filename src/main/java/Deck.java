@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,26 +6,26 @@ public class Deck {
     private ArrayList<Card> deck;
     private ArrayList<Card> discard;
 
-    public Deck(){
+    public Deck() {
         deck = new ArrayList<Card>();
         discard = new ArrayList<Card>();
     }
 
     //retrieves the top card and returns it
-    public Card pop(){
-        return deck.remove(deck.size()-1);
+    public Card pop() {
+        return deck.remove(deck.size() - 1);
     }
 
-    public Card draw(){
+    public Card draw() {
         Card card = pop();
         discard.add(card);
         return card;
     }
 
-    public Card getBottomNormalCard(){
+    public Card getBottomNormalCard() {
         int current = 0;
 
-        while (deck.get(current).getCardType() == Card.CardType.INFECTION){
+        while (deck.get(current).getCardType() == Card.CardType.EPIDEMIC) {
             current++;
         }
 
@@ -36,10 +35,10 @@ public class Deck {
     }
 
     //shuffle the discard and put the cards back into the normal deck
-    public void shuffeBack(){
+    public void shuffeBack() {
         Collections.shuffle(discard);
 
-        for (Card card : discard){
+        for (Card card : discard) {
             deck.add(card);
         }
 
@@ -47,23 +46,23 @@ public class Deck {
     }
 
     //adding a card to the deck
-    public void push(Card card){
+    public void push(Card card) {
         deck.add(card);
     }
 
-    public void pushToDiscard(Card card){
+    public void pushToDiscard(Card card) {
         discard.add(card);
     }
 
     //used for shuffling the deck
-    public void shuffle(){
+    public void shuffle() {
         Collections.shuffle(deck);
     }
 
     //used for debug - prints everything to console
-    public void printAllCards(){
+    public void printAllCards() {
         System.out.print("Cards in the deck: ");
-        for (Card card : deck){
+        for (Card card : deck) {
             System.out.print(card.getCardInfoString() + ", ");
         }
 

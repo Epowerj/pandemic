@@ -20,20 +20,20 @@ public class City {
         cubes.put("Y", 0);
     }
 
-    public void addAdjacent(String adjcity){
+    public void addAdjacent(String adjcity) {
         adjacent.add(adjcity);
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public ArrayList<String> getAdjacent(){
+    public ArrayList<String> getAdjacent() {
         //return a copy of adjacent
         return new ArrayList<String>(adjacent); //copy constructor
     }
 
-    public String getColor(){
+    public String getColor() {
         return color;
     }
 
@@ -41,24 +41,24 @@ public class City {
         return cubes.get(color);
     }
 
-    public int getCubeCount(){
+    public int getCubeCount() {
         return getCubeCount(this.color);
     }
 
-    //only for setup
-    public void setCubeCount(int count, String color){
-        cubes.put(color, count);
-    }
-
-    public void setCubeCount(int count){
+    public void setCubeCount(int count) {
         setCubeCount(count, this.color);
     }
 
-    public void incrementCubes(){
+    //only for setup
+    public void setCubeCount(int count, String color) {
+        cubes.put(color, count);
+    }
+
+    public void incrementCubes() {
         incrementCubes(this.color);
     }
 
-    public void incrementCubes(String color){
+    public void incrementCubes(String color) {
         cubes.put(color, cubes.get(color) + 1);
 
         //check if there are more than 3 cubes there
@@ -79,29 +79,29 @@ public class City {
         }
     }
 
-    public void addCubes(int count, String color){
-        for (int i = 0; i < count; i++){
+    public void addCubes(int count, String color) {
+        for (int i = 0; i < count; i++) {
             incrementCubes(color);
         }
     }
 
-    public void addCubes(int count){
+    public void addCubes(int count) {
         addCubes(count, this.color);
     }
 
-    public void removeCubes(int amount, String color){
+    public void removeCubes(int amount, String color) {
         cubes.put(color, cubes.get(color) - 1);
 
-        if (cubes.get(color) < 0){
+        if (cubes.get(color) < 0) {
             cubes.put(color, 0);
         }
     }
 
-    public void removeCubes(int amount){
+    public void removeCubes(int amount) {
         removeCubes(amount, this.color);
     }
 
-    public boolean isAdjacent(String icity){
-        return adjacent.contains(icity);
+    public boolean isAdjacent(String icity) {
+        return adjacent.contains(icity.toLowerCase());
     }
 }

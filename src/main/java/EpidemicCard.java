@@ -1,10 +1,10 @@
 public class EpidemicCard extends Card {
 
-    public EpidemicCard(){
+    public EpidemicCard() {
         cardtype = CardType.EPIDEMIC;
     }
 
-    public String getCardInfoString(){
+    public String getCardInfoString() {
         return "EpidemicCard";
     }
 }

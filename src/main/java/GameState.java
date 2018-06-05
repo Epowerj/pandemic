@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,14 +8,7 @@ import java.util.*;
 public class GameState {
     private static HashMap<String, City> nodes = new HashMap<String, City>();
     private static ArrayList<String> stations = new ArrayList<>();
-    private Deck infectiondeck = new Deck();
     private static Deck playerdeck = new Deck();
-    ArrayList<Player> players = new ArrayList<>();
-
-    private int outbreak = 0;
-    private int infectionrateindex = 0;
-    private int[] infectionrates = new int[]{2,2,2,3,3,4,4};
-
     private static boolean blueCured = false;
     private static boolean blackCured = false;
     private static boolean redCured = false;
@@ -25,38 +17,109 @@ public class GameState {
     private static boolean blackEradicated = false;
     private static boolean redEradicated = false;
     private static boolean yellowEradicated = false;
+    ArrayList<Player> players = new ArrayList<>();
+    private Deck infectiondeck = new Deck();
+    private int outbreak = 0;
+    private int infectionrateindex = 0;
+    private int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
     //constructor
-    public GameState(String info_file){
+    public GameState(String info_file) {
         parseInfo(info_file);
     }
 
+    public static void placeResearchStation(String targetCity) {
+        if (!stations.contains(targetCity)) { //if there isn't a station already there
+            stations.add(targetCity);
+        }
+    }
+
+    public static boolean cityHasResearchStation(String target) {
+        return stations.contains(target);
+    }
+
+    public static HashMap<String, City> getCities() {
+        return nodes;
+    }
+
+    public static void discardPlayerCard(PlayerCard toDiscard) {
+        playerdeck.pushToDiscard(toDiscard);
+    }
+
+    public static boolean isDiseaseCured(String color) {
+        if (color.equals("B")) {
+            return blueCured;
+        } else if (color.equals("R")) {
+            return redCured;
+        } else if (color.equals("Y")) {
+            return yellowCured;
+        } else if (color.equals("U")) {
+            return blackCured;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isDiseaseEradicated(String color) {
+        if (color.equals("B")) {
+            return blueEradicated;
+        } else if (color.equals("R")) {
+            return redEradicated;
+        } else if (color.equals("Y")) {
+            return yellowEradicated;
+        } else if (color.equals("U")) {
+            return blackEradicated;
+        } else {
+            return false;
+        }
+    }
+
+    public static void setCured(String color) {
+        if (color.equals("B")) {
+            blueCured = true;
+        } else if (color.equals("R")) {
+            redCured = true;
+        } else if (color.equals("Y")) {
+            yellowCured = true;
+        } else if (color.equals("U")) {
+            blackCured = true;
+        }
+    }
+
+    public static Deck getPlayerDeck() {
+        return playerdeck;
+    }
+
+    public static ArrayList<String> getStations() {
+        return stations;
+    }
+
     //add city to the list
-    private void addNode(City node){
+    private void addNode(City node) {
         nodes.put(node.getName(), node);
     }
 
     //read all the cities and other board info from text file
-    private void parseInfo(String filename){
+    private void parseInfo(String filename) {
 
         List<String> lines = null;
 
-        try{
+        try {
             Scanner input = new Scanner(new FileInputStream(new File(filename)));
             lines = Files.readAllLines(Paths.get(filename));
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         //save all the cities
         //and add their cards
-        for (int i=0; i < lines.size(); i++ ){
+        for (int i = 0; i < lines.size(); i++) {
             //if this line isn't empty
             if (lines.get(i).length() > 2) {
                 List<String> words = new ArrayList<String>(Arrays.asList(lines.get(i).split(" ")));
 
                 String color = words.get(0);
-                String cityName = words.get(1);
+                String cityName = words.get(1).toLowerCase();
 
                 City newCity = new City(cityName, color);
                 addNode(newCity);
@@ -68,17 +131,17 @@ public class GameState {
         }
 
         //now connect all the cities
-        for (int i=0; i < lines.size(); i++ ){
+        for (int i = 0; i < lines.size(); i++) {
             //if this line isn't empty
             if (lines.get(i).length() > 2) {
                 List<String> words = new ArrayList<String>(Arrays.asList(lines.get(i).split(" ")));
 
-                String cityName = words.get(1);
+                String cityName = words.get(1).toLowerCase();
                 City toUpdate = nodes.get(cityName);
 
                 //for each adjacent city
-                for (int j = 2; j < words.size(); j++){
-                    String adjCityName = words.get(j);
+                for (int j = 2; j < words.size(); j++) {
+                    String adjCityName = words.get(j).toLowerCase();
 
                     //make sure that we didn't miss this adjacent city when parsing
                     assert (nodes.containsKey(adjCityName));
@@ -88,7 +151,7 @@ public class GameState {
 
                 //DEBUG-START
                 System.out.print("The city " + toUpdate.getName() + " is adjacent to: ");
-                for (String adj : toUpdate.getAdjacent()){
+                for (String adj : toUpdate.getAdjacent()) {
                     System.out.print(adj + ", ");
                 }
                 System.out.print("\n");
@@ -100,7 +163,7 @@ public class GameState {
         playerdeck.shuffle();
     }
 
-    public void gameSetup(){
+    public void gameSetup() {
         //create players
         addPlayer(Player.Role.DISPATCHER);
         addPlayer(Player.Role.MEDIC);
@@ -120,102 +183,70 @@ public class GameState {
         infectiondeck.push(new EpidemicCard());
         infectiondeck.shuffle();
 
-        stations.add("Atlanta"); //add research station
-
-        //DEBUG-START
-        System.out.print("\n");
-        System.out.print("Cards in the Infection deck: ");
-        infectiondeck.printAllCards();
-        System.out.print("Cards in the Player deck: ");
-        playerdeck.printAllCards();
-        System.out.print("\n");
-        //DEBUG-END
-
-        //DEBUG-START
-        System.out.print("Research stations are located in: ");
-        for (String station : stations){
-            System.out.print(station + ", ");
-        }
-        System.out.print("\n");
-
-        System.out.println("Players: ");
-        for (Player player: players){
-            System.out.print("   " + player.getCurrentCity() + ": ");
-            for (Card card : player.getHand()){
-                System.out.print(card.getCardInfoString() + ", ");
-            }
-            System.out.print("\n");
-        }
-        //DEBUG-ENDx
+        stations.add("atlanta"); //add research station
     }
 
-    public void addPlayer(Player.Role role){
+    public void addPlayer(Player.Role role) {
         Player newplayer = new Player(role);
 
         players.add(newplayer);
     }
 
-    public void dealCards(){
+    public void dealCards() {
         int cardstodeal = 0;
         int playercount = players.size();
-        if (playercount==2){
+        if (playercount == 2) {
             cardstodeal = 4;
-        } else if (playercount==3){
+        } else if (playercount == 3) {
             cardstodeal = 3;
 
-        } else if (playercount==4){
+        } else if (playercount == 4) {
             cardstodeal = 2;
         } else {
             System.out.println("Bad number of players");
             assert (false);
         }
 
-        for (Player player : players){ //for each player
-            for (int i = 0; i < cardstodeal; i++){ //loop cardstodeal amount of times
+        for (Player player : players) { //for each player
+            for (int i = 0; i < cardstodeal; i++) { //loop cardstodeal amount of times
                 player.drawCard(playerdeck);
             }
         }
     }
 
-    public void setupInfectedCities(){
-        for (int i=0; i < 3; i++){
+    public void setupInfectedCities() {
+        for (int i = 0; i < 3; i++) {
             InfectionCard card = (InfectionCard) infectiondeck.draw();
             City city = nodes.get(card.getCity());
             city.setCubeCount(3);
         }
-        for (int i=0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             InfectionCard card = (InfectionCard) infectiondeck.draw();
             City city = nodes.get(card.getCity());
             city.setCubeCount(2);
         }
-        for (int i=0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             InfectionCard card = (InfectionCard) infectiondeck.draw();
             City city = nodes.get(card.getCity());
             city.setCubeCount(1);
         }
     }
 
-    public ArrayList<Player> getPlayers(){
+    public ArrayList<Player> getPlayers() {
         return players;
-    }
-
-    public static void placeResearchStation(String targetCity){
-        if (!stations.contains(targetCity)){ //if there isn't a station already there
-            stations.add(targetCity);
-        }
     }
 
     //everything that needs to be done at the end of each turn
     //draw infection cards, put new cubes, handle epidemic cards
-    public void newTurn(){
+    public void newTurn() {
 
 
         int amountCards = infectionrates[infectionrateindex];
 
-        for (int i = 0; i < amountCards; i++){
+        for (int i = 0; i < amountCards; i++) {
             Card card = infectiondeck.draw();
 
-            if (card.getCardType() == Card.CardType.EPIDEMIC){
+            if (card.getCardType() == Card.CardType.EPIDEMIC) {
 
                 //increase the infection rate
                 if (infectionrateindex < 6) {
@@ -229,7 +260,7 @@ public class GameState {
 
                 infectiondeck.shuffeBack();
 
-            }else{ //if normal infection card
+            } else { //if normal infection card
                 InfectionCard infcard = (InfectionCard) card;
 
                 if (!isDiseaseEradicated(infcard.getColor())) {
@@ -241,76 +272,12 @@ public class GameState {
         }
     }
 
-    public static boolean cityHasResearchStation(String target){
-        return stations.contains(target);
-    }
-
-    public static HashMap<String, City> getCities(){
-        return nodes;
-    }
-
-    public static void discardPlayerCard(PlayerCard toDiscard){
-        playerdeck.pushToDiscard(toDiscard);
-    }
-
-    public static boolean isDiseaseCured(String color){
-        if (color.equals("B")){
-            return blueCured;
-        } else if (color.equals("R")){
-            return redCured;
-        } else if (color.equals("Y")){
-            return yellowCured;
-        } else if (color.equals("U")){
-            return blackCured;
-        } else {
-            return false;
-        }
-    }
-
-    public static boolean isDiseaseEradicated(String color){
-        if (color.equals("B")){
-            return blueEradicated;
-        } else if (color.equals("R")){
-            return redEradicated;
-        } else if (color.equals("Y")){
-            return yellowEradicated;
-        } else if (color.equals("U")){
-            return blackEradicated;
-        } else {
-            return false;
-        }
-    }
-
-    public static void setCured(String color){
-        if (color.equals("B")){
-            blueCured = true;
-        } else if (color.equals("R")){
-            redCured = true;
-        } else if (color.equals("Y")){
-            yellowCured = true;
-        } else if (color.equals("U")){
-            blackCured = true;
-        }
-    }
-
-    public int getOutbreak(){
+    public int getOutbreak() {
         return outbreak;
     }
 
-    public int getInfectionrateindex(){
+    public int getInfectionrateindex() {
         return infectionrateindex;
-    }
-
-    public void printResearchStations(){
-        System.out.print("Research stations are located in: ");
-        for (String station : stations){
-            System.out.print(station + ", ");
-        }
-        System.out.print("\n");
-    }
-
-    public static Deck getPlayerDeck(){
-        return playerdeck;
     }
 
 }

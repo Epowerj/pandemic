@@ -1,12 +1,10 @@
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 //Main Game
-public class PandemicGame{
+public class PandemicGame {
     //this is the main
-    public static void main(String[] args){
+    public static void main(String[] args) {
         System.out.println("- Start -");
 
         GameState gamestate = new GameState("cities.txt");
@@ -16,216 +14,251 @@ public class PandemicGame{
         ioloop(gamestate);
     }
 
-    //print out any info that the user may want
-    static void printInfo(Scanner reader, GameState gamestate){
-
-        String response;
-        boolean responsebreak = true;
-
-        while(responsebreak ==true) {
-            System.out.println("Would you like information?");
-            response = reader.nextLine();
-            //cubes
-            //list how many cubes of each
-            if (response.equals("y")) {
-                System.out.println("What information would you like?");
-                System.out.print("Possible Info - {infectionRates, cures, outbreaks, researchStations, cubeCount} \n");
-                response = reader.nextLine();
-                if (response.equals("infectionrates")) {
-                    System.out.println(gamestate.getInfectionrateindex());
-                }
-                if (response.equals("outbreaks")) {
-                    System.out.println(gamestate.getOutbreak());
-                }
-                if (response.equals("researchstations")) {
-                    gamestate.printResearchStations();
-                }
-                if (response.equals("cures")){
-                    System.out.println("Which color");
-                    response = reader.nextLine();
-                    System.out.println(gamestate.isDiseaseCured(response));
-                }
-                if (response.equals("cubes")){
-                    System.out.println("Getting the cube count");
-                    HashMap<String, City> cities = gamestate.getCities();
-                    //  for (HashMap.Entry<String, City> cit: cities.entrySet()){
-                    //    System.out.println("Entry: " + cit.getKey() + "Count" + cit.getKe);
-                    //}
-
-                    //for (City city : cities.values()){
-                    //    System.out.println(city + "" + city.getCubeCount());
-                    //}
-                }
-                System.out.println("Would you like anything else");
-                response = reader.nextLine();
-                if (response.equals("n")){
-                    responsebreak = false;
-                }
-            } else {
-                responsebreak = false;
-            }
-
-        }
-    }
-
-    static void doMove(Scanner reader, GameState gamestate, Player player){
-        String discaredcard="";
-        player.drawCard(gamestate.getPlayerDeck());
-        player.drawCard(gamestate.getPlayerDeck());
-
-                /*for (Card card : player.getHand()){
-                    System.out.print(card.getCardInfoString() + ", ");
-                }
-                System.out.print("\n");*/
-
-        if (player.getHand().size() > 7){
-            for (int j=0; j < player.getHand().size()-7; j++){
-                System.out.println("Which card to discard");
-                discaredcard= reader.nextLine();
-                player.discardfromhand(discaredcard);
-            }
-        }
-
-        String move = "";
-
-        boolean success = true;
-
-        for (int i = 0; i < 4; i++) {
-            System.out.print("Possible moves - {drive, directflight, charterflight, shuttleflight,\n" +
-                    "buildresearchstation, treat, share, take, discover} \n");
-            System.out.print("Player " + "Choose your move: ");
-            move = reader.nextLine();
-
-            if (move.equals("drive")) {
-                //call the action drive
-                System.out.print("What is the destination: ");
-                String destination = reader.nextLine();
-
-                success = player.drive(destination);
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("directflight")) {
-                System.out.print("What is the destination: ");
-                String destination = reader.nextLine();
-
-                success = player.directFlight(destination);
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("charterflight")) {
-                System.out.print("What is the destination: ");
-                String destination = reader.nextLine();
-
-                success = player.charterFlight(destination);
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("shuttleflight")) {
-                System.out.print("What is the destination: ");
-                String destination = reader.nextLine();
-
-                success = player.shuttleFlight(destination);
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("buildresearchstation")) {
-                success = player.buildResearchStation();
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("treat")) {
-                player.treatDisease();
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("share")) {
-                System.out.print("What card: ");
-                String destination = reader.nextLine();
-
-                System.out.println("What player(num): ");
-                String pnum = reader.nextLine();
-
-                ArrayList<Player> players= gamestate.getPlayers();
-
-                success = player.shareKnowledge(players.get(Integer.parseInt(pnum)),destination);
-
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("take")) {
-                System.out.print("What card: ");
-                String destination = reader.nextLine();
-
-                System.out.print("What player(number): ");
-                String pnum = reader.nextLine();
-
-                ArrayList<Player> players= gamestate.getPlayers();
-
-                success = player.takeKnowledge(players.get(Integer.parseInt(pnum)), destination);
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-            if (move.equals("discover")) {
-                System.out.print("What is the card1: ");
-                String card1 = reader.nextLine();
-
-                System.out.print("What is the card2: ");
-                String card2 = reader.nextLine();
-
-                System.out.print("What is the card3: ");
-                String card3 = reader.nextLine();
-
-                System.out.print("What is the card4: ");
-                String card4 = reader.nextLine();
-
-                System.out.print("What is the card5: ");
-                String card5 = reader.nextLine();
-
-                success = player.discoverCure(card1, card2, card3, card4, card5);
-                if (success == false) {
-                    System.out.println("Bad move");
-                    i--;
-                }
-            }
-        }
-    }
-
-    static void ioloop(GameState gamestate){
-        Scanner reader = new Scanner(System.in);
-        boolean looping = true;
+    static void ioloop(GameState gamestate) {
         System.out.print("\n\n");
+        Scanner reader = new Scanner(System.in);
 
-        ArrayList<Player> players= gamestate.getPlayers();
+        boolean looping = true;
 
-        while(looping==true) {
+        ArrayList<Player> players = gamestate.getPlayers();
 
-            printInfo(reader, gamestate);
+        printPlayerInfo(gamestate);
+        printResearchStations(gamestate);
 
-            for (Player player : players) {
+        while (looping == true) { //each turn
 
-                doMove(reader, gamestate, player);
+            for (int playerNum = 0; playerNum < players.size(); playerNum++) { //each player
+
+                Player player = players.get(playerNum);
+
+                System.out.println("Its player " + playerNum + "s turn!");
+
+                //if there are more than 7 cards in this player's hand, the user must discard
+                if (player.getHand().size() > 7) {
+                    System.out.println("Player " + playerNum + " has over 7 cards!");
+
+                    printPlayerInfo(gamestate);
+
+                    for (int j = 0; j < player.getHand().size() - 7; j++) { //TODO discard crashes
+                        System.out.println("Need to discard " + (player.getHand().size() - 7) + " cards");
+
+                        System.out.println("Which card to discard: ");
+                        String discardCard = reader.nextLine();
+                        player.discardfromhand(discardCard);
+                    }
+                }
+
+                for (int actionNum = 4; actionNum > 0; actionNum--) { //4 actions per player
+                    System.out.println("Player " + playerNum + " has " + actionNum + " actions left");
+
+                    //get input
+                    System.out.print("{drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
+                    String line = reader.nextLine().toLowerCase();
+                    String[] input = line.split(" "); //list of words
+
+                    //quit
+                    if (input[0].equals("exit") || input[0].equals("quit") || input[0].equals("q")) {
+                        looping = false;
+                    } else {
+                        //now do actions
+                        boolean success = doMove(input, gamestate, player);
+
+                        while (!success) { //keep trying until success
+                            //get input again
+                            System.out.println("Try again!");
+                            System.out.print("{drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
+                            line = reader.nextLine().toLowerCase();
+                            input = line.split(" "); //list of words
+
+                            success = doMove(input, gamestate, player);
+                        }
+                    }
+                }
+
+                //at the end of each player's moves
+
+                //draw cards
+                player.drawCard(gamestate.getPlayerDeck());
+                player.drawCard(gamestate.getPlayerDeck());
 
                 gamestate.newTurn();
             }
-           // gamestate.newTurn();
-            //looping = false;
         }
+
+        System.out.println(" - Done - ");
+    }
+
+    //TODO add cube info
+
+    static boolean doMove(String[] input, GameState gamestate, Player player) {
+        String move = input[0];
+
+        boolean success = false;
+
+        if (move.equals("info")) {
+            printPlayerInfo(gamestate);
+            printResearchStations(gamestate);
+
+            success = false;
+        }
+
+        if (move.equals("drive")) {
+            if (input.length >= 2) {
+                String destination = input[1];
+
+                success = player.drive(destination);
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: drive <destination>");
+            }
+        }
+
+        if (move.equals("directflight")) {
+            if (input.length >= 2) {
+                String destination = input[1];
+
+                success = player.directFlight(destination);
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: directflight <destination>");
+            }
+        }
+
+        if (move.equals("charterflight")) {
+            if (input.length >= 2) {
+                String destination = input[1];
+
+                success = player.charterFlight(destination);
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: charterflight <destination>");
+            }
+        }
+
+        if (move.equals("shuttleflight")) {
+            if (input.length >= 2) {
+                String destination = input[1];
+
+                success = player.shuttleFlight(destination);
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: shuttleflight <destination>");
+            }
+        }
+
+        if (move.equals("buildstation")) {
+            success = player.buildResearchStation();
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: buildstation");
+            }
+        }
+
+        if (move.equals("treat")) {
+            player.treatDisease();
+            success = true;
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: treat");
+            }
+        }
+
+        if (move.equals("share")) {
+            ArrayList<Player> players = gamestate.getPlayers();
+
+            if (input.length >= 3) {
+                String destination = input[1];
+
+                String pnum = input[2];
+
+                success = player.shareKnowledge(players.get(Integer.parseInt(pnum)), destination);
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: share <destination card> <player number>");
+            }
+        }
+
+        if (move.equals("take")) {
+
+            ArrayList<Player> players = gamestate.getPlayers();
+
+            if (input.length >= 3) {
+                String destination = input[1];
+
+                String pnum = input[2];
+
+                success = player.takeKnowledge(players.get(Integer.parseInt(pnum)), destination);
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: take <destination card> <player number>");
+            }
+        }
+
+        if (move.equals("discover")) {
+
+            if (input.length >= 6) {
+
+                success = player.discoverCure(input[1], input[2], input[3], input[4], input[5]);
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: discover <card> <card> <card> <card> <card>");
+            }
+        }
+
+        return success;
+    }
+
+    static void printPlayerInfo(GameState gamestate) {
+        ArrayList<Player> players = gamestate.getPlayers();
+
+        System.out.println("Player info: ");
+        for (int i = 0; i < players.size(); i++) {
+            System.out.print("Player " + i + "[" + players.get(i).getCurrentCity() + "] - ");
+            System.out.print("Has cards: ");
+            for (Card card : players.get(i).getHand()) {
+                System.out.print(card.getCardInfoString() + ", ");
+            }
+            System.out.print("\n");
+        }
+
+        System.out.print("\n");
+    }
+
+    static void printResearchStations(GameState gameState) {
+        ArrayList<String> stations = gameState.getStations();
+
+        System.out.print("Research stations are located in: ");
+
+        for (String station : stations) {
+            System.out.print(station + ", ");
+        }
+
+        System.out.print("\n\n");
     }
 }
