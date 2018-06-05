@@ -110,13 +110,13 @@ public class GameState {
         dealCards();
 
         //shuffle in epidemic cards AFTER dealing cards to players
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.shuffle();
+        infectiondeck.push(new EpidemicCard());
+        infectiondeck.push(new EpidemicCard());
+        infectiondeck.push(new EpidemicCard());
+        infectiondeck.push(new EpidemicCard());
+        infectiondeck.push(new EpidemicCard());
+        infectiondeck.push(new EpidemicCard());
+        infectiondeck.shuffle();
 
         stations.add("Atlanta"); //add research station
 
@@ -208,6 +208,8 @@ public class GameState {
     //everything that needs to be done at the end of each turn
     //draw infection cards, put new cubes, handle epidemic cards
     public void newTurn(){
+
+
         int amountCards = infectionrates[infectionrateindex];
 
         for (int i = 0; i < amountCards; i++){

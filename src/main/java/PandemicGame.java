@@ -72,6 +72,7 @@ public class PandemicGame{
                 String discaredcard="";
                 player.drawCard(gamestate.getPlayerDeck());
                 player.drawCard(gamestate.getPlayerDeck());
+
                 /*for (Card card : player.getHand()){
                     System.out.print(card.getCardInfoString() + ", ");
                 }
@@ -113,7 +114,6 @@ public class PandemicGame{
                             i--;
                         }
                     }
-
                     if (move.equals("charterflight")) {
                         System.out.print("What is the destination: ");
                         String destination = reader.nextLine();
@@ -124,7 +124,6 @@ public class PandemicGame{
                             i--;
                         }
                     }
-
                     if (move.equals("shuttleflight")) {
                         System.out.print("What is the destination: ");
                         String destination = reader.nextLine();
@@ -135,7 +134,6 @@ public class PandemicGame{
                             i--;
                         }
                     }
-
                     if (move.equals("buildresearchstation")) {
                         success = player.buildResearchStation();
                         if (success == false) {
@@ -143,7 +141,6 @@ public class PandemicGame{
                             i--;
                         }
                     }
-
                     if (move.equals("treat")) {
                         player.treatDisease();
                         if (success == false) {
@@ -151,7 +148,6 @@ public class PandemicGame{
                             i--;
                         }
                     }
-
                     if (move.equals("share")) {
                         System.out.print("What card: ");
                         String destination = reader.nextLine();
@@ -166,7 +162,6 @@ public class PandemicGame{
                             i--;
                         }
                     }
-
                     if (move.equals("take")) {
                         System.out.print("What card: ");
                         String destination = reader.nextLine();
@@ -180,7 +175,6 @@ public class PandemicGame{
                             i--;
                         }
                     }
-
                     if (move.equals("discover")) {
                         System.out.print("What is the card1: ");
                         String card1 = reader.nextLine();
@@ -202,13 +196,11 @@ public class PandemicGame{
                             System.out.println("Bad move");
                             i--;
                         }
-
                     }
-
                 }
-                //gamestate.newTurn();
+                gamestate.newTurn();
             }
-            gamestate.newTurn();
+           // gamestate.newTurn();
             //looping = false;
         }
     }
