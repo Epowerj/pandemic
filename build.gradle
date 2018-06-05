@@ -20,3 +20,13 @@ task run(dependsOn: classes, type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 }
+
+task dist(dependsOn: classes, type: Jar) {
+    manifest {
+        attributes 'Implementation-Version': version,
+                'Main-Class': 'PandemicGame'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

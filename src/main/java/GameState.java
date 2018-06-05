@@ -109,6 +109,8 @@ public class GameState {
 
         dealCards();
 
+        setupInfectedCities(); //distribute cubes
+
         //shuffle in epidemic cards AFTER dealing cards to players
         infectiondeck.push(new EpidemicCard());
         infectiondeck.push(new EpidemicCard());
@@ -119,8 +121,6 @@ public class GameState {
         infectiondeck.shuffle();
 
         stations.add("Atlanta"); //add research station
-
-        setupInfectedCities(); //distribute cubes
 
         //DEBUG-START
         System.out.print("\n");
