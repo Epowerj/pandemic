@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 //Main Game
@@ -27,7 +29,7 @@ public class PandemicGame {
 
         while (looping == true) { //each turn
 
-            for (int playerNum = 0; playerNum < players.size(); playerNum++) { //each player
+            for (int playerNum = 0; playerNum < players.size() && looping; playerNum++) { //each player
 
                 Player player = players.get(playerNum);
 
@@ -48,11 +50,12 @@ public class PandemicGame {
                     }
                 }
 
-                for (int actionNum = 4; actionNum > 0; actionNum--) { //4 actions per player
+                for (int actionNum = 4; actionNum > 0 && looping; actionNum--) { //4 actions per player
+
                     System.out.println("Player " + playerNum + " has " + actionNum + " actions left");
 
                     //get input
-                    System.out.print("{drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
+                    System.out.print("{info, cubeinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
                     String line = reader.nextLine().toLowerCase();
                     String[] input = line.split(" "); //list of words
 
@@ -66,7 +69,7 @@ public class PandemicGame {
                         while (!success) { //keep trying until success
                             //get input again
                             System.out.println("Try again!");
-                            System.out.print("{drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
+                            System.out.print("{info, cubeinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
                             line = reader.nextLine().toLowerCase();
                             input = line.split(" "); //list of words
 
@@ -82,13 +85,13 @@ public class PandemicGame {
                 player.drawCard(gamestate.getPlayerDeck());
 
                 gamestate.newTurn();
+
+                //TODO update user on changes
             }
         }
 
         System.out.println(" - Done - ");
     }
-
-    //TODO add cube info
 
     static boolean doMove(String[] input, GameState gamestate, Player player) {
         String move = input[0];
@@ -98,6 +101,13 @@ public class PandemicGame {
         if (move.equals("info")) {
             printPlayerInfo(gamestate);
             printResearchStations(gamestate);
+            printBoardInfo(gamestate);
+
+            success = false;
+        }
+
+        if (move.equals("cubeinfo")) { //TODO
+            printCubeInfo(gamestate);
 
             success = false;
         }
@@ -248,6 +258,33 @@ public class PandemicGame {
         }
 
         System.out.print("\n");
+    }
+
+    static void printCubeInfo(GameState gameState) {
+        HashMap<String, City> cities = gameState.getCities();
+
+        for (Map.Entry<String, City> entry : cities.entrySet()) {
+            String key = entry.getKey();
+            City value = entry.getValue();
+
+            HashMap<String, Integer> cubelist = value.getCubeList();
+
+            for (Map.Entry<String, Integer> cubenum : cubelist.entrySet()) {
+                String color = cubenum.getKey();
+                Integer count = cubenum.getValue();
+
+                if (count > 0) {
+                    System.out.println(value.getName() + " has " + count + " " + color + " cubes");
+                }
+            }
+        }
+    }
+
+    static void printBoardInfo(GameState gameState) {
+
+        System.out.println("Outbreaks: " + gameState.getOutbreak());
+        System.out.println("Infection rate: " + gameState.getInfectionrateindex());
+        //TODO cured status System.out.println("");
     }
 
     static void printResearchStations(GameState gameState) {

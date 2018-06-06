@@ -45,6 +45,10 @@ public class City {
         return getCubeCount(this.color);
     }
 
+    public HashMap<String, Integer> getCubeList() {
+        return cubes;
+    }
+
     public void setCubeCount(int count) {
         setCubeCount(count, this.color);
     }

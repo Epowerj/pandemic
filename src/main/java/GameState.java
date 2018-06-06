@@ -240,13 +240,13 @@ public class GameState {
     //draw infection cards, put new cubes, handle epidemic cards
     public void newTurn() {
 
-
         int amountCards = infectionrates[infectionrateindex];
 
         for (int i = 0; i < amountCards; i++) {
             Card card = infectiondeck.draw();
 
             if (card.getCardType() == Card.CardType.EPIDEMIC) {
+                System.out.println("Drew an Epidemic card!!");
 
                 //increase the infection rate
                 if (infectionrateindex < 6) {
@@ -258,14 +258,19 @@ public class GameState {
                 nodes.get(cardToInfect.getCity()).addCubes(3);
                 infectiondeck.pushToDiscard(cardToInfect);
 
+                System.out.println("Added cubes to " + cardToInfect.getCity());
+
                 infectiondeck.shuffeBack();
 
             } else { //if normal infection card
+                System.out.println("Drew an infection card");
+
                 InfectionCard infcard = (InfectionCard) card;
 
                 if (!isDiseaseEradicated(infcard.getColor())) {
                     City city = nodes.get(infcard.getCity());
 
+                    System.out.println("Added cubes to " + city.getName());
                     city.incrementCubes(); //put new cube
                 }
             }
