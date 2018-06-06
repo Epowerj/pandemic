@@ -19,7 +19,7 @@ public class GameState {
     private static boolean yellowEradicated = false;
     ArrayList<Player> players = new ArrayList<>();
     private Deck infectiondeck = new Deck();
-    private int outbreak = 0;
+    private static int outbreak = 0;
     private int infectionrateindex = 0;
     private int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
@@ -288,6 +288,10 @@ public class GameState {
 
     public int getInfectionrateindex() {
         return infectionrateindex;
+    }
+
+    public static void incrementOutbreaks() {
+        outbreak++;
     }
 
 }

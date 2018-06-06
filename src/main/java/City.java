@@ -64,7 +64,6 @@ public class City {
 
     public void incrementCubes(String color) {
         //TODO stack overflow -- keep a bool of all cities that have exploded(percard)
-        //TODO increments outbreaks
         cubes.put(color, cubes.get(color) + 1);
 
         //check if there are more than 3 cubes there
@@ -74,7 +73,8 @@ public class City {
             int value = entry.getValue();
 
             if (value > 3) {
-                cubes.put(key, 3);
+                cubes.put(key, 3); //put back to 3
+                GameState.incrementOutbreaks();
 
                 //infect adjacent cities
                 HashMap<String, City> cities = GameState.getCities();
