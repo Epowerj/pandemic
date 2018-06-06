@@ -2,7 +2,7 @@ B SanFrancisco Chicago LosAngeles Tokyo Manila
 B Chicago SanFrancisco LosAngeles MexicoCity Montreal Atlanta
 B Montreal Chicago NewYork Washington
 B NewYork Montreal Washington London Madrid
-B Washington NewYork Montreal Atlanta
+B Washington NewYork Montreal Atlanta Miami
 B Atlanta Washington Chicago Miami
 B London NewYork Madrid Paris Essen
 B Madrid London Paris NewYork SaoPaulo Algiers
@@ -10,17 +10,17 @@ B Paris Milan London Essen Milan Algiers
 B Milan Essen Istanbul Paris
 B Essen London Paris Milan St.Petersburg
 Y LosAngeles Sydney MexicoCity SanFrancisco Chicago
-Y MexicoCity LosAngeles Miami Lima Bogota
-Y Lima Bogota Santiago
+Y MexicoCity LosAngeles Miami Lima Bogota Chicago
+Y Lima Bogota Santiago MexicoCity
 Y Santiago Lima
 Y Miami MexicoCity Bogota Atlanta Washington
-Y Bogota Miami MexicoCity Lima Bueno Aires SaoPaulo
+Y Bogota Miami MexicoCity Lima BuenoAires SaoPaulo
 Y BuenoAires SaoPaulo Bogota
 Y SaoPaulo Bogota Lagos Madrid BuenosAires
 Y Lagos SaoPaulo Kinshasa Khartoum
 Y Kinshasa Lagos Johannesburg Khartoum
 Y Johannesburg Kinshasa Khartoum
-Y Khartoum Johannesburg Kinshasa Cairo
+Y Khartoum Johannesburg Kinshasa Cairo Lagos
 U Algiers Cairo Istanbul Madrid Paris
 U Cairo Algiers Riyadh Baghdad Istanbul
 U Riyadh Cairo Baghdad Karachi
@@ -30,7 +30,7 @@ U Moscow St.Petersburg Istanbul Tehran
 U Tehran Moscow Baghdad Karachi Delhi
 U Karachi Baghdad Tehran Delhi Mumbai Riyadh
 U Delhi Tehran Karachi Mumbai Chennai Kolkata
-U Mumbai Karachi Chennai
+U Mumbai Karachi Chennai Delhi
 U Chennai Mumbai Delhi Kolkata Bangkok Jakarta
 U Kolkata Delhi Chennai Bangkok HongKong
 R Sydney LosAngeles Manila Jakarta
@@ -41,7 +41,7 @@ R HongKong Kolkata Bangkok Shanghai Tapei Manila HoChiMinhCity
 R Manila SanFrancisco Tapei Hongkong HoChiMinhCity Sydney
 R Tapei Osaka HongKong Shanghai Manila
 R Osaka Tapei Tokyo
-R Tokyo SanFrancisco Seoul Shanghai
+R Tokyo SanFrancisco Seoul Shanghai Osaka
 R Seoul Tokyo Shanghai Beijing
 R Beijing Seoul Shanghai
 R Shanghai Beijing Seoul Tokyo Tapei HongKong

@@ -6,9 +6,9 @@ public class City {
     private String name;
     private String color;
 
-    private HashMap<String, Integer> cubes = new HashMap<>();
+    private HashMap<String, Integer> cubes = new HashMap<String, Integer>();
 
-    private ArrayList<String> adjacent = new ArrayList<>();
+    private ArrayList<String> adjacent = new ArrayList<String>();
 
     public City(String cty, String clr) {
         name = cty;
