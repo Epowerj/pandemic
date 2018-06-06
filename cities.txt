@@ -37,12 +37,12 @@ R Sydney LosAngeles Manila Jakarta
 R Jakarta Sydney HoChiMinhCity Chennai Bangkok
 R HoChiMinhCity Jakarta Manila Bangkok Hongkong
 R Bangkok HogKong Kolkata Chennai HoChiMinhCity Jakarta
-R HongKong Kolkata Bangkok Shanghai Tapei Manila HoChiMinhCity
-R Manila SanFrancisco Tapei Hongkong HoChiMinhCity Sydney
-R Tapei Osaka HongKong Shanghai Manila
-R Osaka Tapei Tokyo
+R HongKong Kolkata Bangkok Shanghai Taipei Manila HoChiMinhCity
+R Manila SanFrancisco Taipei Hongkong HoChiMinhCity Sydney
+R Taipei Osaka HongKong Shanghai Manila
+R Osaka Taipei Tokyo
 R Tokyo SanFrancisco Seoul Shanghai Osaka
 R Seoul Tokyo Shanghai Beijing
 R Beijing Seoul Shanghai
-R Shanghai Beijing Seoul Tokyo Tapei HongKong
+R Shanghai Beijing Seoul Tokyo Taipei HongKong
 
