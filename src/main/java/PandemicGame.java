@@ -89,7 +89,7 @@ public class PandemicGame {
         System.out.println(" - Done - ");
     }
 
-    static boolean doMove(String[] input, GameState gamestate, Player player) { //TODO add option to print decks
+    static boolean doMove(String[] input, GameState gamestate, Player player) { //TODO add option to print decks to check for duplicates
         String move = input[0];
 
         boolean success = false;

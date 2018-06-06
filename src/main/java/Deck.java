@@ -16,7 +16,7 @@ public class Deck {
         return deck.remove(deck.size() - 1);
     }
 
-    public Card draw() {
+    public Card draw() { //TODO check for proper removing
         Card card = pop();
         discard.add(card);
         return card;
