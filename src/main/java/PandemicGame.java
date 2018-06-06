@@ -41,7 +41,7 @@ public class PandemicGame {
 
                     printPlayerInfo(gamestate);
 
-                    for (int j = 0; j < player.getHand().size() - 7; j++) { //TODO discard crashes
+                    for (int j = 0; j < player.getHand().size() - 7; j++) {
                         System.out.println("Need to discard " + (player.getHand().size() - 7) + " cards");
 
                         System.out.println("Which card to discard: ");
@@ -56,7 +56,7 @@ public class PandemicGame {
 
                     //get input
                     System.out.print("{info, cubeinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
-                    String line = reader.nextLine().toLowerCase();
+                    String line = reader.nextLine().toLowerCase(); //TODO no next line error
                     String[] input = line.split(" "); //list of words
 
                     //quit
@@ -80,11 +80,7 @@ public class PandemicGame {
 
                 //at the end of each player's moves
 
-                //draw cards
-                player.drawCard(gamestate.getPlayerDeck());
-                player.drawCard(gamestate.getPlayerDeck());
-
-                gamestate.newTurn();
+                gamestate.newTurn(player);
 
                 //TODO update user on changes
             }
@@ -93,7 +89,7 @@ public class PandemicGame {
         System.out.println(" - Done - ");
     }
 
-    static boolean doMove(String[] input, GameState gamestate, Player player) {
+    static boolean doMove(String[] input, GameState gamestate, Player player) { //TODO add option to print decks
         String move = input[0];
 
         boolean success = false;
@@ -106,7 +102,7 @@ public class PandemicGame {
             success = false;
         }
 
-        if (move.equals("cubeinfo")) { //TODO
+        if (move.equals("cubeinfo")) {
             printCubeInfo(gamestate);
 
             success = false;

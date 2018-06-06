@@ -63,6 +63,8 @@ public class City {
     }
 
     public void incrementCubes(String color) {
+        //TODO stack overflow -- keep a bool of all cities that have exploded(percard)
+        //TODO increments outbreaks
         cubes.put(color, cubes.get(color) + 1);
 
         //check if there are more than 3 cubes there

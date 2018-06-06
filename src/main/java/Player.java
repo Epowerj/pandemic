@@ -313,11 +313,15 @@ public class Player {
     }
 
     public void discardfromhand(String card) {
+        Card todiscard = null;
+
         for (PlayerCard c : hand) {
             if (c.getCity().equals(card)) {
-                hand.remove(c);
+                todiscard = c;
             }
         }
+
+        hand.remove(todiscard);
     }
 
     enum Role {OPERATION, MEDIC, PLANNER, DISPATCHER, SPECIALIST, RESEARCHER, SCIENTIST}

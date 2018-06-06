@@ -175,13 +175,13 @@ public class GameState {
         setupInfectedCities(); //distribute cubes
 
         //shuffle in epidemic cards AFTER dealing cards to players
-        infectiondeck.push(new EpidemicCard());
-        infectiondeck.push(new EpidemicCard());
-        infectiondeck.push(new EpidemicCard());
-        infectiondeck.push(new EpidemicCard());
-        infectiondeck.push(new EpidemicCard());
-        infectiondeck.push(new EpidemicCard());
-        infectiondeck.shuffle();
+        playerdeck.push(new EpidemicCard()); //TODO should be going into the player deck
+        playerdeck.push(new EpidemicCard());
+        playerdeck.push(new EpidemicCard());
+        playerdeck.push(new EpidemicCard());
+        playerdeck.push(new EpidemicCard());
+        playerdeck.push(new EpidemicCard());
+        playerdeck.shuffle();
 
         stations.add("atlanta"); //add research station
     }
@@ -238,7 +238,12 @@ public class GameState {
 
     //everything that needs to be done at the end of each turn
     //draw infection cards, put new cubes, handle epidemic cards
-    public void newTurn() {
+    public void newTurn(Player currentPlayer) {
+
+        //draw cards
+        //TODO check for epidemics here instead of infection deck
+        currentPlayer.drawCard(getPlayerDeck()); //TODO print drawn cards
+        currentPlayer.drawCard(getPlayerDeck());
 
         int amountCards = infectionrates[infectionrateindex];
 
