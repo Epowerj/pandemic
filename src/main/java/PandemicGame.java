@@ -35,21 +35,6 @@ public class PandemicGame {
 
                 System.out.println("Its player " + playerNum + "s turn!");
 
-                //if there are more than 7 cards in this player's hand, the user must discard
-                if (player.getHand().size() > 7) {
-                    System.out.println("Player " + playerNum + " has over 7 cards!");
-
-                    printPlayerInfo(gamestate);
-
-                    for (int j = 0; j < player.getHand().size() - 7; j++) {
-                        System.out.println("Need to discard " + (player.getHand().size() - 7) + " cards");
-
-                        System.out.println("Which card to discard: ");
-                        String discardCard = reader.nextLine();
-                        player.discardfromhand(discardCard);
-                    }
-                }
-
                 for (int actionNum = 4; actionNum > 0 && looping; actionNum--) { //4 actions per player
 
                     System.out.println("Player " + playerNum + " has " + actionNum + " actions left");
@@ -83,6 +68,22 @@ public class PandemicGame {
                 gamestate.newTurn(player);
 
                 //TODO update user on changes
+
+                //if there are more than 7 cards in this player's hand, the user must discard
+                if (player.getHand().size() > 7) {
+                    System.out.println("Player " + playerNum + " has over 7 cards!");
+
+                    printPlayerInfo(gamestate);
+
+                    for (int j = 0; j < player.getHand().size() - 7; j++) {
+                        System.out.println("Need to discard " + (player.getHand().size() - 7) + " cards");
+
+                        System.out.println("Which card to discard: ");
+                        String discardCard = reader.nextLine();
+                        player.discardfromhand(discardCard);
+                    }
+                }
+
             }
         }
 
