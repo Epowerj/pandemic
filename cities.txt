@@ -14,8 +14,8 @@ Y MexicoCity LosAngeles Miami Lima Bogota Chicago
 Y Lima Bogota Santiago MexicoCity
 Y Santiago Lima
 Y Miami MexicoCity Bogota Atlanta Washington
-Y Bogota Miami MexicoCity Lima BuenoAires SaoPaulo
-Y BuenoAires SaoPaulo Bogota
+Y Bogota Miami MexicoCity Lima BuenosAires SaoPaulo
+Y BuenosAires SaoPaulo Bogota
 Y SaoPaulo Bogota Lagos Madrid BuenosAires
 Y Lagos SaoPaulo Kinshasa Khartoum
 Y Kinshasa Lagos Johannesburg Khartoum
