@@ -16,7 +16,7 @@ public class PandemicGame {
         ioloop(gamestate);
     }
 
-    static void ioloop(GameState gamestate) {
+    private static void ioloop(GameState gamestate) {
         System.out.print("\n\n");
         Scanner reader = new Scanner(System.in);
 
@@ -30,7 +30,7 @@ public class PandemicGame {
         printResearchStations(gamestate);
         printCubeInfo(gamestate);
 
-        while (looping == true) { //each turn
+        while (looping) { //each turn
 
             for (int playerNum = 0; playerNum < players.size() && looping; playerNum++) { //each player
 
@@ -40,6 +40,8 @@ public class PandemicGame {
 
                 for (int actionNum = 4; actionNum > 0 && looping; actionNum--) { //4 actions per player
 
+                    discardExtra(player, playerNum, gamestate, reader);
+
                     System.out.println("Player " + playerNum + " has " + actionNum + " actions left");
 
                     //get input
@@ -48,6 +50,7 @@ public class PandemicGame {
                     String[] input = line.split(" "); //list of words
 
                     //quit
+                    //TODO doesn't work
                     if (input[0].equals("exit") || input[0].equals("quit") || input[0].equals("q")) {
                         looping = false;
                     } else {
@@ -64,28 +67,15 @@ public class PandemicGame {
                             success = doMove(input, gamestate, player);
                         }
                     }
+
+                    discardExtra(player, playerNum, gamestate, reader);
                 }
 
                 //at the end of each player's moves
 
                 gamestate.newTurn(player);
 
-                //TODO update user on changes
-
-                //if there are more than 7 cards in this player's hand, the user must discard
-                if (player.getHand().size() > 7) {
-                    System.out.println("Player " + playerNum + " has over 7 cards!");
-
-                    printPlayerInfo(gamestate);
-
-                    for (int j = 0; j < player.getHand().size() - 7; j++) {
-                        System.out.println("Need to discard " + (player.getHand().size() - 7) + " cards");
-
-                        System.out.println("Which card to discard: ");
-                        String discardCard = reader.nextLine();
-                        player.discardfromhand(discardCard);
-                    }
-                }
+                discardExtra(player, playerNum, gamestate, reader);
 
             }
         }
@@ -93,7 +83,7 @@ public class PandemicGame {
         System.out.println(" - Done - ");
     }
 
-    static boolean doMove(String[] input, GameState gamestate, Player player) {
+    private static boolean doMove(String[] input, GameState gamestate, Player player) {
         String move = input[0];
 
         boolean success = false;
@@ -142,7 +132,7 @@ public class PandemicGame {
                 success = false;
             }
 
-            if (success == false) {
+            if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: directflight <destination>");
             }
@@ -157,7 +147,7 @@ public class PandemicGame {
                 success = false;
             }
 
-            if (success == false) {
+            if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: charterflight <destination>");
             }
@@ -172,7 +162,7 @@ public class PandemicGame {
                 success = false;
             }
 
-            if (success == false) {
+            if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: shuttleflight <destination>");
             }
@@ -180,7 +170,7 @@ public class PandemicGame {
 
         if (move.equals("buildstation")) {
             success = player.buildResearchStation();
-            if (success == false) {
+            if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: buildstation");
             }
@@ -189,10 +179,6 @@ public class PandemicGame {
         if (move.equals("treat")) {
             player.treatDisease();
             success = true;
-            if (success == false) {
-                System.out.println("Bad move");
-                System.out.println("Usage: treat");
-            }
         }
 
         if (move.equals("share")) {
@@ -208,7 +194,7 @@ public class PandemicGame {
                 success = false;
             }
 
-            if (success == false) {
+            if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: share <destination card> <player number>");
             }
@@ -228,7 +214,7 @@ public class PandemicGame {
                 success = false;
             }
 
-            if (success == false) {
+            if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: take <destination card> <player number>");
             }
@@ -241,13 +227,32 @@ public class PandemicGame {
                 success = player.discoverCure(input[1], input[2], input[3], input[4], input[5]);
             }
 
-            if (success == false) {
+            if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: discover <card> <card> <card> <card> <card>");
             }
         }
 
         return success;
+    }
+
+    //discard extra cards from a players hand if they have more than 7
+    static private void discardExtra(Player player, int playerNum, GameState gamestate, Scanner reader) {
+        //TODO only runs twice for 3
+        //if there are more than 7 cards in this player's hand, the user must discard
+        if (player.getHand().size() > 7) {
+            System.out.println("Player " + playerNum + " has over 7 cards!");
+
+            printPlayerInfo(gamestate);
+
+            for (int j = 0; j < (player.getHand().size() - 7); j++) {
+                System.out.println("Need to discard " + (player.getHand().size() - 7) + " cards");
+
+                System.out.println("Which card to discard: ");
+                String discardCard = reader.nextLine().toLowerCase();
+                player.discardfromhand(discardCard);
+            }
+        }
     }
 
     static void printPlayerInfo(GameState gamestate) {

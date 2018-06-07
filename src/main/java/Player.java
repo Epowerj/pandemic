@@ -197,6 +197,7 @@ public class Player {
     //cure a disease by sacrificing 5 cards of the same color at a research station
     //if player is a scientist, only 4 cards are needed, the last argument can be any string
     //returns false if it's not possible
+    //TODO doesn't work
     public boolean discoverCure(String cardCity1, String cardCity2, String cardCity3, String cardCity4, String cardCity5) {
 
         boolean haveCards = true;
