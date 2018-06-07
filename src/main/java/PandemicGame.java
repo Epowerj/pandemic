@@ -20,12 +20,15 @@ public class PandemicGame {
         System.out.print("\n\n");
         Scanner reader = new Scanner(System.in);
 
+        String commandlist = "{info, cubeinfo, deckinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n";
+
         boolean looping = true;
 
         ArrayList<Player> players = gamestate.getPlayers();
 
         printPlayerInfo(gamestate);
         printResearchStations(gamestate);
+        printCubeInfo(gamestate);
 
         while (looping == true) { //each turn
 
@@ -40,7 +43,7 @@ public class PandemicGame {
                     System.out.println("Player " + playerNum + " has " + actionNum + " actions left");
 
                     //get input
-                    System.out.print("{info, cubeinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
+                    System.out.print(commandlist);
                     String line = reader.nextLine().toLowerCase(); //TODO no next line error
                     String[] input = line.split(" "); //list of words
 
@@ -54,7 +57,7 @@ public class PandemicGame {
                         while (!success) { //keep trying until success
                             //get input again
                             System.out.println("Try again!");
-                            System.out.print("{info, cubeinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n");
+                            System.out.print(commandlist);
                             line = reader.nextLine().toLowerCase();
                             input = line.split(" "); //list of words
 
