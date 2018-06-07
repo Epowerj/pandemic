@@ -24,11 +24,6 @@ public class Player {
         currentCity = toSet;
     }
 
-    public void drawCard(Deck deck) {
-        PlayerCard card = (PlayerCard) deck.pop();
-        hand.add(card);
-    }
-
     public ArrayList<PlayerCard> getHand() {
         return hand;
     }

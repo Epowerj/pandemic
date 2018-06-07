@@ -63,24 +63,31 @@ public class City {
     }
 
     public void incrementCubes(String color) {
-        //TODO stack overflow -- keep a bool of all cities that have exploded(percard)
         cubes.put(color, cubes.get(color) + 1);
 
         //check if there are more than 3 cubes there
-        for (Map.Entry<String, Integer> entry : cubes.entrySet()) {
+        for (Map.Entry<String, Integer> entry : cubes.entrySet()) { //per color
 
-            String key = entry.getKey();
+            String col = entry.getKey();
             int value = entry.getValue();
 
             if (value > 3) {
-                cubes.put(key, 3); //put back to 3
+                cubes.put(col, 3); //put back to 3
                 GameState.incrementOutbreaks();
+
+                GameState.addToExplodedCities(this.getName());
 
                 //infect adjacent cities
                 HashMap<String, City> cities = GameState.getCities();
                 for (String cityname : adjacent) {
-                    cities.get(cityname).incrementCubes(key);
+                    //if city hasn't already exploded
+                    if (!GameState.isCityExploded(cityname)) {
+                        cities.get(cityname).incrementCubes(col);
+                    }
                 }
+
+                //stack should have returned back so it's okay to clear
+                GameState.clearExplodedCities();
             }
         }
     }
