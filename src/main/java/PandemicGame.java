@@ -90,7 +90,7 @@ public class PandemicGame {
         System.out.println(" - Done - ");
     }
 
-    static boolean doMove(String[] input, GameState gamestate, Player player) { //TODO add option to print decks to check for duplicates
+    static boolean doMove(String[] input, GameState gamestate, Player player) {
         String move = input[0];
 
         boolean success = false;
@@ -105,6 +105,12 @@ public class PandemicGame {
 
         if (move.equals("cubeinfo")) {
             printCubeInfo(gamestate);
+
+            success = false;
+        }
+
+        if (move.equals("deckinfo")) {
+            printDeckInfo(gamestate);
 
             success = false;
         }
@@ -277,10 +283,17 @@ public class PandemicGame {
         }
     }
 
+    static void printDeckInfo(GameState gameState) {
+        System.out.println("Player deck: ");
+        gameState.getPlayerDeck().printAllCards();
+        System.out.println("Infection deck: ");
+        gameState.getInfectionDeck().printAllCards();
+    }
+
     static void printBoardInfo(GameState gameState) {
 
         System.out.println("Outbreaks: " + gameState.getOutbreak());
-        System.out.println("Infection rate: " + gameState.getInfectionrateindex());
+        System.out.println("Infection rate: " + gameState.getInfectionRate());
         //TODO cured status System.out.println("");
     }
 

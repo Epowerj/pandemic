@@ -17,11 +17,12 @@ public class GameState {
     private static boolean blackEradicated = false;
     private static boolean redEradicated = false;
     private static boolean yellowEradicated = false;
-    ArrayList<Player> players = new ArrayList<>();
-    private Deck infectiondeck = new Deck();
+    private static Deck infectiondeck = new Deck();
     private static int outbreak = 0;
+    private static ArrayList<String> explodedCites = new ArrayList<>();
     private int infectionrateindex = 0;
     private int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
+    ArrayList<Player> players = new ArrayList<>();
 
     //constructor
     public GameState(String info_file) {
@@ -90,8 +91,16 @@ public class GameState {
         return playerdeck;
     }
 
+    public static Deck getInfectionDeck() {
+        return infectiondeck;
+    }
+
     public static ArrayList<String> getStations() {
         return stations;
+    }
+
+    public static void incrementOutbreaks() {
+        outbreak++;
     }
 
     //add city to the list
@@ -192,26 +201,8 @@ public class GameState {
         players.add(newplayer);
     }
 
-    public void dealCards() {
-        int cardstodeal = 0;
-        int playercount = players.size();
-        if (playercount == 2) {
-            cardstodeal = 4;
-        } else if (playercount == 3) {
-            cardstodeal = 3;
-
-        } else if (playercount == 4) {
-            cardstodeal = 2;
-        } else {
-            System.out.println("Bad number of players");
-            assert (false);
-        }
-
-        for (Player player : players) { //for each player
-            for (int i = 0; i < cardstodeal; i++) { //loop cardstodeal amount of times
-                player.drawCard(playerdeck);
-            }
-        }
+    public static void addToExplodedCities(String city) {
+        explodedCites.add(city);
     }
 
     public void setupInfectedCities() {
@@ -236,21 +227,60 @@ public class GameState {
         return players;
     }
 
+    public static boolean isCityExploded(String city) {
+        for (int i = 0; i < explodedCites.size(); i++) {
+            if (explodedCites.get(i).equals(city.toLowerCase())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int getOutbreak() {
+        return outbreak;
+    }
+
+    public static void clearExplodedCities() {
+        explodedCites.clear();
+    }
+
+    public void dealCards() {
+        int cardstodeal = 0;
+        int playercount = players.size();
+        if (playercount == 2) {
+            cardstodeal = 4;
+        } else if (playercount == 3) {
+            cardstodeal = 3;
+
+        } else if (playercount == 4) {
+            cardstodeal = 2;
+        } else {
+            System.out.println("Bad number of players");
+            assert (false);
+        }
+
+        for (Player player : players) { //for each player
+            for (int i = 0; i < cardstodeal; i++) { //loop cardstodeal amount of times
+                PlayerCard newCard = (PlayerCard) playerdeck.pop(); //at this point there should be no epidemic cards
+                player.addCardToHand(newCard);
+            }
+        }
+    }
+
     //everything that needs to be done at the end of each turn
     //draw infection cards, put new cubes, handle epidemic cards
     public void newTurn(Player currentPlayer) {
 
-        //draw cards
-        //TODO check for epidemics here instead of infection deck
-        currentPlayer.drawCard(getPlayerDeck()); //TODO print drawn cards
-        currentPlayer.drawCard(getPlayerDeck());
+        //draw player cards and do epidemics
 
-        int amountCards = infectionrates[infectionrateindex];
+        int addedCards = 0;
 
-        for (int i = 0; i < amountCards; i++) {
-            Card card = infectiondeck.draw();
+        while (addedCards < 2) { //loop until 2 cards are added to player hand
 
-            if (card.getCardType() == Card.CardType.EPIDEMIC) {
+            Card drawnCard = playerdeck.pop();
+
+            if (drawnCard.getCardType() == Card.CardType.EPIDEMIC) {
                 System.out.println("Drew an Epidemic card!!");
 
                 //increase the infection rate
@@ -266,32 +296,34 @@ public class GameState {
                 System.out.println("Added cubes to " + cardToInfect.getCity());
 
                 infectiondeck.shuffeBack();
+            } else {// otherwise it must be a normal player card
+                currentPlayer.addCardToHand((PlayerCard) drawnCard);
+                addedCards++;
 
-            } else { //if normal infection card
-                System.out.println("Drew an infection card");
-
-                InfectionCard infcard = (InfectionCard) card;
-
-                if (!isDiseaseEradicated(infcard.getColor())) {
-                    City city = nodes.get(infcard.getCity());
-
-                    System.out.println("Added cubes to " + city.getName());
-                    city.incrementCubes(); //put new cube
-                }
+                System.out.println("Player added " + drawnCard.getCardInfoString() + " to their hand");
             }
+        }
+
+        //draw infection cards and update cubes
+        int amountCards = infectionrates[infectionrateindex]; //get the infection rate
+
+        for (int i = 0; i < amountCards; i++) { //depends on the infection rate
+            Card card = infectiondeck.draw();
+            System.out.println("Drew an infection card");
+
+            InfectionCard infcard = (InfectionCard) card;
+
+            if (!isDiseaseEradicated(infcard.getColor())) {
+                City city = nodes.get(infcard.getCity());
+
+                System.out.println("Added cubes to " + city.getName());
+                city.incrementCubes(); //put new cube
+            }
+
         }
     }
 
-    public int getOutbreak() {
-        return outbreak;
+    public int getInfectionRate() {
+        return infectionrates[infectionrateindex];
     }
-
-    public int getInfectionrateindex() {
-        return infectionrateindex;
-    }
-
-    public static void incrementOutbreaks() {
-        outbreak++;
-    }
-
 }
