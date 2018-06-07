@@ -39,8 +39,10 @@ public class Player {
     }
 
     public boolean isHoldingCityCard(String target) {
+        target = target.toLowerCase();
+
         for (PlayerCard card : hand) {
-            if (card.getCity().equals(target)) {
+            if (card.getCity().toLowerCase().equals(target)) {
                 return true;
             }
         }
