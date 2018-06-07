@@ -184,7 +184,7 @@ public class GameState {
         setupInfectedCities(); //distribute cubes
 
         //shuffle in epidemic cards AFTER dealing cards to players
-        playerdeck.push(new EpidemicCard()); //TODO should be going into the player deck
+        playerdeck.push(new EpidemicCard());
         playerdeck.push(new EpidemicCard());
         playerdeck.push(new EpidemicCard());
         playerdeck.push(new EpidemicCard());
