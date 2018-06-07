@@ -20,7 +20,7 @@ public class PandemicGame {
         System.out.print("\n\n");
         Scanner reader = new Scanner(System.in);
 
-        String commandlist = "{info, cubeinfo, deckinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n";
+        String commandlist = "\n{info, cubeinfo, deckinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n";
 
         boolean looping = true;
 
@@ -245,12 +245,17 @@ public class PandemicGame {
 
             printPlayerInfo(gamestate);
 
-            for (int j = 0; j < (player.getHand().size() - 7); j++) {
+            while (player.getHand().size() > 7) {
                 System.out.println("Need to discard " + (player.getHand().size() - 7) + " cards");
 
                 System.out.println("Which card to discard: ");
                 String discardCard = reader.nextLine().toLowerCase();
-                player.discardfromhand(discardCard);
+
+                if (player.isHoldingCityCard(discardCard)) {
+                    player.discardfromhand(discardCard);
+                } else {
+                    System.out.println("Player " + player + " isn't holding that card!");
+                }
             }
         }
     }
