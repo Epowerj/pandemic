@@ -273,10 +273,7 @@ public class GameState {
     public void newTurn(Player currentPlayer) {
 
         //draw player cards and do epidemics
-
-        int addedCards = 0;
-
-        while (addedCards < 2) { //loop until 2 cards are added to player hand
+        for (int i = 0; i < 2; i++) { //loop until 2 cards are added to player hand
 
             Card drawnCard = playerdeck.pop();
 
@@ -298,7 +295,6 @@ public class GameState {
                 infectiondeck.shuffeBack();
             } else {// otherwise it must be a normal player card
                 currentPlayer.addCardToHand((PlayerCard) drawnCard);
-                addedCards++;
 
                 System.out.println("Player added " + drawnCard.getCardInfoString() + " to their hand");
             }

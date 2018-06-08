@@ -252,7 +252,7 @@ public class PandemicGame {
                 String discardCard = reader.nextLine().toLowerCase();
 
                 if (player.isHoldingCityCard(discardCard)) {
-                    player.discardfromhand(discardCard);
+                    player.discardFromHand(discardCard);
                 } else {
                     System.out.println("Player " + player + " isn't holding that card!");
                 }
