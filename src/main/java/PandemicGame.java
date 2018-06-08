@@ -20,7 +20,7 @@ public class PandemicGame {
         System.out.print("\n\n");
         Scanner reader = new Scanner(System.in);
 
-        String commandlist = "\n{info, cubeinfo, deckinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n";
+        String commandlist = "\n{godrive, info, cubeinfo, deckinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n";
 
         boolean looping = true;
 
@@ -106,6 +106,23 @@ public class PandemicGame {
             printDeckInfo(gamestate);
 
             success = false;
+        }
+
+        if (move.equals("godrive")) {
+            if (input.length >= 2) {
+                String destination = input[1];
+
+                player.goDrivePrint(destination);
+
+                success = true;
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: godrive <destination>");
+            }
         }
 
         if (move.equals("drive")) {

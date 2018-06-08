@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Player {
 
@@ -326,5 +327,62 @@ public class Player {
     //TODO specialist stops cube updates
 
     //TODO goDrive command
+    //prints the fastest path to drive to destination
+    public void goDrivePrint(String destination) {
+        HashMap<String, City> cities = GameState.getCities();
+
+        LinkedList<String> queue = new LinkedList<>(); //for some reason LinkedList is a queue
+        ArrayList<String> visited = new ArrayList<>();
+        HashMap<String, String> meta = new HashMap<>();
+
+        String root = currentCity.toLowerCase();
+        meta.put(root, "");
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            String subRoot = queue.poll();
+
+            if (subRoot.equals(destination)) {
+                goDrivePrintConstruct(subRoot, meta); //return
+            } else {
+                City subRootCity = cities.get(subRoot);
+
+                for (String child : subRootCity.getAdjacent()) {
+
+                    if (visited.contains(child)) {
+                        continue;
+                    }
+
+                    if (!queue.contains(child)) {
+                        meta.put(child, subRoot);
+                        queue.add(child);
+                    }
+                }
+
+                visited.add(subRoot);
+            }
+        }
+    }
+
+    private void goDrivePrintConstruct(String state, HashMap<String, String> meta) {
+        //TODO
+        ArrayList<String> actionList = new ArrayList<>();
+
+        while (!meta.get(state).equals("")) { //until root node
+            String action = meta.get(state);
+            actionList.add(action);
+        }
+
+        ArrayList<String> toReturn = new ArrayList<>();
+
+        //reverse the list
+        for (int i = (actionList.size() - 1); i >= 0; i--) {
+            //toReturn.add(actionList.get(i));
+
+            System.out.print(" -> " + actionList.get(i));
+        }
+
+        System.out.println("|end|");
+    }
 
 }
