@@ -206,7 +206,7 @@ public class Player {
         String color = "";
 
         if (!isHoldingCityCard(cardCity1)) {
-            getCityCardFromHand(cardCity1).getColor();
+            color = getCityCardFromHand(cardCity1).getColor();
             haveCards = false;
         } else {
             //discard that card
