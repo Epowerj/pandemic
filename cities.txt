@@ -9,6 +9,7 @@ B Madrid London Paris NewYork SaoPaulo Algiers
 B Paris Milan London Essen Milan Algiers
 B Milan Essen Istanbul Paris
 B Essen London Paris Milan St.Petersburg
+B St.Petersburg Essen Istanbul Moscow
 Y LosAngeles Sydney MexicoCity SanFrancisco Chicago
 Y MexicoCity LosAngeles Miami Lima Bogota Chicago
 Y Lima Bogota Santiago MexicoCity
@@ -36,7 +37,7 @@ U Kolkata Delhi Chennai Bangkok HongKong
 R Sydney LosAngeles Manila Jakarta
 R Jakarta Sydney HoChiMinhCity Chennai Bangkok
 R HoChiMinhCity Jakarta Manila Bangkok Hongkong
-R Bangkok HogKong Kolkata Chennai HoChiMinhCity Jakarta
+R Bangkok HongKong Kolkata Chennai HoChiMinhCity Jakarta
 R HongKong Kolkata Bangkok Shanghai Taipei Manila HoChiMinhCity
 R Manila SanFrancisco Taipei Hongkong HoChiMinhCity Sydney
 R Taipei Osaka HongKong Shanghai Manila
