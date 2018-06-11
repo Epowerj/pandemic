@@ -203,9 +203,10 @@ public class Player {
     public boolean discoverCure(String cardCity1, String cardCity2, String cardCity3, String cardCity4, String cardCity5) {
 
         boolean haveCards = true;
-        String color = getCityCardFromHand(cardCity1).getColor();
+        String color = "";
 
         if (!isHoldingCityCard(cardCity1)) {
+            getCityCardFromHand(cardCity1).getColor();
             haveCards = false;
         } else {
             //discard that card
