@@ -8,8 +8,8 @@ B London NewYork Madrid Paris Essen
 B Madrid London Paris NewYork SaoPaulo Algiers
 B Paris Milan London Essen Milan Algiers
 B Milan Essen Istanbul Paris
-B Essen London Paris Milan St.Petersburg
-B St.Petersburg Essen Istanbul Moscow
+B Essen London Paris Milan StPetersburg
+B StPetersburg Essen Istanbul Moscow
 Y LosAngeles Sydney MexicoCity SanFrancisco Chicago
 Y MexicoCity LosAngeles Miami Lima Bogota Chicago
 Y Lima Bogota Santiago MexicoCity
@@ -26,8 +26,8 @@ U Algiers Cairo Istanbul Madrid Paris
 U Cairo Algiers Riyadh Baghdad Istanbul
 U Riyadh Cairo Baghdad Karachi
 U Baghdad Cairo Riyadh Istanbul Tehran Tehran
-U Istanbul Milan Algiers Cairo Baghdad Moscow St.Petersburg
-U Moscow St.Petersburg Istanbul Tehran
+U Istanbul Milan Algiers Cairo Baghdad Moscow StPetersburg
+U Moscow StPetersburg Istanbul Tehran
 U Tehran Moscow Baghdad Karachi Delhi
 U Karachi Baghdad Tehran Delhi Mumbai Riyadh
 U Delhi Tehran Karachi Mumbai Chennai Kolkata

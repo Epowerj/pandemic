@@ -58,7 +58,7 @@ public class Player {
         for (int i = 0; i < hand.size(); i++) {
             PlayerCard card = hand.get(i);
 
-            if (card.getCity().equals(targetCity)) {
+            if (card.getCity().toLowerCase().equals(targetCity)) {
                 toReturn = card;
                 hand.remove(i);
             }
@@ -206,51 +206,46 @@ public class Player {
         String color = "";
 
         if (!isHoldingCityCard(cardCity1)) {
-            color = getCityCardFromHand(cardCity1).getColor();
             haveCards = false;
         } else {
-            //discard that card
-            PlayerCard toDiscard = takeCityCard(cardCity1);
-            GameState.discardPlayerCard(toDiscard);
+            color = getCityCardFromHand(cardCity1).getColor(); //get color
         }
 
-        if (!isHoldingCityCard(cardCity2)) {
+        if (!isHoldingCityCard(cardCity2) && getCityCardFromHand(cardCity2).getColor().equals(color)) {
             haveCards = false;
-        } else {
-            //discard that card
-            PlayerCard toDiscard = takeCityCard(cardCity2);
-            GameState.discardPlayerCard(toDiscard);
         }
 
-        if (!isHoldingCityCard(cardCity3)) {
+        if (!isHoldingCityCard(cardCity3) && getCityCardFromHand(cardCity3).getColor().equals(color)) {
             haveCards = false;
-        } else {
-            //discard that card
-            PlayerCard toDiscard = takeCityCard(cardCity3);
-            GameState.discardPlayerCard(toDiscard);
         }
 
-        if (!isHoldingCityCard(cardCity4)) {
+        if (!isHoldingCityCard(cardCity4) && getCityCardFromHand(cardCity4).getColor().equals(color)) {
             haveCards = false;
-        } else {
-            //discard that card
-            PlayerCard toDiscard = takeCityCard(cardCity4);
-            GameState.discardPlayerCard(toDiscard);
         }
 
         //scientist doesn't need a fifth card
         if (role != Role.SCIENTIST) {
-            if (!isHoldingCityCard(cardCity5)) {
+            if (!isHoldingCityCard(cardCity5) && getCityCardFromHand(cardCity5).getColor().equals(color)) {
                 haveCards = false;
-            } else {
-                //discard that card
-                PlayerCard toDiscard = takeCityCard(cardCity5);
-                GameState.discardPlayerCard(toDiscard);
             }
         }
 
         if (GameState.cityHasResearchStation(currentCity) && haveCards) {
             GameState.setCured(color);
+
+            //discard cards
+            PlayerCard toDiscard = takeCityCard(cardCity1);
+            GameState.discardPlayerCard(toDiscard);
+            toDiscard = takeCityCard(cardCity2);
+            GameState.discardPlayerCard(toDiscard);
+            toDiscard = takeCityCard(cardCity3);
+            GameState.discardPlayerCard(toDiscard);
+            toDiscard = takeCityCard(cardCity4);
+            GameState.discardPlayerCard(toDiscard);
+            if (role != Role.SCIENTIST) { //Don't discard the last card if you don't need to
+                toDiscard = takeCityCard(cardCity5);
+                GameState.discardPlayerCard(toDiscard);
+            }
 
             return true;
         } else {

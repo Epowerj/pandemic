@@ -59,6 +59,19 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    public Card getCardColor(String color) {
+        for (int i = 0; i < deck.size(); i++) {
+            PlayerCard card = (PlayerCard) deck.get(i);
+
+            if (card.getColor().equals(color)) {
+                deck.remove(i);
+                return card;
+            }
+        }
+
+        return null;
+    }
+
     //used for debug - prints everything to console
     public void printAllCards() {
         System.out.print("Cards in the deck: ");
