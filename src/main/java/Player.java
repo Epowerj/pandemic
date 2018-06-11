@@ -322,7 +322,6 @@ public class Player {
 
     //TODO specialist stops cube updates
 
-    //TODO goDrive command
     //prints the fastest path to drive to destination
     public String goDrivePrint(String destination) {
         HashMap<String, City> cities = GameState.getCities();
@@ -361,7 +360,96 @@ public class Player {
 
     //helper method for godriveprint
     private String goDrivePrintConstruct(String state, HashMap<String, String> meta) {
-        //TODO
+        ArrayList<String> actionList = new ArrayList<>();
+        String destination = state;
+        String result = "";
+
+        while (!meta.get(state).equals("")) { //until root node
+            String action = meta.get(state);
+            actionList.add(action);
+            state = action;
+        }
+
+        ArrayList<String> toReturn = new ArrayList<>();
+
+        //reverse the list
+        for (int i = (actionList.size() - 1); i >= 0; i--) {
+            //toReturn.add(actionList.get(i));
+
+            result += (actionList.get(i) + " -> "); //append
+        }
+
+        result += (destination);
+
+        return result;
+    }
+
+    //prints the fastest path to get to destination
+    public String goAnyPrint(String destination) {
+        HashMap<String, City> cities = GameState.getCities();
+
+        LinkedList<String> queue = new LinkedList<>(); //for some reason LinkedList is a queue
+        ArrayList<String> visited = new ArrayList<>();
+        HashMap<String, String> meta = new HashMap<>();
+
+        String root = currentCity.toLowerCase();
+        meta.put(root, "");
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            String subRoot = queue.poll();
+
+            if (subRoot.equals(destination)) {
+                return goAnyPrintConstruct(subRoot, meta); //return
+            } else {
+                City subRootCity = cities.get(subRoot);
+
+                for (String child : subRootCity.getAdjacent()) {
+
+                    if (!visited.contains(child)) {
+                        meta.put(child, subRoot);
+                        queue.add(child);
+                        visited.add(child);
+                    }
+                }
+
+                //TODO add another loop for flyable cities
+                //TODO make sure order is right
+
+                //TODO handle shuttle flights
+                if (GameState.getStations().contains(subRootCity.getName())) { //if there is a station at current position
+                    for (String city : GameState.getStations()) {
+
+                        if (!visited.contains(city)) { //shuttle flights
+                            meta.put(city, subRoot);
+                            queue.add(city);
+                            visited.add(city);
+                        }
+                    }
+                }
+
+                for (PlayerCard cityCard : hand) {
+                    String city = cityCard.getCity();
+
+                    if (!visited.contains(city)) { //direct flight
+                        meta.put(city, subRoot);
+                        queue.add(city);
+                        visited.add(city);
+                    }
+
+                    //TODO handle charter flights
+
+                }
+
+                visited.add(subRoot);
+            }
+        }
+
+        return "Drive failed";
+    }
+
+    //helper method for goAnyPrint
+    private String goAnyPrintConstruct(String state, HashMap<String, String> meta) {
         ArrayList<String> actionList = new ArrayList<>();
         String destination = state;
         String result = "";

@@ -127,6 +127,25 @@ public class PandemicGame {
             success = false; //don't want to actually count this though
         }
 
+        if (move.equals("go")) {
+            if (input.length >= 2) {
+                String destination = input[1];
+
+                System.out.println(player.goAnyPrint(destination));
+
+                success = true;
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: go <destination>");
+            }
+
+            success = false; //don't want to actually count this though
+        }
+
         if (move.equals("drive")) {
             if (input.length >= 2) {
                 String destination = input[1];
