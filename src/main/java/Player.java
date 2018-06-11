@@ -349,13 +349,10 @@ public class Player {
 
                 for (String child : subRootCity.getAdjacent()) {
 
-                    if (visited.contains(child)) {
-                        continue;
-                    }
-
-                    if (!queue.contains(child)) {
+                    if (!visited.contains(child)) {
                         meta.put(child, subRoot);
                         queue.add(child);
+                        visited.add(child);
                     }
                 }
 
