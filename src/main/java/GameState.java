@@ -246,7 +246,7 @@ public class GameState {
     }
 
     public void dealCards() {
-        /*int cardstodeal = 0;
+        int cardstodeal = 0;
         int playercount = players.size();
         if (playercount == 2) {
             cardstodeal = 4;
@@ -265,14 +265,14 @@ public class GameState {
                 PlayerCard newCard = (PlayerCard) playerdeck.pop(); //at this point there should be no epidemic cards
                 player.addCardToHand(newCard);
             }
-        }*/
+        }
 
-        for (Player player : players) { //for each player
+        /*for (Player player : players) { //for each player
             for (int i = 0; i < 6; i++) { //loop cardstodeal amount of times
                 PlayerCard newCard = (PlayerCard) playerdeck.getCardColor("B"); //at this point there should be no epidemic cards
                 player.addCardToHand(newCard);
             }
-        }
+        }*/
     }
 
     //everything that needs to be done at the end of each turn

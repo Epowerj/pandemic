@@ -59,7 +59,7 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    public Card getCardColor(String color) {
+    /*public Card getCardColor(String color) {
         for (int i = 0; i < deck.size(); i++) {
             PlayerCard card = (PlayerCard) deck.get(i);
 
@@ -70,7 +70,7 @@ public class Deck {
         }
 
         return null;
-    }
+    }*/
 
     //used for debug - prints everything to console
     public void printAllCards() {
