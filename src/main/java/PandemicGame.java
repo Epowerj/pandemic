@@ -112,7 +112,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                player.goDrivePrint(destination);
+                System.out.println(player.goDrivePrint(destination));
 
                 success = true;
             } else {
@@ -123,6 +123,8 @@ public class PandemicGame {
                 System.out.println("Bad move");
                 System.out.println("Usage: godrive <destination>");
             }
+
+            success = false; //don't want to actually count this though
         }
 
         if (move.equals("drive")) {

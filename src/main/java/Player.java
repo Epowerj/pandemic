@@ -328,7 +328,7 @@ public class Player {
 
     //TODO goDrive command
     //prints the fastest path to drive to destination
-    public void goDrivePrint(String destination) {
+    public String goDrivePrint(String destination) {
         HashMap<String, City> cities = GameState.getCities();
 
         LinkedList<String> queue = new LinkedList<>(); //for some reason LinkedList is a queue
@@ -343,7 +343,7 @@ public class Player {
             String subRoot = queue.poll();
 
             if (subRoot.equals(destination)) {
-                goDrivePrintConstruct(subRoot, meta); //return
+                return goDrivePrintConstruct(subRoot, meta); //return
             } else {
                 City subRootCity = cities.get(subRoot);
 
@@ -362,16 +362,21 @@ public class Player {
                 visited.add(subRoot);
             }
         }
+
+        return "Drive failed";
     }
 
     //helper method for godriveprint
-    private void goDrivePrintConstruct(String state, HashMap<String, String> meta) {
+    private String goDrivePrintConstruct(String state, HashMap<String, String> meta) {
         //TODO
         ArrayList<String> actionList = new ArrayList<>();
+        String destination = state;
+        String result = "";
 
         while (!meta.get(state).equals("")) { //until root node
             String action = meta.get(state);
             actionList.add(action);
+            state = action;
         }
 
         ArrayList<String> toReturn = new ArrayList<>();
@@ -380,10 +385,12 @@ public class Player {
         for (int i = (actionList.size() - 1); i >= 0; i--) {
             //toReturn.add(actionList.get(i));
 
-            System.out.print(" -> " + actionList.get(i));
+            result += (actionList.get(i) + " -> "); //append
         }
 
-        System.out.println("|end|");
+        result += (destination);
+
+        return result;
     }
 
 }
