@@ -340,6 +340,7 @@ public class PandemicGame {
         gameState.getPlayerDeck().printAllCards();
         System.out.println("Infection deck: ");
         gameState.getInfectionDeck().printAllCards();
+        predictEpidemic(gameState);
     }
 
     static void printBoardInfo(GameState gameState) {
@@ -361,18 +362,22 @@ public class PandemicGame {
         System.out.print("\n\n");
     }
 
-    static String predictPlayer(){
-        String h = "";
-        return h;
+    static void predictPlayer(GameState gameState){
+        double deck = gameState.sizing();
+        double num=0;
+        double predictor = (((12 - num) / deck) * 2) * 100;
 
+    }
+
+    static void predictInfection(GameState gameState){
 
     }
 
     static void predictEpidemic(GameState gameState){
         int outbreaks = gameState.getOutbreak();
-        int decksize = gameState.sizing();
-        int predictor = (((6-outbreaks)/decksize) * 2) *100;
-        System.out.println("There is a" + predictor + " chance that you will get an Epidemic Card");
+        double deck = gameState.sizing();
+        double predictor = (((6-outbreaks) / deck ) * 2) * 100;
+        System.out.println("There is a " + Math.round(predictor) + "% chance that you will get an Epidemic Card");
 
     }
 }

@@ -1,3 +1,5 @@
+import com.sun.org.apache.bcel.internal.generic.RET;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -438,6 +440,30 @@ public class Player {
     //prints the fastest path to get to destination
     public String goAnyPrint(String destination) {
         return "not done";
+    }
+
+    public HashMap<String , Integer> colorCount(PlayerCard playerCard){
+        HashMap<String, Integer> colorCount = new HashMap<>();
+        colorCount.put("U", 0);
+        colorCount.put("B",0);
+        colorCount.put("R",0);
+        colorCount.put("Y",0);
+
+        for (PlayerCard c : hand) {
+            if (c.getColor().equals("U")) {
+                colorCount.put("U", colorCount.get("U") + 1);
+            } else if ( c.getColor().equals("B")){
+                colorCount.put("B", colorCount.get("B") + 1);
+            } else if (c.getColor().equals("R")){
+                colorCount.put("R", colorCount.get("R") + 1);
+            } else{
+                colorCount.put("Y", colorCount.get("Y") + 1);
+            }
+        }
+        return colorCount;
+
+
+
     }
 
     //helper method for goAnyPrint

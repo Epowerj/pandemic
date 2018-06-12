@@ -16,6 +16,7 @@ public class PlayerCard extends Card {
         return color;
     }
 
+
     public String getCity() {
         return city;
     }
