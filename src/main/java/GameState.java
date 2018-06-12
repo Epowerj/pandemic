@@ -43,6 +43,8 @@ public class GameState {
         return nodes;
     }
 
+
+
     public static void discardPlayerCard(PlayerCard toDiscard) {
         playerdeck.pushToDiscard(toDiscard);
     }
@@ -86,6 +88,7 @@ public class GameState {
             blackCured = true;
         }
     }
+
 
     public static Deck getPlayerDeck() {
         return playerdeck;
@@ -241,9 +244,18 @@ public class GameState {
         return outbreak;
     }
 
-    public int sizing(){
+    public int sizingPlayer(){
        return playerdeck.deckSize();
     }
+
+    public int sizingInfection(){
+        return infectiondeck.deckSize();
+    }
+
+    public int infectionDiscard(){
+        return infectiondeck.deckSize();
+    }
+
 
     public static void clearExplodedCities() {
         explodedCites.clear();
@@ -334,3 +346,5 @@ public class GameState {
         return infectionrates[infectionrateindex];
     }
 }
+
+

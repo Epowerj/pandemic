@@ -506,7 +506,7 @@ public class Player {
         return shortestPath.toString();
     }
 
-    public HashMap<String , Integer> colorCount(PlayerCard playerCard){
+    public HashMap<String , Integer> colorCount(){
         HashMap<String, Integer> colorCount = new HashMap<>();
         colorCount.put("U", 0);
         colorCount.put("B",0);
