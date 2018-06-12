@@ -241,6 +241,10 @@ public class GameState {
         return outbreak;
     }
 
+    public int sizing(){
+       return playerdeck.deckSize();
+    }
+
     public static void clearExplodedCities() {
         explodedCites.clear();
     }

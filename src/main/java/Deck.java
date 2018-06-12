@@ -11,6 +11,7 @@ public class Deck {
         discard = new ArrayList<Card>();
     }
 
+
     //retrieves the top card and returns it
     public Card pop() {
         return deck.remove(deck.size() - 1);
@@ -80,6 +81,14 @@ public class Deck {
         }
 
         System.out.print("\n");
+    }
+
+    public int deckSize(){
+        return deck.size();
+    }
+
+    public int discardSize(){
+        return discard.size();
     }
 }
 
