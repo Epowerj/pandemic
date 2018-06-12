@@ -384,8 +384,7 @@ public class Player {
         return result;
     }
 
-    //prints the fastest path to get to destination
-    public String goAnyPrint(String destination) {
+    private ArrayList<String> goNormal(String start, String destination) {
         HashMap<String, City> cities = GameState.getCities();
 
         LinkedList<String> queue = new LinkedList<>(); //for some reason LinkedList is a queue
@@ -400,7 +399,7 @@ public class Player {
             String subRoot = queue.poll();
 
             if (subRoot.equals(destination)) {
-                return goAnyPrintConstruct(subRoot, meta); //return
+                return goNormalConstruct(subRoot, meta); //return
             } else {
                 City subRootCity = cities.get(subRoot);
 
@@ -413,10 +412,7 @@ public class Player {
                     }
                 }
 
-                //TODO add another loop for flyable cities
-                //TODO make sure order is right
-
-                //TODO handle shuttle flights
+                //shuttle flights
                 if (GameState.getStations().contains(subRootCity.getName())) { //if there is a station at current position
                     for (String city : GameState.getStations()) {
 
@@ -428,24 +424,20 @@ public class Player {
                     }
                 }
 
-                for (PlayerCard cityCard : hand) {
-                    String city = cityCard.getCity();
-
-                    if (!visited.contains(city)) { //direct flight
-                        meta.put(city, subRoot);
-                        queue.add(city);
-                        visited.add(city);
-                    }
-
-                    //TODO handle charter flights
-
-                }
-
                 visited.add(subRoot);
             }
         }
 
-        return "Drive failed";
+        return null;
+    }
+
+    public ArrayList<String> goNormalConstruct(String state, HashMap<String, String> meta) {
+        return null;
+    }
+
+    //prints the fastest path to get to destination
+    public String goAnyPrint(String destination) {
+        return "not done";
     }
 
     //helper method for goAnyPrint
