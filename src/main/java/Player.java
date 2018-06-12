@@ -1,8 +1,7 @@
-import com.sun.org.apache.bcel.internal.generic.RET;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Player {
 
@@ -393,7 +392,7 @@ public class Player {
         ArrayList<String> visited = new ArrayList<>();
         HashMap<String, String> meta = new HashMap<>();
 
-        String root = currentCity.toLowerCase();
+        String root = start.toLowerCase();
         meta.put(root, "");
         queue.add(root);
 
@@ -434,12 +433,77 @@ public class Player {
     }
 
     public ArrayList<String> goNormalConstruct(String state, HashMap<String, String> meta) {
-        return null;
+        ArrayList<String> actionList = new ArrayList<>();
+        ArrayList<String> resultList = new ArrayList<>();
+
+        //follow meta to get path
+        while (!meta.get(state).equals("")) { //until root node
+            String action = meta.get(state);
+            actionList.add(action);
+            state = action;
+        }
+
+        //reverse the list
+        for (int i = (actionList.size() - 1); i >= 0; i--) {
+            resultList.add(actionList.get(i));
+        }
+
+        return resultList;
     }
 
+    //TODO finish
     //prints the fastest path to get to destination
     public String goAnyPrint(String destination) {
-        return "not done";
+        HashMap<String, ArrayList<ArrayList<String>>> results = new HashMap<>(); //card -> 2 results
+
+        for (PlayerCard card : hand) {
+            String cardCity = card.getCity();
+
+            //drive to C and then charter flight to B
+            ArrayList<String> aDriveC = goNormal(currentCity, cardCity);
+            //afterwards fly is one move
+            int aDrivecFlyB = aDriveC.size() + 1;
+
+            //fly to C and then drive to B
+            //fly is one move
+            ArrayList<String> cFlyB = goNormal(cardCity, destination);
+            int aFlyCDriveB = 1 + cFlyB.size();
+
+            //TODO
+            //fly to C, drive to D, then fly to B
+            //ArrayList<String> aFlyC = goNormal(currentCity, )
+
+            ArrayList<ArrayList<String>> toSave = new ArrayList<>();
+            toSave.add(aDriveC);
+            toSave.add(cFlyB);
+
+            results.put(cardCity, toSave);
+        }
+
+        int shortest = Integer.MAX_VALUE;
+        ArrayList<String> shortestPath = null;
+
+        //find the best result
+        for (Map.Entry<String, ArrayList<ArrayList<String>>> entry : results.entrySet()) {
+            String card = entry.getKey();
+            ArrayList<ArrayList<String>> result = entry.getValue();
+
+            int aDrivecFlyB = result.get(0).size() + 1;
+            int aFlyCDriveB = 1 + result.get(1).size();
+
+            if (aDrivecFlyB < shortest) {
+                shortest = aDrivecFlyB;
+                shortestPath = result.get(0);
+            }
+
+            if (aFlyCDriveB < shortest) {
+                shortest = aFlyCDriveB;
+                shortestPath = result.get(1);
+            }
+        }
+
+        //TODO print the path instead of this
+        return shortestPath.toString();
     }
 
     public HashMap<String , Integer> colorCount(PlayerCard playerCard){
@@ -461,8 +525,6 @@ public class Player {
             }
         }
         return colorCount;
-
-
 
     }
 
