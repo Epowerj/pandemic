@@ -395,6 +395,7 @@ public class Player {
         String root = start.toLowerCase();
         meta.put(root, "");
         queue.add(root);
+        visited.add(root);
 
         while (!queue.isEmpty()) {
             String subRoot = queue.poll();
@@ -433,6 +434,8 @@ public class Player {
     }
 
     public ArrayList<String> goNormalConstruct(String state, HashMap<String, String> meta) {
+        String destination = state;
+
         ArrayList<String> actionList = new ArrayList<>();
         ArrayList<String> resultList = new ArrayList<>();
 
@@ -448,6 +451,8 @@ public class Player {
             resultList.add(actionList.get(i));
         }
 
+        resultList.add(destination); //the final destination isn't added normally
+
         return resultList;
     }
 
@@ -460,22 +465,29 @@ public class Player {
             String cardCity = card.getCity();
 
             //drive to C and then charter flight to B
-            ArrayList<String> aDriveC = goNormal(currentCity, cardCity);
+            ArrayList<String> aDriveCFlyB = goNormal(currentCity, cardCity);
             //afterwards fly is one move
-            int aDrivecFlyB = aDriveC.size() + 1;
+            aDriveCFlyB.add("flight to " + destination);
 
             //fly to C and then drive to B
             //fly is one move
-            ArrayList<String> cFlyB = goNormal(cardCity, destination);
-            int aFlyCDriveB = 1 + cFlyB.size();
+            ArrayList<String> aFlyCDriveB = new ArrayList<>();
+            aFlyCDriveB.add("flight to " + cardCity);
+
+            ArrayList<String> temp = goNormal(cardCity, destination);
+
+            //append the drive path to the existing list
+            for (int i = 0; i < temp.size(); i++) {
+                aFlyCDriveB.add(temp.get(i));
+            }
 
             //TODO
             //fly to C, drive to D, then fly to B
             //ArrayList<String> aFlyC = goNormal(currentCity, )
 
             ArrayList<ArrayList<String>> toSave = new ArrayList<>();
-            toSave.add(aDriveC);
-            toSave.add(cFlyB);
+            toSave.add(aDriveCFlyB);
+            toSave.add(aFlyCDriveB);
 
             results.put(cardCity, toSave);
         }
@@ -502,8 +514,13 @@ public class Player {
             }
         }
 
-        //TODO print the path instead of this
-        return shortestPath.toString();
+        String toReturn = "";
+
+        for (String move : shortestPath) {
+            toReturn += "->" + move;
+        }
+
+        return toReturn;
     }
 
     public HashMap<String , Integer> colorCount(){
@@ -526,32 +543,6 @@ public class Player {
         }
         return colorCount;
 
-    }
-
-    //helper method for goAnyPrint
-    private String goAnyPrintConstruct(String state, HashMap<String, String> meta) {
-        ArrayList<String> actionList = new ArrayList<>();
-        String destination = state;
-        String result = "";
-
-        while (!meta.get(state).equals("")) { //until root node
-            String action = meta.get(state);
-            actionList.add(action);
-            state = action;
-        }
-
-        ArrayList<String> toReturn = new ArrayList<>();
-
-        //reverse the list
-        for (int i = (actionList.size() - 1); i >= 0; i--) {
-            //toReturn.add(actionList.get(i));
-
-            result += (actionList.get(i) + " -> "); //append
-        }
-
-        result += (destination);
-
-        return result;
     }
 
 }
