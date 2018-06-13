@@ -492,32 +492,61 @@ public class Player {
             results.put(cardCity, toSave);
         }
 
-        int shortest = Integer.MAX_VALUE;
-        ArrayList<String> shortestPath = null;
+        //now get the top n from the list of results
+        ArrayList<ArrayList<String>> shortestPaths = new ArrayList<>();
+        ArrayList<Integer> shortest = new ArrayList<>();
+        final int n = 5; //the top n best paths are printed
+
+        //initialize the array
+        for (int i = 0; i < n; i++) {
+            shortest.add(Integer.MAX_VALUE);
+        }
 
         //find the best result
         for (Map.Entry<String, ArrayList<ArrayList<String>>> entry : results.entrySet()) {
             String card = entry.getKey();
             ArrayList<ArrayList<String>> result = entry.getValue();
 
-            int aDrivecFlyB = result.get(0).size() + 1;
+            int aDriveCFlyB = result.get(0).size() + 1;
             int aFlyCDriveB = 1 + result.get(1).size();
 
-            if (aDrivecFlyB < shortest) {
-                shortest = aDrivecFlyB;
-                shortestPath = result.get(0);
-            }
+            if (aDriveCFlyB < aFlyCDriveB) {
 
-            if (aFlyCDriveB < shortest) {
-                shortest = aFlyCDriveB;
-                shortestPath = result.get(1);
+                for (int i = 0; i < n; i++) {
+                    if (aDriveCFlyB < shortest.get(i)) {
+                        shortest.add(i, aDriveCFlyB);
+                        shortestPaths.add(i, result.get(0));
+
+                        break;
+                    }
+                }
+
+            } else {
+
+                for (int i = 0; i < n; i++) {
+                    if (aFlyCDriveB < shortest.get(i)) {
+                        shortest.add(i, aDriveCFlyB);
+                        shortestPaths.add(i, result.get(0));
+
+                        break;
+                    }
+                }
             }
         }
 
         String toReturn = "";
 
-        for (String move : shortestPath) {
-            toReturn += "->" + move;
+        int ncounter = 0; //for printing only the top n
+        for (ArrayList<String> path : shortestPaths) {
+            if (ncounter < n) { //only print the top n
+                for (String move : path) {
+                    toReturn += "->" + move;
+                }
+
+                toReturn += "\n";
+
+                ncounter++;
+            }
         }
 
         return toReturn;
