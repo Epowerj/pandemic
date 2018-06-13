@@ -464,15 +464,19 @@ public class Player {
         for (PlayerCard card : hand) {
             String cardCity = card.getCity();
 
+            ArrayList<ArrayList<String>> toSave = new ArrayList<>();
+
             //drive to C and then charter flight to B
             ArrayList<String> aDriveCFlyB = goNormal(currentCity, cardCity);
             //afterwards fly is one move
             aDriveCFlyB.add("flight to " + destination);
+            toSave.add(aDriveCFlyB);
 
             //fly to C and then drive to B
             //fly is one move
             ArrayList<String> aFlyCDriveB = new ArrayList<>();
             aFlyCDriveB.add("flight to " + cardCity);
+            toSave.add(aFlyCDriveB);
 
             ArrayList<String> temp = goNormal(cardCity, destination);
 
@@ -483,11 +487,30 @@ public class Player {
 
             //TODO
             //fly to C, drive to D, then fly to B
-            //ArrayList<String> aFlyC = goNormal(currentCity, )
+            //Find the shortest for this type of path
+            int shortestacdb = Integer.MAX_VALUE;
+            //ArrayList shortest = new ArrayList();
 
-            ArrayList<ArrayList<String>> toSave = new ArrayList<>();
-            toSave.add(aDriveCFlyB);
-            toSave.add(aFlyCDriveB);
+            for (PlayerCard step : hand) {
+                String stepCity = step.getCity();
+
+                if (!step.equals(card) && !results.containsKey(stepCity)) {
+                    ArrayList<String> stepPath = goNormal(cardCity, stepCity);
+
+                    int aFlyCDriveDFlyB = 1 + stepPath.size() + 1;
+
+                    if (aFlyCDriveDFlyB < shortestacdb) {
+                        stepPath.add(0, "flight to " + cardCity);
+                        stepPath.add("flight to " + destination);
+
+                        if (toSave.size() >= 3) {
+                            toSave.set(2, stepPath);
+                        } else {
+                            toSave.add(stepPath);
+                        }
+                    }
+                }
+            }
 
             results.put(cardCity, toSave);
         }
@@ -507,28 +530,44 @@ public class Player {
             String card = entry.getKey();
             ArrayList<ArrayList<String>> result = entry.getValue();
 
-            int aDriveCFlyB = result.get(0).size() + 1;
-            int aFlyCDriveB = 1 + result.get(1).size();
+            int aDriveCFlyB = result.get(0).size();
+            int aFlyCDriveB = result.get(1).size();
+            int aFlyCDriveDFlyB = Integer.MAX_VALUE;
 
-            if (aDriveCFlyB < aFlyCDriveB) {
+            if (result.size() >= 3) {
+                aFlyCDriveDFlyB = result.get(2).size();
+            }
 
+            if (aFlyCDriveDFlyB < aDriveCFlyB && aFlyCDriveDFlyB < aFlyCDriveB) {
                 for (int i = 0; i < n; i++) {
-                    if (aDriveCFlyB < shortest.get(i)) {
-                        shortest.add(i, aDriveCFlyB);
-                        shortestPaths.add(i, result.get(0));
+                    if (aFlyCDriveDFlyB < shortest.get(i)) {
+                        shortest.add(i, aFlyCDriveDFlyB);
+                        shortestPaths.add(i, result.get(2));
 
                         break;
                     }
                 }
-
             } else {
+                if (aDriveCFlyB < aFlyCDriveB) {
 
-                for (int i = 0; i < n; i++) {
-                    if (aFlyCDriveB < shortest.get(i)) {
-                        shortest.add(i, aDriveCFlyB);
-                        shortestPaths.add(i, result.get(0));
+                    for (int i = 0; i < n; i++) {
+                        if (aDriveCFlyB < shortest.get(i)) {
+                            shortest.add(i, aDriveCFlyB);
+                            shortestPaths.add(i, result.get(0));
 
-                        break;
+                            break;
+                        }
+                    }
+
+                } else {
+
+                    for (int i = 0; i < n; i++) {
+                        if (aFlyCDriveB < shortest.get(i)) {
+                            shortest.add(i, aDriveCFlyB);
+                            shortestPaths.add(i, result.get(1));
+
+                            break;
+                        }
                     }
                 }
             }
