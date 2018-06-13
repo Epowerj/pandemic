@@ -456,7 +456,7 @@ public class Player {
         return resultList;
     }
 
-    //TODO finish
+    //TODO fix doubles + add normal drive comparisons
     //prints the fastest path to get to destination
     public String goAnyPrint(String destination) {
         HashMap<String, ArrayList<ArrayList<String>>> results = new HashMap<>(); //card -> 2 results
@@ -485,7 +485,6 @@ public class Player {
                 aFlyCDriveB.add(temp.get(i));
             }
 
-            //TODO
             //fly to C, drive to D, then fly to B
             //Find the shortest for this type of path
             int shortestacdb = Integer.MAX_VALUE;
@@ -574,6 +573,15 @@ public class Player {
         }
 
         String toReturn = "";
+
+        ArrayList<String> drive = goNormal(currentCity, destination);
+
+        toReturn += "Normal drive path: ";
+
+        for (String move : drive) {
+            toReturn += "->" + move;
+        }
+        toReturn += "\n";
 
         int ncounter = 0; //for printing only the top n
         for (ArrayList<String> path : shortestPaths) {
