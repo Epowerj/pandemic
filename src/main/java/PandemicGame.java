@@ -84,6 +84,7 @@ public class PandemicGame {
     }
 
     private static boolean doMove(String[] input, GameState gamestate, Player player) {
+        Scanner reader = new Scanner(System.in);
         String move = input[0];
 
         boolean success = false;
@@ -93,6 +94,11 @@ public class PandemicGame {
             printResearchStations(gamestate);
             printBoardInfo(gamestate);
             predictPlayer(gamestate,player);
+            System.out.println("Which city from the infection deck");
+            String target = reader.nextLine();
+            predictInfection(gamestate,target);
+
+
 
             success = false;
         }
@@ -393,15 +399,18 @@ public class PandemicGame {
         }
     }
 
-    static void predictInfection(GameState gameState){
-        int outbreaks = gameState.getOutbreak();
-        int infections = gameState.getInfectionRate();
+    static void predictInfection(GameState gameState,String target){
         double decksize = gameState.sizingInfection();
-        double discardsize = gameState.infectionDiscard();
+        double infections = gameState.getInfectionRate();
+        boolean success = gameState.isInDeck(target);
+        System.out.print(success);
+        if (success==false){
+            double predict = ((1 / decksize) * infections) * 100;
+            System.out.println("The percentage of you getting " + target + " is " + Math.round(predict) + "%" );
+        }
+        if (success=false){
 
-
-
-
+        }
     }
 
     static void predictEpidemic(GameState gameState){

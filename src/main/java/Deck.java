@@ -55,6 +55,8 @@ public class Deck {
         discard.add(card);
     }
 
+
+
     //used for shuffling the deck
     public void shuffle() {
         Collections.shuffle(deck);

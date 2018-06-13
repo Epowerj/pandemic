@@ -8,6 +8,7 @@ import java.util.*;
 public class GameState {
     private static HashMap<String, City> nodes = new HashMap<String, City>();
     private static ArrayList<String> stations = new ArrayList<>();
+    private static ArrayList<InfectionCard> infectiondiscard = new ArrayList<>();
     private static Deck playerdeck = new Deck();
     private static boolean blueCured = false;
     private static boolean blackCured = false;
@@ -253,7 +254,7 @@ public class GameState {
     }
 
     public int infectionDiscard(){
-        return infectiondeck.deckSize();
+        return infectiondeck.discardSize();
     }
 
 
@@ -344,6 +345,16 @@ public class GameState {
 
     public int getInfectionRate() {
         return infectionrates[infectionrateindex];
+    }
+
+    public boolean isInDeck(String target){
+         target = target.toLowerCase();
+            for (InfectionCard card: infectiondiscard) {
+                if (card.getCity().toLowerCase().equals(target)) {
+                    return true;
+                }
+            }
+            return false;
     }
 }
 
