@@ -479,20 +479,20 @@ public class PandemicGame {
                     }
                 }
             } else {
-
-                result = (1 / gameState.getInfectionSize()) * infectionrate;
+                System.out.println(gameState.getInfectionSize());
+                result = (1f / gameState.getInfectionSize()) * infectionrate;
             }
         } else {
             result = 0;
         }
 
-        System.out.println("The chance of drawing that card is: " + (result * 100) + "%");
+        result = Math.round(result * 100f);
+        System.out.println("The chance of drawing that card is: " + result + "%");
     }
 
     static void congestedCities() {//TODO
         //will decide which cities should be worried about the most
     }
-
 
     static void predictEpidemic(GameState gameState) {
         int outbreaks = gameState.getOutbreak();
