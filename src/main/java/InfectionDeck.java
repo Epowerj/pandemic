@@ -7,6 +7,11 @@ public class InfectionDeck extends Deck {
 
     private ArrayList<ArrayList<InfectionCard>> shuffleBacks = new ArrayList<>();
 
+    public InfectionDeck() {
+        deck = new ArrayList<InfectionCard>();
+        discard = new ArrayList<InfectionCard>();
+    }
+
     //shuffle the discard and put the cards back into the normal deck
     @Override
     public void shuffeBack() {

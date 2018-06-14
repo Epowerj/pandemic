@@ -151,6 +151,25 @@ public class PandemicGame {
             success = false; //don't want to actually count this though
         }
 
+        if (move.equals("infchance")) {
+            if (input.length >= 2) {
+                String destination = input[1];
+
+                predictInfection(gamestate, destination);
+
+                success = true;
+            } else {
+                success = false;
+            }
+
+            if (success == false) {
+                System.out.println("Bad move");
+                System.out.println("Usage: infchance <card>");
+            }
+
+            success = false; //don't want to actually count this though
+        }
+
         if (move.equals("drive")) {
             if (input.length >= 2) {
                 String destination = input[1];
@@ -398,21 +417,79 @@ public class PandemicGame {
     }
 
     static void predictInfection(GameState gameState, String target) {
-        double decksize = gameState.getInfectionSize();
-        double infections = gameState.getInfectionRate();
-        double outbreaks = gameState.getOutbreak();
-        boolean success = gameState.isInfectionDiscard(target);
-        //System.out.print(success);
-        if (success == false) {
-            double predict = ((1 / decksize) * infections) * 100;
-            System.out.println("The percentage of you getting " + target + " is " + Math.round(predict) + "%");
-        }
-        if (success == true) {
+        ArrayList<ArrayList<InfectionCard>> shuffleBacks = gameState.getInfectiondeck().getShuffleBack();
+        int infectionrate = gameState.getInfectionRate();
 
+        double result = 0;
+
+        if (!gameState.getInfectiondeck().isInDiscard(target)) {
+            if (!shuffleBacks.isEmpty()) {
+
+                ArrayList<InfectionCard> topStack = shuffleBacks.get(shuffleBacks.size() - 1);
+
+                if (infectionrate <= topStack.size()) {
+                    boolean contains = false;
+                    for (InfectionCard card : topStack) {
+                        if (card.getCity().equals(target)) {
+                            contains = true;
+                        }
+                    }
+
+                    if (contains) {
+                        result = (1 / topStack.size()) * infectionrate;
+                    }
+                } else {
+                    int topIndex = shuffleBacks.size() - 1;
+
+                    while (infectionrate > topStack.size()) {
+                        boolean contains = false;
+                        for (InfectionCard card : topStack) {
+                            if (card.getCity().equals(target)) {
+                                contains = true;
+                            }
+                        }
+
+                        if (contains) {
+                            result = 1;
+                            break;
+                        } else {
+                            infectionrate -= topStack.size();
+
+                            topIndex--;
+                            if (topIndex < 0) {
+                                result = (1 / gameState.getInfectionSize()) * infectionrate;
+                            } else {
+
+                                topStack = shuffleBacks.get(topIndex);
+                            }
+                        }
+                    }
+
+                    if (result == 0) {
+                        boolean contains = false;
+                        for (InfectionCard card : topStack) {
+                            if (card.getCity().equals(target)) {
+                                contains = true;
+                            }
+                        }
+
+                        if (contains) {
+                            result = (1 / topStack.size()) * infectionrate;
+                        }
+                    }
+                }
+            } else {
+
+                result = (1 / gameState.getInfectionSize()) * infectionrate;
+            }
+        } else {
+            result = 0;
         }
+
+        System.out.println("The chance of drawing that card is: " + (result * 100) + "%");
     }
 
-    static void congestedCities() {
+    static void congestedCities() {//TODO
         //will decide which cities should be worried about the most
     }
 

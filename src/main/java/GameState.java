@@ -350,6 +350,10 @@ public class GameState {
     public boolean isInfectionDiscard(String target) {
         return infectiondeck.isInDiscard(target);
     }
+
+    public InfectionDeck getInfectiondeck() {
+        return infectiondeck;
+    }
 }
 
 
