@@ -1,8 +1,8 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.text.DecimalFormat;
 
 //Main Game
 public class PandemicGame {
@@ -482,14 +482,13 @@ public class PandemicGame {
                     }
                 }
             } else {
-                System.out.println(gameState.getInfectionSize());
                 result = (1f / gameState.getInfectionSize()) * infectionrate;
             }
         } else {
             result = 0;
         }
 
-        result =result * 100f;
+        result = result * 100f;
         System.out.println("The chance of drawing that card is: " + f.format(result) + "%");
         //System.out.println("The chance of drawing that card is: " + (result) + "%");
     }
