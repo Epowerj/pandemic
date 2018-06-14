@@ -402,16 +402,23 @@ public class PandemicGame {
     static void predictInfection(GameState gameState,String target){
         double decksize = gameState.sizingInfection();
         double infections = gameState.getInfectionRate();
+        double outbreaks = gameState.getOutbreak();
         boolean success = gameState.isInDeck(target);
         System.out.print(success);
         if (success==false){
             double predict = ((1 / decksize) * infections) * 100;
             System.out.println("The percentage of you getting " + target + " is " + Math.round(predict) + "%" );
         }
-        if (success=false){
+        if (success=true){
+
 
         }
     }
+
+    static void congestedCities(){
+        //will decide which cities should be worried about the most
+    }
+
 
     static void predictEpidemic(GameState gameState){
         int outbreaks = gameState.getOutbreak();

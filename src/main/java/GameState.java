@@ -339,7 +339,6 @@ public class GameState {
                 System.out.println("Added cubes to " + city.getName());
                 city.incrementCubes(); //put new cube
             }
-
         }
     }
 
@@ -355,6 +354,11 @@ public class GameState {
                 }
             }
             return false;
+    }
+
+    public void congested(){
+
+
     }
 }
 
