@@ -313,7 +313,7 @@ public class GameState {
 
                 System.out.println("Added cubes to " + cardToInfect.getCity());
 
-                infectiondeck.shuffeBack();
+                infectiondeck.shuffleBack();
             } else {// otherwise it must be a normal player card
                 currentPlayer.addCardToHand((PlayerCard) drawnCard);
 

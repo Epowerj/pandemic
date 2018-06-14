@@ -3,8 +3,8 @@ import java.util.Collections;
 
 public class Deck {
     //These are the decks
-    private ArrayList<Card> deck;
-    private ArrayList<Card> discard;
+    protected ArrayList<Card> deck;
+    protected ArrayList<Card> discard;
 
     public Deck() {
         deck = new ArrayList<Card>();
@@ -36,7 +36,7 @@ public class Deck {
     }
 
     //shuffle the discard and put the cards back into the normal deck
-    public void shuffeBack() {
+    public void shuffleBack() {
         Collections.shuffle(discard);
 
         for (Card card : discard) {
