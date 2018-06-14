@@ -447,7 +447,8 @@ public class Player {
         }
 
         //reverse the list
-        for (int i = (actionList.size() - 1); i >= 0; i--) {
+        //skips the starting node
+        for (int i = (actionList.size() - 2); i >= 0; i--) {
             resultList.add(actionList.get(i));
         }
 
