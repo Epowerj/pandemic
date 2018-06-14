@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 //Main Game
 public class PandemicGame {
@@ -417,6 +418,8 @@ public class PandemicGame {
     }
 
     static void predictInfection(GameState gameState, String target) {
+        DecimalFormat f = new DecimalFormat("#.000");
+
         ArrayList<ArrayList<InfectionCard>> shuffleBacks = gameState.getInfectiondeck().getShuffleBack();
         int infectionrate = gameState.getInfectionRate();
 
@@ -486,8 +489,9 @@ public class PandemicGame {
             result = 0;
         }
 
-        result = Math.round(result * 100f);
-        System.out.println("The chance of drawing that card is: " + result + "%");
+        result =result * 100f;
+        System.out.println("The chance of drawing that card is: " + f.format(result) + "%");
+        //System.out.println("The chance of drawing that card is: " + (result) + "%");
     }
 
     static void congestedCities() {//TODO
