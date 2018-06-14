@@ -401,7 +401,7 @@ public class PandemicGame {
         double decksize = gameState.getInfectionSize();
         double infections = gameState.getInfectionRate();
         double outbreaks = gameState.getOutbreak();
-        boolean success = gameState.isInDeck(target);
+        boolean success = gameState.isInfectionDiscard(target);
         //System.out.print(success);
         if (success == false) {
             double predict = ((1 / decksize) * infections) * 100;
