@@ -319,10 +319,6 @@ public class Player {
         hand.remove(todiscard);
     }
 
-    enum Role {OPERATION, MEDIC, PLANNER, DISPATCHER, SPECIALIST, RESEARCHER, SCIENTIST}
-
-    //TODO specialist stops cube updates
-
     //prints the fastest path to drive to destination
     public String goDrivePrint(String destination) {
         HashMap<String, City> cities = GameState.getCities();
@@ -358,6 +354,8 @@ public class Player {
 
         return "Drive failed";
     }
+
+    //TODO specialist stops cube updates
 
     //helper method for godriveprint
     private String goDrivePrintConstruct(String state, HashMap<String, String> meta) {
@@ -600,26 +598,28 @@ public class Player {
         return toReturn;
     }
 
-    public HashMap<String , Integer> colorCount(){
+    public HashMap<String, Integer> colorCount() {
         HashMap<String, Integer> colorCount = new HashMap<>();
         colorCount.put("U", 0);
-        colorCount.put("B",0);
-        colorCount.put("R",0);
-        colorCount.put("Y",0);
+        colorCount.put("B", 0);
+        colorCount.put("R", 0);
+        colorCount.put("Y", 0);
 
         for (PlayerCard c : hand) {
             if (c.getColor().equals("U")) {
                 colorCount.put("U", colorCount.get("U") + 1);
-            } else if ( c.getColor().equals("B")){
+            } else if (c.getColor().equals("B")) {
                 colorCount.put("B", colorCount.get("B") + 1);
-            } else if (c.getColor().equals("R")){
+            } else if (c.getColor().equals("R")) {
                 colorCount.put("R", colorCount.get("R") + 1);
-            } else{
+            } else {
                 colorCount.put("Y", colorCount.get("Y") + 1);
             }
         }
         return colorCount;
 
     }
+
+    enum Role {OPERATION, MEDIC, PLANNER, DISPATCHER, SPECIALIST, RESEARCHER, SCIENTIST}
 
 }

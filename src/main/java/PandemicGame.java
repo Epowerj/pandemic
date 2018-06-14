@@ -84,7 +84,6 @@ public class PandemicGame {
     }
 
     private static boolean doMove(String[] input, GameState gamestate, Player player) {
-        Scanner reader = new Scanner(System.in);
         String move = input[0];
 
         boolean success = false;
@@ -93,12 +92,11 @@ public class PandemicGame {
             printPlayerInfo(gamestate);
             printResearchStations(gamestate);
             printBoardInfo(gamestate);
-            predictPlayer(gamestate,player);
-            System.out.println("Which city from the infection deck");
-            String target = reader.nextLine();
-            predictInfection(gamestate,target);
 
+            predictPlayer(gamestate, player);
 
+            String target = input[1];
+            predictInfection(gamestate, target);
 
             success = false;
         }
@@ -370,62 +368,60 @@ public class PandemicGame {
         System.out.print("\n\n");
     }
 
-    static void predictPlayer(GameState gameState, Player player){
-        double deck = gameState.sizingPlayer();
-        double u,b,y,r;
-        HashMap<String,Integer> counter = player.colorCount();
-        for (Map.Entry<String , Integer> cubes : counter.entrySet()){
+    static void predictPlayer(GameState gameState, Player player) {
+        double deck = gameState.getPlayerDeckSize();
+        double u, b, y, r;
+        HashMap<String, Integer> counter = player.colorCount();
+        for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
             String key = cubes.getKey();
             Integer value = cubes.getValue();
-            if (key.equals("U")){
+            if (key.equals("U")) {
                 u = (((12 - value) / deck) * 2) * 100;
                 System.out.println("There is a " + Math.round(u) + "% chance that you will get a Black Card");
             }
-            if (key.equals("R")){
-               r =  (((12 - value) / deck) * 2) * 100;
-               System.out.println("There is a " + Math.round(r) + "% chance that you will get a Red Card");
+            if (key.equals("R")) {
+                r = (((12 - value) / deck) * 2) * 100;
+                System.out.println("There is a " + Math.round(r) + "% chance that you will get a Red Card");
 
             }
-            if (key.equals("Y")){
-               y =  (((12 - value) / deck) * 2) * 100;
-               System.out.println("There is a " + Math.round(y) + "% chance that you will get a yellow Card");
+            if (key.equals("Y")) {
+                y = (((12 - value) / deck) * 2) * 100;
+                System.out.println("There is a " + Math.round(y) + "% chance that you will get a yellow Card");
 
             }
-            if (key.equals("B")){
-               b =  (((12 - value) / deck) * 2) * 100;
-               System.out.println("There is a " + Math.round(b) + "% chance that you will get a Blue Card");
+            if (key.equals("B")) {
+                b = (((12 - value) / deck) * 2) * 100;
+                System.out.println("There is a " + Math.round(b) + "% chance that you will get a Blue Card");
 
             }
         }
     }
 
-    static void predictInfection(GameState gameState,String target){
-        double decksize = gameState.sizingInfection();
+    static void predictInfection(GameState gameState, String target) {
+        double decksize = gameState.getInfectionSize();
         double infections = gameState.getInfectionRate();
         double outbreaks = gameState.getOutbreak();
         boolean success = gameState.isInDeck(target);
-        System.out.print(success);
-        if (success==false){
+        //System.out.print(success);
+        if (success == false) {
             double predict = ((1 / decksize) * infections) * 100;
-            System.out.println("The percentage of you getting " + target + " is " + Math.round(predict) + "%" );
+            System.out.println("The percentage of you getting " + target + " is " + Math.round(predict) + "%");
         }
-        if (success=true){
-
+        if (success == true) {
 
         }
     }
 
-    static void congestedCities(){
+    static void congestedCities() {
         //will decide which cities should be worried about the most
     }
 
 
-    static void predictEpidemic(GameState gameState){
+    static void predictEpidemic(GameState gameState) {
         int outbreaks = gameState.getOutbreak();
-        double deck = gameState.sizingPlayer();
-        double predictor = (((6-outbreaks) / deck ) * 2) * 100;
+        double deck = gameState.getPlayerDeckSize();
+        double predictor = (((6 - outbreaks) / deck) * 2) * 100;
         System.out.println("There is a " + Math.round(predictor) + "% chance that you will get an Epidemic Card");
-
     }
 }
 

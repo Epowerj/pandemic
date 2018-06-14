@@ -21,9 +21,9 @@ public class GameState {
     private static Deck infectiondeck = new Deck();
     private static int outbreak = 0;
     private static ArrayList<String> explodedCites = new ArrayList<>();
+    ArrayList<Player> players = new ArrayList<>();
     private int infectionrateindex = 0;
     private int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
-    ArrayList<Player> players = new ArrayList<>();
 
     //constructor
     public GameState(String info_file) {
@@ -43,7 +43,6 @@ public class GameState {
     public static HashMap<String, City> getCities() {
         return nodes;
     }
-
 
 
     public static void discardPlayerCard(PlayerCard toDiscard) {
@@ -105,6 +104,24 @@ public class GameState {
 
     public static void incrementOutbreaks() {
         outbreak++;
+    }
+
+    public static void addToExplodedCities(String city) {
+        explodedCites.add(city);
+    }
+
+    public static boolean isCityExploded(String city) {
+        for (int i = 0; i < explodedCites.size(); i++) {
+            if (explodedCites.get(i).equals(city.toLowerCase())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void clearExplodedCities() {
+        explodedCites.clear();
     }
 
     //add city to the list
@@ -205,10 +222,6 @@ public class GameState {
         players.add(newplayer);
     }
 
-    public static void addToExplodedCities(String city) {
-        explodedCites.add(city);
-    }
-
     public void setupInfectedCities() {
         for (int i = 0; i < 3; i++) {
             InfectionCard card = (InfectionCard) infectiondeck.draw();
@@ -231,35 +244,20 @@ public class GameState {
         return players;
     }
 
-    public static boolean isCityExploded(String city) {
-        for (int i = 0; i < explodedCites.size(); i++) {
-            if (explodedCites.get(i).equals(city.toLowerCase())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public int getOutbreak() {
         return outbreak;
     }
 
-    public int sizingPlayer(){
-       return playerdeck.deckSize();
+    public int getPlayerDeckSize() {
+        return playerdeck.deckSize();
     }
 
-    public int sizingInfection(){
+    public int getInfectionSize() {
         return infectiondeck.deckSize();
     }
 
-    public int infectionDiscard(){
+    public int getInfectionDiscardSize() {
         return infectiondeck.discardSize();
-    }
-
-
-    public static void clearExplodedCities() {
-        explodedCites.clear();
     }
 
     public void dealCards() {
@@ -346,20 +344,16 @@ public class GameState {
         return infectionrates[infectionrateindex];
     }
 
-    public boolean isInDeck(String target){
-         target = target.toLowerCase();
-            for (InfectionCard card: infectiondiscard) {
-                if (card.getCity().toLowerCase().equals(target)) {
-                    return true;
-                }
+    public boolean isInDeck(String target) {
+        target = target.toLowerCase();
+        for (InfectionCard card : infectiondiscard) {
+            if (card.getCity().toLowerCase().equals(target)) {
+                return true;
             }
-            return false;
+        }
+        return false;
     }
 
-    public void congested(){
-
-
-    }
 }
 
 

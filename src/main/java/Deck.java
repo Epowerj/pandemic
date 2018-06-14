@@ -56,7 +56,6 @@ public class Deck {
     }
 
 
-
     //used for shuffling the deck
     public void shuffle() {
         Collections.shuffle(deck);
@@ -85,11 +84,11 @@ public class Deck {
         System.out.print("\n");
     }
 
-    public int deckSize(){
+    public int deckSize() {
         return deck.size();
     }
 
-    public int discardSize(){
+    public int discardSize() {
         return discard.size();
     }
 }
