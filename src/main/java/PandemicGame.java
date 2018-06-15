@@ -442,7 +442,7 @@ public class PandemicGame {
                     }
 
                     if (contains) {
-                        result = (1 / topStack.size()) * infectionrate;
+                        result = (1f / topStack.size()) * infectionrate;
                     }
                 } else {
                     int topIndex = shuffleBacks.size() - 1;
@@ -463,7 +463,7 @@ public class PandemicGame {
 
                             topIndex--;
                             if (topIndex < 0) {
-                                result = (1 / gameState.getInfectionSize()) * infectionrate;
+                                result = (1f / gameState.getInfectionSize()) * infectionrate;
                             } else {
 
                                 topStack = shuffleBacks.get(topIndex);
@@ -480,7 +480,7 @@ public class PandemicGame {
                         }
 
                         if (contains) {
-                            result = (1 / topStack.size()) * infectionrate;
+                            result = (1f / topStack.size()) * infectionrate;
                         }
                     }
                 }

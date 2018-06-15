@@ -458,6 +458,10 @@ public class Player {
     //TODO fix doubles + add normal drive comparisons
     //prints the fastest path to get to destination
     public String goAnyPrint(String destination) {
+        if (!GameState.getCities().containsKey(destination)) {
+            return "Invalid city";
+        }
+
         HashMap<String, ArrayList<ArrayList<String>>> results = new HashMap<>(); //card -> 2 results
 
         for (PlayerCard card : hand) {
