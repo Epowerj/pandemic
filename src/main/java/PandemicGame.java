@@ -1,8 +1,8 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.text.DecimalFormat;
 
 //Main Game
 public class PandemicGame {
@@ -405,7 +405,7 @@ public class PandemicGame {
                 Integer value = cubes.getValue();
                 if (key.equals("U")) {
                     uCount +=value;
-                   // System.out.println(key);
+                    // System.out.println(key);
                     System.out.println("The value is: " + uCount);
                 }
                 if (key.equals("R")) {
@@ -419,16 +419,16 @@ public class PandemicGame {
                 }
             }
         }
-        u = (((12 - uCount) / deck) * 2) - (((12 - uCount) / deck) * ((12 - (uCount + 1)) / deck)) * 100;
+        u = (((12f - uCount) / deck) * 2f) - (((12f - uCount) / deck) * ((12f - (uCount + 1f)) / deck)) * 100f;
         System.out.println("Chance of black: " + Math.round(u) + "%");
 
-        r = (((12 - rCount) / deck) * 2) - (((12 - rCount) / deck) * ((12 - (rCount + 1)) / deck)) * 100;
+        r = (((12f - rCount) / deck) * 2f) - (((12f - rCount) / deck) * ((12f - (rCount + 1f)) / deck)) * 100f;
         System.out.println("Chance of red: " + Math.round(r) + "%");
 
-        y = (((12 - yCount) / deck) * 2) - (((12 - yCount) / deck) * ((12 - (yCount + 1)) / deck)) * 100;
+        y = (((12f - yCount) / deck) * 2f) - (((12f - yCount) / deck) * ((12f - (yCount + 1f)) / deck)) * 100f;
         System.out.println("Chance of yellow: " + Math.round(y) + "%");
 
-        b = (((12 - bCount) / deck) * 2) - (((12 - bCount) / deck) * ((12 - (bCount + 1)) / deck)) * 100;
+        b = (((12f - bCount) / deck) * 2f) - (((12f - bCount) / deck) * ((12f - (bCount + 1f)) / deck)) * 100f;
         System.out.println("Chance of blue: " + Math.round(b) + "%");
     }
 
