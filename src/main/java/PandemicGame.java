@@ -94,7 +94,7 @@ public class PandemicGame {
             printResearchStations(gamestate);
             printBoardInfo(gamestate);
 
-            predictPlayer(gamestate, player);
+            predictPlayer(gamestate);
             predictEpidemic(gamestate);
 
             if (input.length > 1) {
@@ -391,33 +391,45 @@ public class PandemicGame {
         System.out.print("\n\n");
     }
 
-    static void predictPlayer(GameState gameState, Player player) {
-        double deck = gameState.getPlayerDeckSize();
+    static void predictPlayer(GameState gameState) {
+        ArrayList<Player> players = gameState.getPlayers();
+        //these are the overall predictions of the colors
+        //these are the total color counts from each player
         double u, b, y, r;
-        HashMap<String, Integer> counter = player.colorCount();
-        for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
-            String key = cubes.getKey();
-            Integer value = cubes.getValue();
-            if (key.equals("U")) {
-                u = (((12 - value) / deck) * 2) * 100;
-                System.out.println("There is a " + Math.round(u) + "% chance that you will get a Black Card");
-            }
-            if (key.equals("R")) {
-                r = (((12 - value) / deck) * 2) * 100;
-                System.out.println("There is a " + Math.round(r) + "% chance that you will get a Red Card");
-
-            }
-            if (key.equals("Y")) {
-                y = (((12 - value) / deck) * 2) * 100;
-                System.out.println("There is a " + Math.round(y) + "% chance that you will get a yellow Card");
-
-            }
-            if (key.equals("B")) {
-                b = (((12 - value) / deck) * 2) * 100;
-                System.out.println("There is a " + Math.round(b) + "% chance that you will get a Blue Card");
-
+        double uCount=0, bCount=0, yCount=0, rCount=0;
+        double deck = gameState.getPlayerDeckSize();
+        for (Player c: players) {
+            HashMap<String, Integer> counter = c.colorCount();
+            for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
+                String key = cubes.getKey();
+                Integer value = cubes.getValue();
+                if (key.equals("U")) {
+                    uCount +=value;
+                   // System.out.println(key);
+                    System.out.println("The value is: " + uCount);
+                }
+                if (key.equals("R")) {
+                    rCount+=value;
+                }
+                if (key.equals("Y")) {
+                    yCount+=value;
+                }
+                if (key.equals("B")) {
+                    bCount+=value;
+                }
             }
         }
+        u = (((12 - uCount) / deck) * 2) - (((12 - uCount) / deck) * ((12 - (uCount + 1)) / deck)) * 100;
+        System.out.println("Chance of black: " + Math.round(u) + "%");
+
+        r = (((12 - rCount) / deck) * 2) - (((12 - rCount) / deck) * ((12 - (rCount + 1)) / deck)) * 100;
+        System.out.println("Chance of red: " + Math.round(r) + "%");
+
+        y = (((12 - yCount) / deck) * 2) - (((12 - yCount) / deck) * ((12 - (yCount + 1)) / deck)) * 100;
+        System.out.println("Chance of yellow: " + Math.round(y) + "%");
+
+        b = (((12 - bCount) / deck) * 2) - (((12 - bCount) / deck) * ((12 - (bCount + 1)) / deck)) * 100;
+        System.out.println("Chance of blue: " + Math.round(b) + "%");
     }
 
     static void predictInfection(GameState gameState, String target) {

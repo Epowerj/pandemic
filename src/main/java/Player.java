@@ -41,7 +41,6 @@ public class Player {
     }
 
     public boolean isHoldingCityCard(String target) {
-        target = target.toLowerCase();
 
         for (PlayerCard card : hand) {
             if (card.getCity().toLowerCase().equals(target)) {
@@ -608,6 +607,7 @@ public class Player {
         colorCount.put("B", 0);
         colorCount.put("R", 0);
         colorCount.put("Y", 0);
+
 
         for (PlayerCard c : hand) {
             if (c.getColor().equals("U")) {
