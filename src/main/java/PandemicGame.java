@@ -442,7 +442,7 @@ public class PandemicGame {
                     }
 
                     if (contains) {
-                        result = (1 / topStack.size()) * infectionrate;
+                        result = (1f / topStack.size()) * infectionrate;
                     }
                 } else {
                     int topIndex = shuffleBacks.size() - 1;
