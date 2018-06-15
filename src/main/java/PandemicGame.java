@@ -95,9 +95,12 @@ public class PandemicGame {
             printBoardInfo(gamestate);
 
             predictPlayer(gamestate, player);
+            predictEpidemic(gamestate);
 
-            String target = input[1];
-            predictInfection(gamestate, target);
+            if (input.length > 1) {
+                String target = input[1];
+                predictInfection(gamestate, target);
+            }
 
             success = false;
         }
