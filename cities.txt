@@ -23,7 +23,7 @@ Y Kinshasa Lagos Johannesburg Khartoum
 Y Johannesburg Kinshasa Khartoum
 Y Khartoum Johannesburg Kinshasa Cairo Lagos
 U Algiers Cairo Istanbul Madrid Paris
-U Cairo Algiers Riyadh Baghdad Istanbul
+U Cairo Algiers Riyadh Baghdad Istanbul Khartoum
 U Riyadh Cairo Baghdad Karachi
 U Baghdad Cairo Riyadh Istanbul Tehran Tehran
 U Istanbul Milan Algiers Cairo Baghdad Moscow StPetersburg
