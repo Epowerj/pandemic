@@ -59,6 +59,11 @@ public class ComputerPlayer {
         // trade cards
 
         // discover
+
+        ArrayList<Plan> plans = new ArrayList<>();
+        plans.addAll(treatPlans);
+
+        //pick the best from plans
     }
 
     private ArrayList<Plan> simulateTreat() {
