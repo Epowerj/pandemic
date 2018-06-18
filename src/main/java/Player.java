@@ -382,7 +382,7 @@ public class Player {
         return result;
     }
 
-    private ArrayList<String> goNormal(String start, String destination) {
+    public ArrayList<String> goNormal(String start, String destination) {
         HashMap<String, City> cities = GameState.getCities();
 
         LinkedList<String> queue = new LinkedList<>(); //for some reason LinkedList is a queue
@@ -430,7 +430,7 @@ public class Player {
         return null;
     }
 
-    public ArrayList<String> goNormalConstruct(String state, HashMap<String, String> meta) {
+    private ArrayList<String> goNormalConstruct(String state, HashMap<String, String> meta) {
         String destination = state;
 
         ArrayList<String> actionList = new ArrayList<>();
