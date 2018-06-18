@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+
 //Main Game
 public class PandemicGame {
     //this is the main
@@ -392,44 +393,44 @@ public class PandemicGame {
     }
 
     static void predictPlayer(GameState gameState) {
+        DecimalFormat df = new DecimalFormat("#.000");
         ArrayList<Player> players = gameState.getPlayers();
-        //these are the overall predictions of the colors
-        //these are the total color counts from each player
-        double u, b, y, r;
-        double uCount=0, bCount=0, yCount=0, rCount=0;
+        double uCount=0, bCount=0, yCount=0, rCount=0;           //counts the color card within players hands
+        double uDiscard=0, rDiscard=0, yDiscard=0,bDiscard=0;   //counts the color card within the discard pile
+        double uPossible=0, rPossible=0, yPossible=0, bPossible=0; //this will reprsent 12-count-discard
         double deck = gameState.getPlayerDeckSize();
         for (Player c: players) {
             HashMap<String, Integer> counter = c.colorCount();
             for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
                 String key = cubes.getKey();
                 Integer value = cubes.getValue();
-                if (key.equals("U")) {
-                    uCount +=value;
-                    // System.out.println(key);
-                    System.out.println("The value is: " + uCount);
-                }
-                if (key.equals("R")) {
-                    rCount+=value;
-                }
-                if (key.equals("Y")) {
-                    yCount+=value;
-                }
-                if (key.equals("B")) {
-                    bCount+=value;
-                }
+                if (key.equals("U")) { uCount +=value; }
+                if (key.equals("R")) { rCount+=value; }
+                if (key.equals("Y")) { yCount+=value; }
+                if (key.equals("B")) { bCount+=value; }
             }
+            HashMap<String,Integer> discardCounter = gameState.getPlayerColorCount();
+            for (Map.Entry<String,Integer> num : discardCounter.entrySet()){
+            String key = num.getKey();
+            Integer value = num.getValue();
+            if (key.equals("U")) { uDiscard +=value;}
+            if (key.equals("R")) { rDiscard+=value;}
+            if (key.equals("Y")) { yDiscard+=value;}
+            if (key.equals("B")) { bDiscard+=value;}
         }
-        u = (((12f - uCount) / deck) * 2f) - (((12f - uCount) / deck) * ((12f - (uCount + 1f)) / deck)) * 100f;
-        System.out.println("Chance of black: " + Math.round(u) + "%");
+        }
+        uPossible=12-uCount-uDiscard;rPossible=12-rCount-rDiscard;yPossible=12-yCount-yDiscard;bPossible=12-bCount-bDiscard;
+        double u = ((uPossible/ deck) * 2f) - ((uPossible / deck) * ((uPossible-1)/deck));
+        System.out.println("Chance of black: " + df.format(u)+ "%");
 
-        r = (((12f - rCount) / deck) * 2f) - (((12f - rCount) / deck) * ((12f - (rCount + 1f)) / deck)) * 100f;
-        System.out.println("Chance of red: " + Math.round(r) + "%");
+        double r = ((rPossible/ deck) * 2f) - ((rPossible / deck) * ((rPossible-1)/deck));
+        System.out.println("Chance of red: " + df.format(r) + "%");
 
-        y = (((12f - yCount) / deck) * 2f) - (((12f - yCount) / deck) * ((12f - (yCount + 1f)) / deck)) * 100f;
-        System.out.println("Chance of yellow: " + Math.round(y) + "%");
+        double y = ((yPossible/ deck) * 2f) - ((yPossible / deck) * ((yPossible -1)/deck));
+        System.out.println("Chance of yellow: " + df.format(y) + "%");
 
-        b = (((12f - bCount) / deck) * 2f) - (((12f - bCount) / deck) * ((12f - (bCount + 1f)) / deck)) * 100f;
-        System.out.println("Chance of blue: " + Math.round(b) + "%");
+        double b = ((bPossible/ deck) * 2f) - ((bPossible / deck) * ((bPossible -1)/deck));
+        System.out.println("Chance of blue: " + df.format(b) + "%");
     }
 
     static void predictInfection(GameState gameState, String target) {

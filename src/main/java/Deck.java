@@ -91,6 +91,11 @@ public class Deck {
     public int discardSize() {
         return discard.size();
     }
+
+    public ArrayList<Card> getDiscard(){ return discard; }
+
+
+
 }
 
 

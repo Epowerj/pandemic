@@ -254,10 +254,9 @@ public class GameState {
     public int getInfectionSize() {
         return infectiondeck.deckSize();
     }
+    public int getPlayerDiscard(){ return playerdeck.discardSize(); }
 
-    public int getInfectionDiscardSize() {
-        return infectiondeck.discardSize();
-    }
+    //public int getInfectionDiscardSize() { return infectiondeck.discardSize(); }
 
     public void dealCards() {
         int cardstodeal = 0;
@@ -353,6 +352,32 @@ public class GameState {
 
     public InfectionDeck getInfectiondeck() {
         return infectiondeck;
+    }
+
+
+    public HashMap<String,Integer> getPlayerColorCount(){
+        ArrayList<Card> playerdiscard = playerdeck.getDiscard();
+        HashMap<String,Integer> colorcount = new HashMap<>();
+        colorcount.put("U", 0);
+        colorcount.put("B", 0);
+        colorcount.put("R", 0);
+        colorcount.put("Y", 0);
+
+        for (Card c : playerdiscard){
+            if (c.cardtype == Card.CardType.PLAYER) {
+                PlayerCard pcard = (PlayerCard) c;
+                if (pcard.getColor().equals("U")) {
+                    colorcount.put("U", colorcount.get("U") + 1);
+                } else if (pcard.getColor().equals("B")) {
+                    colorcount.put("B", colorcount.get("B") + 1);
+                } else if (pcard.getColor().equals("R")) {
+                    colorcount.put("R", colorcount.get("R") + 1);
+                } else {
+                    colorcount.put("Y", colorcount.get("Y") + 1);
+                }
+            }
+        }
+        return colorcount;
     }
 }
 
