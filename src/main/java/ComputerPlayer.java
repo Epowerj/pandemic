@@ -17,16 +17,14 @@ public class ComputerPlayer {
     public String doMove() {
         //TODO do move and return string description of move
 
-        // 1 - calculate TTW and TTL
+        // calculate TTW and TTL
         calculateTime();
 
-        // 2 - do all possible moves (abstracted)
+        // do all possible moves (abstracted)
         ArrayList<Plan> plans = simulateMoves();
 
-        // 3 - calculate the difference in TTW and TTL for each move
-        // 4 - pick the best move and do it
-
-        //pick the best from plans
+        // pick the best from plans
+        //TODO doesn't take into account real TTW and TTL
         Plan currentBest = null;
         for (Plan plan : plans) {
             if (currentBest == null || plan.getDeltaValue() > currentBest.getDeltaValue()) {
@@ -34,9 +32,9 @@ public class ComputerPlayer {
             }
         }
 
-        //TODO print currentBest
+        String toReturn = "The best plan is:\n  " + currentBest.getDescription();
 
-        return "Did nothing";
+        return toReturn;
     }
 
     private void calculateTime() {
@@ -60,16 +58,13 @@ public class ComputerPlayer {
     private ArrayList<Plan> simulateMoves() {
         //possible moves:
 
-        //move (skipping)
-        //TODO would you even need to just move simulateGo(); ??
-
         // treat
         ArrayList<Plan> treatPlans = simulateTreat();
 
-        // build research station (skipping)
-
         // discover (+ trade cards)
         ArrayList<Plan> discoverPlans = simulateDiscover();
+
+        //TODO build research station (skipping)
 
         ArrayList<Plan> plans = new ArrayList<>();
         plans.addAll(treatPlans);
