@@ -624,6 +624,26 @@ public class Player {
 
     }
 
+    public ArrayList<String> pathToClosestStation() {
+        ArrayList<ArrayList<String>> paths = new ArrayList<>();
+        for (String city : GameState.getStations()) {
+            paths.add(goNormal(currentCity, city));
+        }
+
+        int bestIndex = -1;
+        int currentShortest = Integer.MAX_VALUE;
+
+        for (int i = 0; i < paths.size(); i++) {
+
+            if (paths.get(i).size() < currentShortest) {
+                bestIndex = i;
+                currentShortest = paths.get(i).size();
+            }
+        }
+
+        return paths.get(bestIndex);
+    }
+
     enum Role {OPERATION, MEDIC, PLANNER, DISPATCHER, SPECIALIST, RESEARCHER, SCIENTIST}
 
 }

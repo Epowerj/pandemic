@@ -19,10 +19,22 @@ public class ComputerPlayer {
 
         // 1 - calculate TTW and TTL
         calculateTime();
+
         // 2 - do all possible moves (abstracted)
-        simulateMoves();
+        ArrayList<Plan> plans = simulateMoves();
+
         // 3 - calculate the difference in TTW and TTL for each move
         // 4 - pick the best move and do it
+
+        //pick the best from plans
+        Plan currentBest = null;
+        for (Plan plan : plans) {
+            if (currentBest == null || plan.getDeltaValue() > currentBest.getDeltaValue()) {
+                currentBest = plan;
+            }
+        }
+
+        //TODO print currentBest
 
         return "Did nothing";
     }
@@ -45,25 +57,25 @@ public class ComputerPlayer {
     }
 
     //simulate all possible moves
-    private void simulateMoves() {
+    private ArrayList<Plan> simulateMoves() {
         //possible moves:
 
-        //move
+        //move (skipping)
         //TODO would you even need to just move simulateGo(); ??
 
         // treat
         ArrayList<Plan> treatPlans = simulateTreat();
 
-        // build research station
+        // build research station (skipping)
 
-        // trade cards
-
-        // discover
+        // discover (+ trade cards)
+        ArrayList<Plan> discoverPlans = simulateDiscover();
 
         ArrayList<Plan> plans = new ArrayList<>();
         plans.addAll(treatPlans);
+        plans.addAll(discoverPlans);
 
-        //pick the best from plans
+        return plans;
     }
 
     private ArrayList<Plan> simulateTreat() {
@@ -109,9 +121,36 @@ public class ComputerPlayer {
 
                 TTLDelta = positiveTTLDelta - path.size();
 
-                plans.add(new Plan("Treat cubes at " + cityName, 0, TTLDelta));
+                plans.add(new Plan("Treat cubes at " + cityName, 0, TTLDelta, path));
             }
         }
+
+        return plans;
+    }
+
+    private ArrayList<Plan> simulateDiscover() {
+        ArrayList<Plan> plans = new ArrayList<>();
+
+        // if have 5 cards of the same color, can try going for cure
+
+        // check if player has the right cards for curing
+        HashMap<String, Integer> cardCount = player.colorCount();
+        for (Map.Entry<String, Integer> entry : cardCount.entrySet()) {
+            String color = entry.getKey();
+            int count = entry.getValue();
+
+            if (count >= 5) {
+                //TODO try making a plan to cure this and add it to plans
+                ArrayList<String> path = player.pathToClosestStation();
+                String destination = path.get(path.size() - 1);
+
+                Plan curePlan = new Plan(("Drive to " + destination + " and cure " + color), -20, -(path.size() + 1), path);
+                plans.add(curePlan);
+            }
+        }
+
+        // can always try trading cards??
+        //TODO do trades and add generated plans
 
         return plans;
     }

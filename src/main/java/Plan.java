@@ -1,12 +1,16 @@
+import java.util.ArrayList;
+
 public class Plan {
     private String description;
     private int TTWDelta;
     private int TTLDelta;
+    private ArrayList<String> path;
 
-    public Plan(String desc, int ttwD, int ttlD) {
+    public Plan(String desc, int ttwD, int ttlD, ArrayList<String> p) {
         description = desc;
         TTWDelta = ttwD;
         TTLDelta = ttlD;
+        path = p;
     }
 
     public String getDescription() {
@@ -19,5 +23,10 @@ public class Plan {
 
     public int getTTLDelta() {
         return TTLDelta;
+    }
+
+    public int getDeltaValue() {
+        //want to make TTWDelta smaller and TTLDelta larger
+        return TTLDelta - TTWDelta;
     }
 }
