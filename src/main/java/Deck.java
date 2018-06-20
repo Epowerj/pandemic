@@ -51,6 +51,10 @@ public class Deck {
         deck.add(card);
     }
 
+    public void insert(Card card, int location) {
+        deck.add(location, card);
+    }
+
     public void pushToDiscard(Card card) {
         discard.add(card);
     }

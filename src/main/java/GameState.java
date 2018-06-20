@@ -43,7 +43,6 @@ public class GameState {
         return nodes;
     }
 
-
     public static void discardPlayerCard(PlayerCard toDiscard) {
         playerdeck.pushToDiscard(toDiscard);
     }
@@ -87,7 +86,6 @@ public class GameState {
             blackCured = true;
         }
     }
-
 
     public static Deck getPlayerDeck() {
         return playerdeck;
@@ -194,25 +192,28 @@ public class GameState {
 
     public void gameSetup() {
         //create players
+        //ASSUMES 2 OR 4 PLAYERS
         addPlayer(Player.Role.DISPATCHER);
-        addPlayer(Player.Role.MEDIC);
-        //addPlayer(Player.Role.PLANNER);
+        addPlayer(Player.Role.PLANNER);
+        //addPlayer(Player.Role.MEDIC);
         //addPlayer(Player.Role.SCIENTIST);
 
-        dealCards();
+        dealCards(); // deal cards to players
 
-        setupInfectedCities(); //distribute cubes
+        setupInfectedCities(); // distribute cubes
 
-        //shuffle in epidemic cards AFTER dealing cards to players
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
-        playerdeck.push(new EpidemicCard());
+        // shuffle in epidemic cards AFTER dealing cards to players
         playerdeck.shuffle();
+        //ASSUMES 4 EPIDEMICS
+        //for each epidemic
+        for (int i = 0; i < 4; i++) {
+            int random = new Random().nextInt(9); // random number from 0 to 9
+            random += i * 10; // epoch offset
 
-        stations.add("atlanta"); //add research station
+            playerdeck.insert(new EpidemicCard(), random); // insert into player deck
+        }
+
+        stations.add("atlanta"); // add research station
     }
 
     public void addPlayer(Player.Role role) {
