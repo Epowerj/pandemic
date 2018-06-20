@@ -539,9 +539,9 @@ public class PandemicGame {
             }
         }
         Collections.sort(predictions);
-        for (int i =0; i < 6; i++){
-            System.out.println("Possible outbreak " + (i) + ": " + names.get(i) + " " + predictions.get(i));
-        }
+        //for (int i =0; i < 6; i++){
+            System.out.println("Possible outbreak: " + names + " " + predictions);
+        //}
     }
 
     static void predictEpidemic(GameState gameState) {
