@@ -1,8 +1,10 @@
+import java.sql.SQLSyntaxErrorException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Collections;
 
 
 //Main Game
@@ -96,6 +98,7 @@ public class PandemicGame {
             printBoardInfo(gamestate);
 
             predictPlayer(gamestate);
+            congestedCities(gamestate);
             predictEpidemic(gamestate);
 
             if (input.length > 1) {
@@ -433,7 +436,7 @@ public class PandemicGame {
         System.out.println("Chance of blue: " + df.format(b) + "%");
     }
 
-    static void predictInfection(GameState gameState, String target) {
+    static double predictInfection(GameState gameState, String target) {
         DecimalFormat f = new DecimalFormat("#.000");
 
         ArrayList<ArrayList<InfectionCard>> shuffleBacks = gameState.getInfectiondeck().getShuffleBack();
@@ -453,7 +456,6 @@ public class PandemicGame {
                             contains = true;
                         }
                     }
-
                     if (contains) {
                         result = (1f / topStack.size()) * infectionrate;
                     }
@@ -467,7 +469,6 @@ public class PandemicGame {
                                 contains = true;
                             }
                         }
-
                         if (contains) {
                             result = 1;
                             break;
@@ -483,7 +484,6 @@ public class PandemicGame {
                             }
                         }
                     }
-
                     if (result == 0) {
                         boolean contains = false;
                         for (InfectionCard card : topStack) {
@@ -491,7 +491,6 @@ public class PandemicGame {
                                 contains = true;
                             }
                         }
-
                         if (contains) {
                             result = (1f / topStack.size()) * infectionrate;
                         }
@@ -505,12 +504,44 @@ public class PandemicGame {
             result = 0;
         }
         result =result * 100f;
-        System.out.println("The chance of drawing that card is: " + f.format(result) + "%");
-        //System.out.println("The chance of drawing that card is: " + (result) + "%");
+        return result;
     }
 
-    static void congestedCities() {//TODO
-        //will decide which cities should be worried about the most
+    static void printPrediction(GameState gameState, String goal){
+        double result = predictInfection(gameState,goal);
+        DecimalFormat f = new DecimalFormat("#.000");
+        System.out.println("The chance of drawing that card is: " + f.format(result) + "%");
+
+    }
+
+    static void congestedCities(GameState gameState) {
+       //int infections = gameState.getInfectionRate();
+        //int outbreaks = gameState.getOutbreak();
+        ArrayList<Double> predictions = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        //Predicting outbreaks for this turn and the next turn
+        HashMap<String,City> cities = gameState.getCities();
+        //double rank1=0,rank2=0,rank3=0,rank4=0,rank5=0;
+
+        for (Map.Entry<String, City> entry : cities.entrySet()) {
+            String key = entry.getKey();
+            City value = entry.getValue();
+            //System.out.println(key);
+
+            HashMap<String, Integer> cubelist = value.getCubeList();
+            for (Map.Entry<String, Integer> cubenum : cubelist.entrySet()){
+                String color = cubenum.getKey();
+                Integer count = cubenum.getValue();
+                if (count > 2){
+                    predictions.add(predictInfection(gameState,key));
+                    names.add(key);
+                }
+            }
+        }
+        Collections.sort(predictions);
+        for (int i =0; i < 6; i++){
+            System.out.println("Possible outbreak " + (i) + ": " + names.get(i) + " " + predictions.get(i));
+        }
     }
 
     static void predictEpidemic(GameState gameState) {
