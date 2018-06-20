@@ -197,7 +197,7 @@ public class GameState {
         addPlayer(Player.Role.DISPATCHER);
         addPlayer(Player.Role.MEDIC);
         //addPlayer(Player.Role.PLANNER);
-        addPlayer(Player.Role.SCIENTIST);
+        //addPlayer(Player.Role.SCIENTIST);
 
         dealCards();
 

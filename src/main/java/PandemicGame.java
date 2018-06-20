@@ -396,7 +396,7 @@ public class PandemicGame {
     }
 
     static void predictPlayer(GameState gameState) {
-        DecimalFormat df = new DecimalFormat("#.000");
+        DecimalFormat df = new DecimalFormat("#.00");
         ArrayList<Player> players = gameState.getPlayers();
         double uCount=0, bCount=0, yCount=0, rCount=0;           //counts the color card within players hands
         double uDiscard=0, rDiscard=0, yDiscard=0,bDiscard=0;   //counts the color card within the discard pile
@@ -423,16 +423,16 @@ public class PandemicGame {
         }
         }
         uPossible=12-uCount-uDiscard;rPossible=12-rCount-rDiscard;yPossible=12-yCount-yDiscard;bPossible=12-bCount-bDiscard;
-        double u = ((uPossible/ deck) * 2f) - ((uPossible / deck) * ((uPossible-1)/deck));
-        System.out.println("Chance of black: " + df.format(u)+ "%");
+        double u = (((uPossible/ deck) * 2f) - ((uPossible / deck) * ((uPossible-1)/deck))) * 100f;
+        System.out.println("Chance of black: " + df.format(u) + "%");
 
-        double r = ((rPossible/ deck) * 2f) - ((rPossible / deck) * ((rPossible-1)/deck));
+        double r = (((rPossible/ deck) * 2f) - ((rPossible / deck) * ((rPossible-1)/deck))) * 100f;
         System.out.println("Chance of red: " + df.format(r) + "%");
 
-        double y = ((yPossible/ deck) * 2f) - ((yPossible / deck) * ((yPossible -1)/deck));
+        double y = (((yPossible/ deck) * 2f) - ((yPossible / deck) * ((yPossible -1)/deck))) * 100f;
         System.out.println("Chance of yellow: " + df.format(y) + "%");
 
-        double b = ((bPossible/ deck) * 2f) - ((bPossible / deck) * ((bPossible -1)/deck));
+        double b = (((bPossible/ deck) * 2f) - ((bPossible / deck) * ((bPossible -1)/deck))) * 100f;
         System.out.println("Chance of blue: " + df.format(b) + "%");
     }
 
