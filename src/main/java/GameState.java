@@ -262,6 +262,7 @@ public class GameState {
     public int getInfectionSize() {
         return infectiondeck.deckSize();
     }
+
     public int getPlayerDiscard(){ return playerdeck.discardSize(); }
 
     //public int getInfectionDiscardSize() { return infectiondeck.discardSize(); }
