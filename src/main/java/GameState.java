@@ -23,6 +23,10 @@ public class GameState {
     ArrayList<Player> players = new ArrayList<>();
     private int infectionrateindex = 0;
     private int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
+    public final int epidemicDifficulty = 4;
+    private boolean haveLost = false;
+    private int epochSize;
+    private int epochOverflow;
 
     //constructor
     public GameState(String info_file) {
@@ -192,7 +196,6 @@ public class GameState {
 
     public void gameSetup() {
         //create players
-        //ASSUMES 2 OR 4 PLAYERS
         addPlayer(Player.Role.DISPATCHER);
         addPlayer(Player.Role.PLANNER);
         //addPlayer(Player.Role.MEDIC);
@@ -204,12 +207,16 @@ public class GameState {
 
         // shuffle in epidemic cards AFTER dealing cards to players
         playerdeck.shuffle();
-        //ASSUMES 4 EPIDEMICS
-        //for each epidemic
-        for (int i = 0; i < 4; i++) {
-            int random = new Random().nextInt(9); // random number from 0 to 9
-            random += i * 10; // epoch offset
-
+        epochSize = playerdeck.deckSize() / epidemicDifficulty;
+        epochOverflow = playerdeck.deckSize() - epochSize * (epidemicDifficulty - 1);
+        // add the first epidemic card
+        Random r = new Random();
+        int random = r.nextInt(epochOverflow); // random number from 0 to epochOverflow
+        playerdeck.insert(new EpidemicCard(), random); // insert into player deck
+        // for each epidemic except the first one
+        for (int i = 0; i < epidemicDifficulty - 1; i++) {
+            random = r.nextInt(epochSize); // random number from 0 to epochSize
+            random += i * epochSize + epochOverflow; // epoch offset
             playerdeck.insert(new EpidemicCard(), random); // insert into player deck
         }
 
@@ -339,6 +346,15 @@ public class GameState {
         }
     }
 
+    //TODO
+    public boolean haveLost() {
+        HashMap<String, Integer> cCount = new HashMap<>();
+
+        haveLost = (outbreak >= 8);
+
+        return haveLost;
+    }
+
     public int getInfectionRate() {
         return infectionrates[infectionrateindex];
     }
@@ -354,7 +370,6 @@ public class GameState {
     public InfectionDeck getInfectiondeck() {
         return infectiondeck;
     }
-
 
     public HashMap<String,Integer> getPlayerColorCount(){
         ArrayList<Card> playerdiscard = playerdeck.getDiscard();
