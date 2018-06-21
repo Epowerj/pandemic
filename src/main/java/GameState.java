@@ -301,6 +301,10 @@ public class GameState {
     //draw infection cards, put new cubes, handle epidemic cards
     public void newTurn(Player currentPlayer) {
 
+        if (playerdeck.deckSize() < 2) { //if we can't draw cards, we've lost
+            haveLost = true;
+        }
+
         //draw player cards and do epidemics
         for (int i = 0; i < 2; i++) { //loop until 2 cards are added to player hand
 
@@ -376,17 +380,20 @@ public class GameState {
     }
 
     public boolean haveLost() {
-        HashMap<String, Integer> cCount = new HashMap<>();
-
         haveLost = (outbreak >= 8); // if 8 or more outbreaks
 
-        HashMap<String, Integer> cubeCounts = getCubeCounts();
-        for (Map.Entry<String, Integer> entry : cubeCounts.entrySet()) {
-            String color = entry.getKey();
-            int count = entry.getValue();
+        if (!haveLost) { //if we've already lost, don't do anything
 
-            if (count >= 24) {
-                haveLost = true;
+            HashMap<String, Integer> cCount = new HashMap<>();
+
+            HashMap<String, Integer> cubeCounts = getCubeCounts();
+            for (Map.Entry<String, Integer> entry : cubeCounts.entrySet()) {
+                String color = entry.getKey();
+                int count = entry.getValue();
+
+                if (count >= 24) {
+                    haveLost = true;
+                }
             }
         }
 
