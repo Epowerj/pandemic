@@ -103,15 +103,29 @@ public class ComputerPlayer {
             //find how it changes the TTL (increase in TTL)
             int cubeCount = cities.get(cityName).getCubeCount(); //TODO cube count is only for the default color
 
-            //for all possible cubes removed
-            for (int i = 0; i < cubeCount; i++) {
-                //TODO create a plan object?
+            if (!GameState.isDiseaseCured(cities.get(cityName).getColor())) { // if that color isn't cured
+                //for all possible cubes removed
+                for (int i = 0; i < cubeCount; i++) {
+                    //TODO create a plan object?
+                    int positiveTTLDelta;
+
+                    if (cubeCount >= 3) {
+                        positiveTTLDelta = 2 + i * 4; // temporary: doesn't take into account shuffle backs
+                    } else {
+                        positiveTTLDelta = i * 4;
+                    }
+
+                    TTLDelta = positiveTTLDelta - path.size();
+
+                    plans.add(new Plan("Treat cubes at " + cityName, 0, TTLDelta, path));
+                }
+            } else { // if that color is cured
                 int positiveTTLDelta;
 
                 if (cubeCount >= 3) {
-                    positiveTTLDelta = 2 + i * 4; // temporary: doesn't take into account shuffle backs
+                    positiveTTLDelta = 2 + cubeCount * 4; // temporary: doesn't take into account shuffle backs
                 } else {
-                    positiveTTLDelta = i * 4;
+                    positiveTTLDelta = cubeCount * 4;
                 }
 
                 TTLDelta = positiveTTLDelta - path.size();
