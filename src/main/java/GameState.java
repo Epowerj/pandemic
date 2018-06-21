@@ -345,15 +345,76 @@ public class GameState {
                 city.incrementCubes(); //put new cube
             }
         }
+
+        updateEradicated();
     }
 
-    //TODO
+    private void updateEradicated() {
+        HashMap<String, Integer> cubeCounts = getCubeCounts();
+        for (Map.Entry<String, Integer> entry : cubeCounts.entrySet()) {
+            String color = entry.getKey();
+            int count = entry.getValue();
+
+            if (count == 0) {
+                if (color.equals("B")) {
+                    blueEradicated = true;
+                }
+
+                if (color.equals("U")) {
+                    blackEradicated = true;
+                }
+
+                if (color.equals("R")) {
+                    redEradicated = true;
+                }
+
+                if (color.equals("Y")) {
+                    yellowEradicated = true;
+                }
+            }
+        }
+    }
+
     public boolean haveLost() {
         HashMap<String, Integer> cCount = new HashMap<>();
 
-        haveLost = (outbreak >= 8);
+        haveLost = (outbreak >= 8); // if 8 or more outbreaks
+
+        HashMap<String, Integer> cubeCounts = getCubeCounts();
+        for (Map.Entry<String, Integer> entry : cubeCounts.entrySet()) {
+            String color = entry.getKey();
+            int count = entry.getValue();
+
+            if (count >= 24) {
+                haveLost = true;
+            }
+        }
 
         return haveLost;
+    }
+
+    public HashMap<String, Integer> getCubeCounts() {
+        HashMap<String, Integer> result = new HashMap<>();
+        result.put("U", 0);
+        result.put("Y", 0);
+        result.put("B", 0);
+        result.put("R", 0);
+
+        for (Map.Entry<String, City> entry : getCities().entrySet()) {
+            String name = entry.getKey();
+            City city = entry.getValue();
+
+            HashMap<String, Integer> colors = city.getCubeList();
+
+            for (Map.Entry<String, Integer> entry2 : colors.entrySet()) {
+                String color = entry2.getKey();
+                int count = entry2.getValue();
+
+                result.put(color, result.get(color) + count);
+            }
+        }
+
+        return result;
     }
 
     public int getInfectionRate() {
