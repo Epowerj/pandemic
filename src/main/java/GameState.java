@@ -428,8 +428,6 @@ public class GameState {
         return result;
     }
 
-
-
     public int getInfectionRate() {
         return infectionrates[infectionrateindex];
     }

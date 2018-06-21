@@ -1,10 +1,5 @@
-import java.sql.SQLSyntaxErrorException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Collections;
+import java.util.*;
 
 
 //Main Game
@@ -546,38 +541,32 @@ public class PandemicGame {
     }
 
     static void predictEpidemic(GameState gameState) {
-        DecimalFormat f = new DecimalFormat("#.000");
-        double epochzsize = gameState.getEpochSize();
-        double size = epochzsize;
-        double infections = gameState.getInfectionrateindex();
-        int overflow = gameState.getEpochOverflow();
-        double predictor=0;
-        int i=0;
-        double decksize = gameState.getPlayerDeckSize();
+        int deckSize = gameState.getPlayerDeck().deckSize();
+        int currentEpoch = 1;
+        int currentEpochSize = gameState.getEpochOverflow();
 
-        if (decksize !=overflow) {
-            if (size > 0) {
-                if (infections > i) {
-                    predictor = 0;
-                    i++;
-                } else {
-                    predictor = (2.0 / size) * 100;
-                }
-            }
-        } else {
-            if (overflow > 0) {
-                if (infections > i) {
-                    predictor = 0;
-                    i++;
-                } else {
-                    predictor = (2.0 / overflow) * 100;
-                }
+        boolean isEpidemicDrawn = false;
+        int cardsLeft = -1;
+
+        boolean looping = true;
+        while (looping) {
+            if (deckSize <= currentEpochSize) {
+                //if it is, we know which epoch we're in
+                looping = false; // stop loop
+
+                isEpidemicDrawn = (gameState.getInfectionrateindex() > (gameState.getEpidemicDifficulty() - currentEpoch));
+                cardsLeft = currentEpochSize - deckSize;
+            } else {
+                //this isn't the epoch we're looking for; increment
+
+                currentEpoch++;
+                deckSize -= currentEpochSize;
+                currentEpochSize = gameState.getEpochSize();
             }
         }
-        size --;
 
-        System.out.println("Epidemic chance is: " + f.format(predictor));
-
+        System.out.println("Is epidemic drawn: " + isEpidemicDrawn);
+        System.out.println("How many cards left: " + cardsLeft);
     }
 }
 
