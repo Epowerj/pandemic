@@ -545,25 +545,17 @@ public class PandemicGame {
         int currentEpoch = 1;
         int currentEpochSize = gameState.getEpochOverflow();
 
-        boolean isEpidemicDrawn = false;
-        int cardsLeft = -1;
+        while (deckSize > currentEpochSize) {
+            //this isn't the epoch we're looking for; increment
 
-        boolean looping = true;
-        while (looping) {
-            if (deckSize <= currentEpochSize) {
-                //if it is, we know which epoch we're in
-                looping = false; // stop loop
-
-                isEpidemicDrawn = (gameState.getInfectionrateindex() > (gameState.getEpidemicDifficulty() - currentEpoch));
-                cardsLeft = currentEpochSize - deckSize;
-            } else {
-                //this isn't the epoch we're looking for; increment
-
-                currentEpoch++;
-                deckSize -= currentEpochSize;
-                currentEpochSize = gameState.getEpochSize();
-            }
+            currentEpoch++;
+            deckSize -= currentEpochSize;
+            currentEpochSize = gameState.getEpochSize();
         }
+
+        //now we know which epoch we're in
+        boolean isEpidemicDrawn = (gameState.getInfectionrateindex() > (gameState.getEpidemicDifficulty() - currentEpoch));
+        int cardsLeft = currentEpochSize - deckSize;
 
         System.out.println("Is epidemic drawn: " + isEpidemicDrawn);
         System.out.println("How many cards left: " + cardsLeft);
