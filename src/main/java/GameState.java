@@ -265,7 +265,11 @@ public class GameState {
 
     public int getPlayerDiscard(){ return playerdeck.discardSize(); }
 
-    //public int getInfectionDiscardSize() { return infectiondeck.discardSize(); }
+    public int getEpidemicDifficulty(){ return epidemicDifficulty;}
+
+    public int getEpochSize(){ return epochSize; }
+
+    public  int getEpochOverflow(){ return epochOverflow; }
 
     public void dealCards() {
         int cardstodeal = 0;
@@ -424,9 +428,13 @@ public class GameState {
         return result;
     }
 
+
+
     public int getInfectionRate() {
         return infectionrates[infectionrateindex];
     }
+
+    public int getInfectionrateindex(){ return infectionrateindex; }
 
     public boolean isInInfectionDeck(String target) {
         return infectiondeck.isInDeck(target);
@@ -464,6 +472,7 @@ public class GameState {
         }
         return colorcount;
     }
+
 }
 
 

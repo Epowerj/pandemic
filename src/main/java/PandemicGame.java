@@ -101,6 +101,7 @@ public class PandemicGame {
             congestedCities(gamestate);
             predictEpidemic(gamestate);
 
+
             if (input.length > 1) {
                 String target = input[1];
                 predictInfection(gamestate, target);
@@ -545,10 +546,38 @@ public class PandemicGame {
     }
 
     static void predictEpidemic(GameState gameState) {
-        int outbreaks = gameState.getOutbreak();
-        double deck = gameState.getPlayerDeckSize();
-        double predictor = (((6 - outbreaks) / deck) * 2) * 100;
-        System.out.println("There is a " + Math.round(predictor) + "% chance that you will get an Epidemic Card");
+        DecimalFormat f = new DecimalFormat("#.000");
+        double epochzsize = gameState.getEpochSize();
+        double size = epochzsize;
+        double infections = gameState.getInfectionrateindex();
+        int overflow = gameState.getEpochOverflow();
+        double predictor=0;
+        int i=0;
+        double decksize = gameState.getPlayerDeckSize();
+
+        if (decksize !=overflow) {
+            if (size > 0) {
+                if (infections > i) {
+                    predictor = 0;
+                    i++;
+                } else {
+                    predictor = (2.0 / size) * 100;
+                }
+            }
+        } else {
+            if (overflow > 0) {
+                if (infections > i) {
+                    predictor = 0;
+                    i++;
+                } else {
+                    predictor = (2.0 / overflow) * 100;
+                }
+            }
+        }
+        size --;
+
+        System.out.println("Epidemic chance is: " + f.format(predictor));
+
     }
 }
 

@@ -75,6 +75,7 @@ public class City {
                 cubes.put(col, 3); //put back to 3
                 GameState.incrementOutbreaks();
 
+
                 GameState.addToExplodedCities(this.getName());
 
                 //infect adjacent cities
