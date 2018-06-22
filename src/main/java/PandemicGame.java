@@ -544,7 +544,7 @@ public class PandemicGame {
         DecimalFormat f = new DecimalFormat("#.000");
         int deckSize = gameState.getPlayerDeck().deckSize();
         int currentEpoch = 1;
-        int currentEpochSize = gameState.getEpochOverflow();
+        int currentEpochSize = gameState.getEpochOverflow() + 1;
         double predictor=0;
 
         while (deckSize > currentEpochSize) {
@@ -552,7 +552,7 @@ public class PandemicGame {
 
             currentEpoch++;
             deckSize -= currentEpochSize;
-            currentEpochSize = gameState.getEpochSize();
+            currentEpochSize = gameState.getEpochSize() + 1;
         }
 
         //now we know which epoch we're in
