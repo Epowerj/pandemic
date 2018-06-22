@@ -62,7 +62,7 @@ public class ComputerPlayer {
     }
 
     private int playerCardsTTL() {
-        return gamestate.getPlayerDeckSize() * 2; // how many actions till we run out of player cards
+        return gamestate.getPlayerDeck().deckSize() * 2; // how many actions till we run out of player cards
     }
 
     //simulate all possible moves
