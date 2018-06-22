@@ -557,7 +557,7 @@ public class PandemicGame {
 
         //now we know which epoch we're in
         boolean isEpidemicDrawn = (gameState.getInfectionrateindex() > (gameState.getEpidemicDifficulty() - currentEpoch));
-        int cardsLeft = currentEpochSize - deckSize;
+        int cardsLeft = deckSize;
 
         if ( isEpidemicDrawn==false){
             predictor = (2.0/cardsLeft);
