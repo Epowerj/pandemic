@@ -397,7 +397,7 @@ public class PandemicGame {
         double uCount=0, bCount=0, yCount=0, rCount=0;           //counts the color card within players hands
         double uDiscard=0, rDiscard=0, yDiscard=0,bDiscard=0;   //counts the color card within the discard pile
         double uPossible=0, rPossible=0, yPossible=0, bPossible=0; //this will reprsent 12-count-discard
-        double deck = gameState.getPlayerDeckSize();
+        double deck = gameState.getPlayerDeck().deckSize();
         for (Player c: players) {
             HashMap<String, Integer> counter = c.colorCount();
             for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
@@ -541,9 +541,11 @@ public class PandemicGame {
     }
 
     static void predictEpidemic(GameState gameState) {
+        DecimalFormat f = new DecimalFormat("#.000");
         int deckSize = gameState.getPlayerDeck().deckSize();
         int currentEpoch = 1;
         int currentEpochSize = gameState.getEpochOverflow();
+        double predictor=0;
 
         while (deckSize > currentEpochSize) {
             //this isn't the epoch we're looking for; increment
@@ -557,6 +559,13 @@ public class PandemicGame {
         boolean isEpidemicDrawn = (gameState.getInfectionrateindex() > (gameState.getEpidemicDifficulty() - currentEpoch));
         int cardsLeft = currentEpochSize - deckSize;
 
+        if ( isEpidemicDrawn==false){
+            predictor = (2.0/cardsLeft);
+        } else {
+            predictor = 0.0;
+        }
+
+        System.out.println("The chance of epidemic is: " + f.format(predictor));
         System.out.println("Is epidemic drawn: " + isEpidemicDrawn);
         System.out.println("How many cards left: " + cardsLeft);
     }

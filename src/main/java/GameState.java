@@ -255,15 +255,9 @@ public class GameState {
         return outbreak;
     }
 
-    public int getPlayerDeckSize() {
-        return playerdeck.deckSize();
-    }
-
     public int getInfectionSize() {
         return infectiondeck.deckSize();
     }
-
-    public int getPlayerDiscard(){ return playerdeck.discardSize(); }
 
     public int getEpidemicDifficulty(){ return epidemicDifficulty;}
 
