@@ -49,9 +49,20 @@ public class ComputerPlayer {
     }
 
     private int calculateTTL() {
+
+        int cardsTTL = playerCardsTTL();
+        // calculate out of cubes TTL
+        // calculate 8 outbreaks TTL
+
+        // return the smallest
+
         timeToLose = 50;
 
         return timeToLose;
+    }
+
+    private int playerCardsTTL() {
+        return gamestate.getPlayerDeckSize() * 2; // how many actions till we run out of player cards
     }
 
     //simulate all possible moves
