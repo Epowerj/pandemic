@@ -20,6 +20,19 @@ public class City {
         cubes.put("Y", 0);
     }
 
+    //copy constructor
+    public City(City other) {
+        name = other.getName();
+        color = other.getColor();
+
+        cubes.put("U", other.getCubeCount("U"));
+        cubes.put("B", other.getCubeCount("B"));
+        cubes.put("R", other.getCubeCount("R"));
+        cubes.put("Y", other.getCubeCount("Y"));
+
+        adjacent = other.getAdjacent();
+    }
+
     public void addAdjacent(String adjcity) {
         adjacent.add(adjcity);
     }

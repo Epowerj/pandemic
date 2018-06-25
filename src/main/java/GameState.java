@@ -39,7 +39,15 @@ public class GameState {
     }
 
     protected void copy(GameState other) {
-        nodes = other.getCities(); //TODO create copy of city objects
+        for (Map.Entry<String, City> entry : other.getCities().entrySet()) {
+            String cityName = entry.getKey();
+            City city = entry.getValue();
+
+            City copyCity = new City(city);
+
+            nodes.put(cityName, copyCity);
+        }
+
         stations = other.getResearchStations();
         playerdeck = other.getPlayerDeck();
         infectiondeck = other.getInfectiondeck();
