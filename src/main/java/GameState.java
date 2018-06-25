@@ -20,17 +20,45 @@ public class GameState {
     private static InfectionDeck infectiondeck = new InfectionDeck();
     private static int outbreak = 0;
     private static ArrayList<String> explodedCites = new ArrayList<>();
+    public final int epidemicDifficulty = 4;
     ArrayList<Player> players = new ArrayList<>();
     private int infectionrateindex = 0;
     private int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
-    public final int epidemicDifficulty = 4;
     private boolean haveLost = false;
     private int epochSize;
     private int epochOverflow;
 
-    //constructor
+    // constructor
     public GameState(String info_file) {
         parseInfo(info_file);
+    }
+
+    // copy constructor
+    public GameState(GameState other) {
+        nodes = other.getCities();
+        stations = other.getResearchStations();
+        playerdeck = other.getPlayerDeck();
+        infectiondeck = other.getInfectiondeck();
+
+        blueCured = other.isDiseaseCured("B");
+        blackCured = other.isDiseaseCured("U");
+        redCured = other.isDiseaseCured("R");
+        yellowCured = other.isDiseaseCured("Y");
+
+        blueEradicated = other.isDiseaseEradicated("B");
+        blackEradicated = other.isDiseaseEradicated("U");
+        redEradicated = other.isDiseaseEradicated("R");
+        yellowEradicated = other.isDiseaseEradicated("Y");
+
+        outbreak = other.getOutbreak();
+        //exploded cities is empty
+        //epidemicDifficulty = other.getEpidemicDifficulty();
+        players = other.getPlayers();
+        infectionrateindex = other.getInfectionrateindex();
+        //infection rates don't change
+        haveLost = other.haveLost;
+        epochSize = other.getEpochSize();
+        epochOverflow = other.getEpochOverflow();
     }
 
     public static void placeResearchStation(String targetCity) {
@@ -259,11 +287,17 @@ public class GameState {
         return infectiondeck.deckSize();
     }
 
-    public int getEpidemicDifficulty(){ return epidemicDifficulty;}
+    public int getEpidemicDifficulty() {
+        return epidemicDifficulty;
+    }
 
-    public int getEpochSize(){ return epochSize; }
+    public int getEpochSize() {
+        return epochSize;
+    }
 
-    public  int getEpochOverflow(){ return epochOverflow; }
+    public int getEpochOverflow() {
+        return epochOverflow;
+    }
 
     public void dealCards() {
         int cardstodeal = 0;
@@ -422,11 +456,17 @@ public class GameState {
         return result;
     }
 
+    public ArrayList<String> getResearchStations() {
+        return stations;
+    }
+
     public int getInfectionRate() {
         return infectionrates[infectionrateindex];
     }
 
-    public int getInfectionrateindex(){ return infectionrateindex; }
+    public int getInfectionrateindex() {
+        return infectionrateindex;
+    }
 
     public boolean isInInfectionDeck(String target) {
         return infectiondeck.isInDeck(target);
@@ -440,15 +480,15 @@ public class GameState {
         return infectiondeck;
     }
 
-    public HashMap<String,Integer> getPlayerColorCount(){
+    public HashMap<String, Integer> getPlayerColorCount() {
         ArrayList<Card> playerdiscard = playerdeck.getDiscard();
-        HashMap<String,Integer> colorcount = new HashMap<>();
+        HashMap<String, Integer> colorcount = new HashMap<>();
         colorcount.put("U", 0);
         colorcount.put("B", 0);
         colorcount.put("R", 0);
         colorcount.put("Y", 0);
 
-        for (Card c : playerdiscard){
+        for (Card c : playerdiscard) {
             if (c.cardtype == Card.CardType.PLAYER) {
                 PlayerCard pcard = (PlayerCard) c;
                 if (pcard.getColor().equals("U")) {
