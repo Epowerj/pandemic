@@ -175,7 +175,7 @@ public class PandemicGame {
         }
 
         if (move.equals("ai")) {
-
+            //TODO do ai move
 
             success = false;
         }
