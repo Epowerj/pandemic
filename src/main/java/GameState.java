@@ -35,6 +35,10 @@ public class GameState {
 
     // copy constructor
     public GameState(GameState other) {
+        copy(other);
+    }
+
+    protected void copy(GameState other) {
         nodes = other.getCities();
         stations = other.getResearchStations();
         playerdeck = other.getPlayerDeck();
