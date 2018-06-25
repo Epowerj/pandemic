@@ -44,7 +44,7 @@ public class ComputerPlayer {
 
     private int calculateTTW() {
         timeToWin = 50;
-
+        gamestate.predictPlayer();
         return timeToWin;
     }
 
@@ -176,4 +176,6 @@ public class ComputerPlayer {
 
         return plans;
     }
+
+
 }

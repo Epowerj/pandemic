@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class GameState {
@@ -517,6 +518,66 @@ public class GameState {
         return colorcount;
     }
 
+    public void predictPlayer() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        ArrayList<Player> players = getPlayers();
+        double uCount = 0, bCount = 0, yCount = 0, rCount = 0;           //counts the color card within players hands
+        double uDiscard = 0, rDiscard = 0, yDiscard = 0, bDiscard = 0;   //counts the color card within the discard pile
+        double uPossible = 0, rPossible = 0, yPossible = 0, bPossible = 0; //this will reprsent 12-count-discard
+        double deck = getPlayerDeck().deckSize();
+        for (Player c : players) {
+            HashMap<String, Integer> counter = c.colorCount();
+            for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
+                String key = cubes.getKey();
+                Integer value = cubes.getValue();
+                if (key.equals("U")) {
+                    uCount += value;
+                }
+                if (key.equals("R")) {
+                    rCount += value;
+                }
+                if (key.equals("Y")) {
+                    yCount += value;
+                }
+                if (key.equals("B")) {
+                    bCount += value;
+                }
+            }
+            HashMap<String, Integer> discardCounter = getPlayerColorCount();
+            for (Map.Entry<String, Integer> num : discardCounter.entrySet()) {
+                String key = num.getKey();
+                Integer value = num.getValue();
+                if (key.equals("U")) {
+                    uDiscard += value;
+                }
+                if (key.equals("R")) {
+                    rDiscard += value;
+                }
+                if (key.equals("Y")) {
+                    yDiscard += value;
+                }
+                if (key.equals("B")) {
+                    bDiscard += value;
+                }
+            }
+        }
+        uPossible = 12 - uCount - uDiscard;
+        rPossible = 12 - rCount - rDiscard;
+        yPossible = 12 - yCount - yDiscard;
+        bPossible = 12 - bCount - bDiscard;
+        double u = (((uPossible / deck) * 2f) - ((uPossible / deck) * ((uPossible - 1) / deck))) * 100f;
+        System.out.println("Chance of black: " + df.format(u) + "%");
+
+        double r = (((rPossible / deck) * 2f) - ((rPossible / deck) * ((rPossible - 1) / deck))) * 100f;
+        System.out.println("Chance of red: " + df.format(r) + "%");
+
+        double y = (((yPossible / deck) * 2f) - ((yPossible / deck) * ((yPossible - 1) / deck))) * 100f;
+        System.out.println("Chance of yellow: " + df.format(y) + "%");
+
+        double b = (((bPossible / deck) * 2f) - ((bPossible / deck) * ((bPossible - 1) / deck))) * 100f;
+        System.out.println("Chance of blue: " + df.format(b) + "%");
+
+    }
 }
 
 
