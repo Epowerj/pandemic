@@ -27,7 +27,7 @@ public class SimulationGameState extends GameState {
         while (!haveLost()) {
             turns++;
 
-            newTurn(players.get(player));
+            newTurn(players.get(player)); //TODO need to shuffle and copy decks!
 
             //switch to the next player
             if (player < players.size()) {

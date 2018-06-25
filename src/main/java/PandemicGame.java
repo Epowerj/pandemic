@@ -174,6 +174,12 @@ public class PandemicGame {
             success = false; //don't want to actually count this though
         }
 
+        if (move.equals("ai")) {
+
+
+            success = false;
+        }
+
         if (move.equals("drive")) {
             if (input.length >= 2) {
                 String destination = input[1];
