@@ -97,12 +97,12 @@ public class PandemicGame {
             predictEpidemic(gamestate);
 
 
-            if (input.length > 1) {
+          /*  if (input.length > 1) {
                 String target = input[1];
-                predictInfection(gamestate, target);
+                printPrediction(gamestate, target);
             }
 
-            success = false;
+            success = false;*/
         }
 
         if (move.equals("cubeinfo")) {
@@ -159,7 +159,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                predictInfection(gamestate, destination);
+                printPrediction(gamestate, destination);
 
                 success = true;
             } else {
@@ -493,7 +493,7 @@ public class PandemicGame {
                     }
                 }
             } else {
-                System.out.println(gameState.getInfectionSize());
+                //System.out.println(gameState.getInfectionSize());
                 result = (1f / gameState.getInfectionSize()) * infectionrate;
             }
         } else {
