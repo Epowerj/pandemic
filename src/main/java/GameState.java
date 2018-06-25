@@ -39,7 +39,7 @@ public class GameState {
     }
 
     protected void copy(GameState other) {
-        nodes = other.getCities();
+        nodes = other.getCities(); //TODO create copy of city objects
         stations = other.getResearchStations();
         playerdeck = other.getPlayerDeck();
         infectiondeck = other.getInfectiondeck();

@@ -56,7 +56,15 @@ public class ComputerPlayer {
 
         // return the smallest
 
-        timeToLose = 50;
+        SimulationGameState sim = new SimulationGameState(gamestate);
+        int simTTL = sim.simulateUntilLoss();
+
+        //pick the smallest
+        if (simTTL < cardsTTL) {
+            timeToLose = simTTL;
+        } else {
+            timeToLose = cardsTTL;
+        }
 
         return timeToLose;
     }
@@ -85,8 +93,6 @@ public class ComputerPlayer {
     }
 
     private ArrayList<Plan> simulateTreat() {
-        String current = player.getCurrentCity();
-
         //have to list all the possible POIs and go to them
 
         HashMap<String, City> cities = gamestate.getCities();
@@ -117,29 +123,25 @@ public class ComputerPlayer {
             if (!GameState.isDiseaseCured(cities.get(cityName).getColor())) { // if that color isn't cured
                 //for all possible cubes removed
                 for (int i = 0; i < cubeCount; i++) {
-                    //TODO create a plan object?
-                    int positiveTTLDelta;
 
-                    if (cubeCount >= 3) {
-                        positiveTTLDelta = 2 + i * 4; // temporary: doesn't take into account shuffle backs
-                    } else {
-                        positiveTTLDelta = i * 4;
-                    }
+                    SimulationGameState sim = new SimulationGameState(gamestate);
+                    sim.treatDisease(cityName, cubeCount);
 
-                    TTLDelta = positiveTTLDelta - path.size();
+                    int newTTL = sim.simulateUntilLoss(); //TODO fix math
+
+                    TTLDelta = (newTTL - timeToLose) - path.size();
 
                     plans.add(new Plan("Treat cubes at " + cityName, 0, TTLDelta, path));
                 }
-            } else { // if that color is cured
-                int positiveTTLDelta;
+            } else { // otherwise, that color is cured
 
-                if (cubeCount >= 3) {
-                    positiveTTLDelta = 2 + cubeCount * 4; // temporary: doesn't take into account shuffle backs
-                } else {
-                    positiveTTLDelta = cubeCount * 4;
-                }
+                // don't need to loop
+                SimulationGameState sim = new SimulationGameState(gamestate);
+                sim.treatDisease(cityName, 3);
 
-                TTLDelta = positiveTTLDelta - path.size();
+                int newTTL = sim.simulateUntilLoss(); //TODO fix math
+
+                TTLDelta = (newTTL - timeToLose) - path.size();
 
                 plans.add(new Plan("Treat cubes at " + cityName, 0, TTLDelta, path));
             }

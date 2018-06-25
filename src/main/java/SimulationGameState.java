@@ -9,6 +9,17 @@ public class SimulationGameState extends GameState {
         super.copy(other);
     }
 
+    public void treatDisease(String city, int amount) {
+        City targetCity = GameState.getCities().get(city);
+
+        //if disease is cured
+        if (isDiseaseCured(targetCity.getColor())) {
+            targetCity.removeCubes(targetCity.getCubeCount());
+        } else {
+            targetCity.removeCubes(amount);
+        }
+    }
+
     public int simulateUntilLoss() {
         int turns = 0;
         int player = 0;
