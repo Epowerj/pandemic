@@ -7,9 +7,10 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class GameState {
-    private static HashMap<String, City> nodes = new HashMap<String, City>();
+    protected static HashMap<String, City> nodes = new HashMap<String, City>();
     private static ArrayList<String> stations = new ArrayList<>();
-    private static Deck playerdeck = new Deck();
+    protected static Deck playerdeck = new Deck();
+    protected static InfectionDeck infectiondeck = new InfectionDeck();
     private static boolean blueCured = false;
     private static boolean blackCured = false;
     private static boolean redCured = false;
@@ -18,14 +19,13 @@ public class GameState {
     private static boolean blackEradicated = false;
     private static boolean redEradicated = false;
     private static boolean yellowEradicated = false;
-    private static InfectionDeck infectiondeck = new InfectionDeck();
     private static int outbreak = 0;
     private static ArrayList<String> explodedCites = new ArrayList<>();
     public final int epidemicDifficulty = 4;
-    ArrayList<Player> players = new ArrayList<>();
-    private int infectionrateindex = 0;
-    private int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
-    private boolean haveLost = false;
+    protected final int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
+    protected ArrayList<Player> players = new ArrayList<>();
+    protected int infectionrateindex = 0;
+    protected boolean haveLost = false;
     private int epochSize;
     private int epochOverflow;
 
@@ -398,7 +398,7 @@ public class GameState {
         updateEradicated();
     }
 
-    private void updateEradicated() {
+    protected void updateEradicated() {
         HashMap<String, Integer> cubeCounts = getCubeCounts();
         for (Map.Entry<String, Integer> entry : cubeCounts.entrySet()) {
             String color = entry.getKey();
