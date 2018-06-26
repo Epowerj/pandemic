@@ -94,13 +94,13 @@ public class ComputerPlayer {
         ArrayList<Plan> treatPlans = simulateTreat();
 
         // discover (+ trade cards)
-        ArrayList<Plan> discoverPlans = simulateDiscover();
+        //TODO ArrayList<Plan> discoverPlans = simulateDiscover();
 
         //TODO build research station (skipping)
 
         ArrayList<Plan> plans = new ArrayList<>();
         plans.addAll(treatPlans);
-        plans.addAll(discoverPlans);
+        //plans.addAll(discoverPlans);
 
         return plans;
     }
