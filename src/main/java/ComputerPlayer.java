@@ -56,8 +56,21 @@ public class ComputerPlayer {
 
         // return the smallest
 
-        SimulationGameState sim = new SimulationGameState(gamestate);
-        int simTTL = sim.simulateUntilLoss();
+        // simulate a bunch of times and average the number
+        SimulationGameState sim;
+        ArrayList<Integer> toAverage = new ArrayList<>();
+
+        for (int i = 0; i < 25; i++) { // simulate many times
+            sim = new SimulationGameState(gamestate);
+            toAverage.add(sim.simulateUntilLoss());
+        }
+
+        // average
+        int simTTL = 0;
+        for (int i : toAverage) {
+            simTTL += i;
+        }
+        simTTL = simTTL / toAverage.size();
 
         //pick the smallest
         if (simTTL < cardsTTL) {
@@ -124,10 +137,21 @@ public class ComputerPlayer {
                 //for all possible cubes removed
                 for (int i = 0; i < cubeCount; i++) {
 
-                    SimulationGameState sim = new SimulationGameState(gamestate);
-                    sim.treatDisease(cityName, cubeCount);
+                    SimulationGameState sim;
+                    ArrayList<Integer> toAverage = new ArrayList<>();
 
-                    int newTTL = sim.simulateUntilLoss(); //TODO fix math
+                    for (int h = 0; h < 25; h++) { // simulate many times
+                        sim = new SimulationGameState(gamestate);
+                        sim.treatDisease(cityName, cubeCount);
+                        toAverage.add(sim.simulateUntilLoss());
+                    }
+
+                    // average
+                    int newTTL = 0;
+                    for (int k : toAverage) {
+                        newTTL += k;
+                    }
+                    newTTL = newTTL / toAverage.size();
 
                     TTLDelta = (newTTL - timeToLose) - path.size();
 
