@@ -28,6 +28,7 @@ public class GameState {
     protected boolean haveLost = false;
     private int epochSize;
     private int epochOverflow;
+    private HashMap<Integer, ComputerPlayer> aiList = new HashMap<>();
 
     // constructor
     public GameState(String info_file) {
@@ -577,6 +578,29 @@ public class GameState {
         double b = (((bPossible / deck) * 2f) - ((bPossible / deck) * ((bPossible - 1) / deck))) * 100f;
         System.out.println("Chance of blue: " + df.format(b) + "%");
 
+    }
+
+    public HashMap<Integer, ComputerPlayer> getAiList() {
+        return aiList;
+    }
+
+    public ComputerPlayer getAI(int i) {
+        return aiList.get(i);
+    }
+
+    public boolean isAI(int i) {
+        return aiList.containsKey(i);
+    }
+
+    // register a new ai
+    public void makeAI(int i) {
+        if (players.size() > i && !aiList.containsKey(i)) {
+            aiList.put(i, new ComputerPlayer(this, players.get(i)));
+        } else {
+            // bad
+            System.out.println("Tried to make an invalid ai - GameState.makeAI()");
+            assert false;
+        }
     }
 }
 

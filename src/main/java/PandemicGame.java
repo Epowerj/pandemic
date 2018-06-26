@@ -12,6 +12,8 @@ public class PandemicGame {
 
         gamestate.gameSetup();
 
+        gamestate.makeAI(0);
+
         ioloop(gamestate);
     }
 
@@ -176,6 +178,25 @@ public class PandemicGame {
 
         if (move.equals("ai")) {
             //TODO do ai move
+
+            // check if the current player is an ai
+            // first find the current player index
+            int currentPlayer;
+            for (currentPlayer = 0; currentPlayer < gamestate.getPlayers().size(); currentPlayer++) {
+                if (gamestate.getPlayers().get(currentPlayer) == player) {
+                    break;
+                }
+            }
+
+            // do the check
+            String aiMove;
+            if (gamestate.isAI(currentPlayer)) {
+                aiMove = gamestate.getAI(currentPlayer).doMove();
+            } else {
+                aiMove = "The current player doesn't have an associated AI";
+            }
+
+            System.out.println(aiMove);
 
             success = false;
         }
