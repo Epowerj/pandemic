@@ -30,7 +30,7 @@ public class SimulationGameState extends GameState {
             newTurn(players.get(player)); //TODO need to shuffle and copy decks!
 
             //switch to the next player
-            if (player < players.size()) {
+            if (player < players.size() - 1) {
                 player++;
             } else {
                 player = 0;
@@ -65,7 +65,7 @@ public class SimulationGameState extends GameState {
 
                 //add 3 cubes
                 InfectionCard cardToInfect = (InfectionCard) infectiondeck.getBottomNormalCard();
-                nodes.get(cardToInfect.getCity()).addCubes(3);
+                nodes.get(cardToInfect.getCity()).addCubes(3, this);
                 infectiondeck.pushToDiscard(cardToInfect);
 
                 System.out.println("Added cubes to " + cardToInfect.getCity());
@@ -91,7 +91,7 @@ public class SimulationGameState extends GameState {
                 City city = nodes.get(infcard.getCity());
 
                 System.out.println("Added cubes to " + city.getName());
-                city.incrementCubes(); //put new cube
+                city.incrementCubes(this); //put new cube
             }
         }
 

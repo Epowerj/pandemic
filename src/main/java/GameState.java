@@ -20,7 +20,7 @@ public class GameState {
     private static boolean redEradicated = false;
     private static boolean yellowEradicated = false;
     private static int outbreak = 0;
-    private static ArrayList<String> explodedCites = new ArrayList<>();
+    private static ArrayList<String> explodedCities = new ArrayList<>();
     public final int epidemicDifficulty = 4;
     protected final int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
     protected ArrayList<Player> players = new ArrayList<>();
@@ -40,39 +40,8 @@ public class GameState {
         copy(other);
     }
 
-    protected void copy(GameState other) {
-        for (Map.Entry<String, City> entry : other.getCities().entrySet()) {
-            String cityName = entry.getKey();
-            City city = entry.getValue();
-
-            City copyCity = new City(city);
-
-            nodes.put(cityName, copyCity);
-        }
-
-        stations = other.getResearchStations();
-        playerdeck = other.getPlayerDeck();
-        infectiondeck = other.getInfectiondeck();
-
-        blueCured = other.isDiseaseCured("B");
-        blackCured = other.isDiseaseCured("U");
-        redCured = other.isDiseaseCured("R");
-        yellowCured = other.isDiseaseCured("Y");
-
-        blueEradicated = other.isDiseaseEradicated("B");
-        blackEradicated = other.isDiseaseEradicated("U");
-        redEradicated = other.isDiseaseEradicated("R");
-        yellowEradicated = other.isDiseaseEradicated("Y");
-
-        outbreak = other.getOutbreak();
-        //exploded cities is empty
-        //epidemicDifficulty = other.getEpidemicDifficulty();
-        players = other.getPlayers();
-        infectionrateindex = other.getInfectionrateindex();
-        //infection rates don't change
-        haveLost = other.haveLost;
-        epochSize = other.getEpochSize();
-        epochOverflow = other.getEpochOverflow();
+    public static void addToExplodedCities(String city) {
+        explodedCities.add(city);
     }
 
     public static void placeResearchStation(String targetCity) {
@@ -149,13 +118,9 @@ public class GameState {
         outbreak++;
     }
 
-    public static void addToExplodedCities(String city) {
-        explodedCites.add(city);
-    }
-
     public static boolean isCityExploded(String city) {
-        for (int i = 0; i < explodedCites.size(); i++) {
-            if (explodedCites.get(i).equals(city.toLowerCase())) {
+        for (int i = 0; i < explodedCities.size(); i++) {
+            if (explodedCities.get(i).equals(city.toLowerCase())) {
                 return true;
             }
         }
@@ -164,7 +129,47 @@ public class GameState {
     }
 
     public static void clearExplodedCities() {
-        explodedCites.clear();
+        explodedCities.clear();
+    }
+
+    protected void copy(GameState other) {
+        for (Map.Entry<String, City> entry : other.getCities().entrySet()) {
+            String cityName = entry.getKey();
+            City city = entry.getValue();
+
+            City copyCity = new City(city);
+
+            nodes.put(cityName, copyCity);
+        }
+
+        stations = other.getResearchStations();
+
+        playerdeck = other.getPlayerDeck();
+        infectiondeck = other.getInfectiondeck();
+
+        blueCured = other.isDiseaseCured("B");
+        blackCured = other.isDiseaseCured("U");
+        redCured = other.isDiseaseCured("R");
+        yellowCured = other.isDiseaseCured("Y");
+
+        blueEradicated = other.isDiseaseEradicated("B");
+        blackEradicated = other.isDiseaseEradicated("U");
+        redEradicated = other.isDiseaseEradicated("R");
+        yellowEradicated = other.isDiseaseEradicated("Y");
+
+        outbreak = other.getOutbreak();
+        //exploded cities is empty
+        //epidemicDifficulty = other.getEpidemicDifficulty();
+
+        for (Player otherPlayer : other.getPlayers()) {
+            players.add(new Player(otherPlayer));
+        }
+
+        infectionrateindex = other.getInfectionrateindex();
+        //infection rates don't change
+        haveLost = other.haveLost;
+        epochSize = other.getEpochSize();
+        epochOverflow = other.getEpochOverflow();
     }
 
     //add city to the list
@@ -366,7 +371,7 @@ public class GameState {
 
                 //add 3 cubes
                 InfectionCard cardToInfect = (InfectionCard) infectiondeck.getBottomNormalCard();
-                nodes.get(cardToInfect.getCity()).addCubes(3);
+                nodes.get(cardToInfect.getCity()).addCubes(3, this);
                 infectiondeck.pushToDiscard(cardToInfect);
 
                 System.out.println("Added cubes to " + cardToInfect.getCity());
@@ -392,7 +397,7 @@ public class GameState {
                 City city = nodes.get(infcard.getCity());
 
                 System.out.println("Added cubes to " + city.getName());
-                city.incrementCubes(); //put new cube
+                city.incrementCubes(this); //put new cube
             }
         }
 

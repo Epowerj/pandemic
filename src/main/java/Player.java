@@ -13,6 +13,13 @@ public class Player {
         role = playerole;
     }
 
+    // copy constructor
+    public Player(Player other) {
+        hand = other.getHand();
+        currentCity = other.getCurrentCity();
+        role = other.getRole();
+    }
+
     public Role getRole() {
         return role;
     }

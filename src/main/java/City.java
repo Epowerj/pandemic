@@ -71,11 +71,16 @@ public class City {
         cubes.put(color, count);
     }
 
-    public void incrementCubes() {
-        incrementCubes(this.color);
+    public void incrementCubes(GameState gameState) {
+        incrementCubes(this.color, gameState);
     }
 
-    public void incrementCubes(String color) {
+    // launcher for the real increment cubes method
+    public void incrementCubes(String color, GameState gameState) {
+        incrementCubes(color, gameState, false);
+    }
+
+    public void incrementCubes(String color, GameState gameState, boolean recursing) {
         cubes.put(color, cubes.get(color) + 1);
 
         //check if there are more than 3 cubes there
@@ -86,34 +91,35 @@ public class City {
 
             if (value > 3) {
                 cubes.put(col, 3); //put back to 3
-                GameState.incrementOutbreaks();
+                gameState.incrementOutbreaks();
 
-
-                GameState.addToExplodedCities(this.getName());
+                gameState.addToExplodedCities(this.getName());
 
                 //infect adjacent cities
-                HashMap<String, City> cities = GameState.getCities();
+                HashMap<String, City> cities = gameState.getCities();
                 for (String cityname : adjacent) {
                     //if city hasn't already exploded
-                    if (!GameState.isCityExploded(cityname)) {
-                        cities.get(cityname).incrementCubes(col);
+                    if (!gameState.isCityExploded(cityname)) {
+                        cities.get(cityname).incrementCubes(col, gameState, true);
                     }
                 }
 
-                //stack should have returned back so it's okay to clear
-                GameState.clearExplodedCities();
+                if (!recursing) {
+                    //stack should have returned back so it's okay to clear
+                    gameState.clearExplodedCities();
+                }
             }
         }
     }
 
-    public void addCubes(int count, String color) {
+    public void addCubes(int count, String color, GameState gameState) {
         for (int i = 0; i < count; i++) {
-            incrementCubes(color);
+            incrementCubes(color, gameState);
         }
     }
 
-    public void addCubes(int count) {
-        addCubes(count, this.color);
+    public void addCubes(int count, GameState gameState) {
+        addCubes(count, this.color, gameState);
     }
 
     public void removeCubes(int amount, String color) {
