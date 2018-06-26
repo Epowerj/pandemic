@@ -10,7 +10,7 @@ public class SimulationGameState extends GameState {
     }
 
     public void treatDisease(String city, int amount) {
-        City targetCity = GameState.getCities().get(city);
+        City targetCity = getCities().get(city);
 
         //if disease is cured
         if (isDiseaseCured(targetCity.getColor())) {

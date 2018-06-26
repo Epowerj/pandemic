@@ -134,7 +134,7 @@ public class ComputerPlayer {
             //find how it changes the TTL (increase in TTL)
             int cubeCount = cities.get(cityName).getCubeCount(); //TODO cube count is only for the default color
 
-            if (!GameState.isDiseaseCured(cities.get(cityName).getColor())) { // if that color isn't cured
+            if (!gamestate.isDiseaseCured(cities.get(cityName).getColor())) { // if that color isn't cured
                 //for all possible cubes removed
                 for (int i = 0; i < cubeCount; i++) {
 
@@ -161,10 +161,21 @@ public class ComputerPlayer {
             } else { // otherwise, that color is cured
 
                 // don't need to loop
-                SimulationGameState sim = new SimulationGameState(gamestate);
-                sim.treatDisease(cityName, 3);
+                SimulationGameState sim;
+                ArrayList<Integer> toAverage = new ArrayList<>();
 
-                int newTTL = sim.simulateUntilLoss(); //TODO fix math
+                for (int h = 0; h < 25; h++) { // simulate many times
+                    sim = new SimulationGameState(gamestate);
+                    sim.treatDisease(cityName, 3);
+                    toAverage.add(sim.simulateUntilLoss());
+                }
+
+                // average
+                int newTTL = 0;
+                for (int k : toAverage) {
+                    newTTL += k;
+                }
+                newTTL = newTTL / toAverage.size();
 
                 TTLDelta = (newTTL - timeToLose) - path.size();
 
