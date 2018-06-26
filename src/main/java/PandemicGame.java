@@ -31,6 +31,7 @@ public class PandemicGame {
         printResearchStations(gamestate);
         printCubeInfo(gamestate);
 
+
         while (looping) { //each turn
 
             for (int playerNum = 0; playerNum < players.size() && looping; playerNum++) { //each player

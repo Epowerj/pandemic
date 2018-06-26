@@ -44,7 +44,8 @@ public class ComputerPlayer {
 
     private int calculateTTW() {
         timeToWin = 50;
-        gamestate.predictPlayer();
+        HashMap<String,Double> predictions = gamestate.predictPlayer();
+
         return timeToWin;
     }
 

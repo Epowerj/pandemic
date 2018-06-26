@@ -1,3 +1,5 @@
+import org.omg.PortableInterceptor.INACTIVE;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -524,8 +526,9 @@ public class GameState {
         return colorcount;
     }
 
-    public void predictPlayer() {
+    public HashMap<String,Double> predictPlayer() {
         DecimalFormat df = new DecimalFormat("#.00");
+        HashMap<String,Double> predictions = new HashMap<>();
         ArrayList<Player> players = getPlayers();
         double uCount = 0, bCount = 0, yCount = 0, rCount = 0;           //counts the color card within players hands
         double uDiscard = 0, rDiscard = 0, yDiscard = 0, bDiscard = 0;   //counts the color card within the discard pile
@@ -536,35 +539,19 @@ public class GameState {
             for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
                 String key = cubes.getKey();
                 Integer value = cubes.getValue();
-                if (key.equals("U")) {
-                    uCount += value;
-                }
-                if (key.equals("R")) {
-                    rCount += value;
-                }
-                if (key.equals("Y")) {
-                    yCount += value;
-                }
-                if (key.equals("B")) {
-                    bCount += value;
-                }
+                if (key.equals("U")) { uCount += value; }
+                if (key.equals("R")) { rCount += value; }
+                if (key.equals("Y")) { yCount += value; }
+                if (key.equals("B")) { bCount += value; }
             }
             HashMap<String, Integer> discardCounter = getPlayerColorCount();
             for (Map.Entry<String, Integer> num : discardCounter.entrySet()) {
                 String key = num.getKey();
                 Integer value = num.getValue();
-                if (key.equals("U")) {
-                    uDiscard += value;
-                }
-                if (key.equals("R")) {
-                    rDiscard += value;
-                }
-                if (key.equals("Y")) {
-                    yDiscard += value;
-                }
-                if (key.equals("B")) {
-                    bDiscard += value;
-                }
+                if (key.equals("U")) { uDiscard += value; }
+                if (key.equals("R")) { rDiscard += value; }
+                if (key.equals("Y")) { yDiscard += value; }
+                if (key.equals("B")) { bDiscard += value; }
             }
         }
         uPossible = 12 - uCount - uDiscard;
@@ -572,16 +559,22 @@ public class GameState {
         yPossible = 12 - yCount - yDiscard;
         bPossible = 12 - bCount - bDiscard;
         double u = (((uPossible / deck) * 2f) - ((uPossible / deck) * ((uPossible - 1) / deck))) * 100f;
+        predictions.put("U",u);
         System.out.println("Chance of black: " + df.format(u) + "%");
 
         double r = (((rPossible / deck) * 2f) - ((rPossible / deck) * ((rPossible - 1) / deck))) * 100f;
+        predictions.put("R",r);
         System.out.println("Chance of red: " + df.format(r) + "%");
 
         double y = (((yPossible / deck) * 2f) - ((yPossible / deck) * ((yPossible - 1) / deck))) * 100f;
+        predictions.put("Y",y);
         System.out.println("Chance of yellow: " + df.format(y) + "%");
 
         double b = (((bPossible / deck) * 2f) - ((bPossible / deck) * ((bPossible - 1) / deck))) * 100f;
+        predictions.put("B",b);
         System.out.println("Chance of blue: " + df.format(b) + "%");
+
+        return predictions;
 
     }
 
