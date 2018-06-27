@@ -579,5 +579,6 @@ public class PandemicGame {
         System.out.println("Is epidemic drawn: " + isEpidemicDrawn);
         System.out.println("How many cards left: " + cardsLeft);
     }
+
 }
 

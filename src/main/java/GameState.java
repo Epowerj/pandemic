@@ -580,6 +580,7 @@ public class GameState {
 
     }
 
+
     public HashMap<Integer, ComputerPlayer> getAiList() {
         return aiList;
     }
@@ -601,6 +602,15 @@ public class GameState {
             System.out.println("Tried to make an invalid ai - GameState.makeAI()");
             assert false;
         }
+    }
+
+    public void avgPredictions(GameState gameState){
+        HashMap<String,Double> predictions = gameState.predictPlayer();
+        int avg = 0;
+
+
+
+
     }
 }
 

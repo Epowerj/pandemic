@@ -44,6 +44,12 @@ public class ComputerPlayer {
     }
 
     private int calculateTTW() {
+        //average of predictions
+        //average time to have 5 of one color in the hand
+        //avergae turns to move and exchange a card
+        //last step avg time to get to a research station
+        //repeat this 4 times for each cure to get number to win based on actions
+        HashMap<String,Double> playerpredictions= new HashMap<>();
         timeToWin = 50;
         HashMap<String,Double> predictions = gamestate.predictPlayer();
 
@@ -213,5 +219,8 @@ public class ComputerPlayer {
         calculateTTL();
         return timeToLose;
     }
+
+    //TODO simulate an exchange and a meet
+
 
 }
