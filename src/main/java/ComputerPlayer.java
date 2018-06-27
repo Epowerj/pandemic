@@ -68,7 +68,7 @@ public class ComputerPlayer {
         SimulationGameState sim;
         ArrayList<Integer> toAverage = new ArrayList<>();
 
-        for (int i = 0; i < 25; i++) { // simulate many times
+        for (int i = 0; i < 2; i++) { // simulate many times
             sim = new SimulationGameState(gamestate);
             toAverage.add(sim.simulateUntilLoss());
         }
@@ -131,7 +131,7 @@ public class ComputerPlayer {
             int TTLDelta = entry.getValue(); // is 0
 
             //find the turns needed to get there (decrease in TTL)
-            ArrayList<String> path = player.goNormal(player.getCurrentCity(), cityName);
+            ArrayList<String> path = player.goNormal(player.getCurrentCity(), cityName, gamestate);
 
             //find how it changes the TTL (increase in TTL)
             int cubeCount = cities.get(cityName).getCubeCount(); //TODO cube count is only for the default color
@@ -201,7 +201,7 @@ public class ComputerPlayer {
 
             if (count >= 5) {
                 //TODO try making a plan to cure this and add it to plans
-                ArrayList<String> path = player.pathToClosestStation();
+                ArrayList<String> path = player.pathToClosestStation(gamestate);
                 String destination = path.get(path.size() - 1);
 
                 Plan curePlan = new Plan(("Drive to " + destination + " and cure " + color), -20, -(path.size() + 1), path);

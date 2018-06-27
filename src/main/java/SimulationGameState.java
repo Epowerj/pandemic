@@ -37,7 +37,7 @@ public class SimulationGameState extends GameState {
             }
         }
 
-        return turns;
+        return turns * 4; //convert into actions
 
         // |   ||
         // ||  |_

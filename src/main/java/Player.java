@@ -17,7 +17,7 @@ public class Player {
     public Player(Player other) {
         // copy hand
         for (int i = 0; i < other.getHand().size(); i++) {
-            hand.set(i, other.getHand().get(i));
+            hand.add(i, other.getHand().get(i));
         }
 
         currentCity = other.getCurrentCity();
@@ -84,8 +84,8 @@ public class Player {
 
     //move to an adjacent city
     //returns false if move isn't possible
-    public boolean drive(String destination) {
-        HashMap<String, City> cities = GameState.getCities();
+    public boolean drive(String destination, GameState gameState) {
+        HashMap<String, City> cities = gameState.getCities();
 
         if (cities.get(currentCity).isAdjacent(destination)) {
             currentCity = destination; //do the move
@@ -97,11 +97,11 @@ public class Player {
 
     //move to a city of a held card
     //returns false if move isn't possible
-    public boolean directFlight(String destination) {
+    public boolean directFlight(String destination, GameState gameState) {
         if (this.isHoldingCityCard(destination)) {
             currentCity = destination; //do the move
             PlayerCard toDiscard = takeCityCard(destination);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
             return true;
         } else {
             return false;
@@ -110,12 +110,12 @@ public class Player {
 
     //move to any city if card matches current position
     //returns false if move isn't possible
-    public boolean charterFlight(String destination) {
+    public boolean charterFlight(String destination, GameState gameState) {
         if (this.isHoldingCityCard(currentCity)) {
             String previousCity = currentCity;
             currentCity = destination; //do the move
             PlayerCard toDiscard = takeCityCard(previousCity);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
             return true;
         } else {
             return false;
@@ -124,9 +124,9 @@ public class Player {
 
     //move between research station cities
     //returns false if move isn't possible
-    public boolean shuttleFlight(String destination) {
+    public boolean shuttleFlight(String destination, GameState gameState) {
         //if current location and destination both have research stations
-        if (GameState.cityHasResearchStation(currentCity) && GameState.cityHasResearchStation(destination)) {
+        if (gameState.cityHasResearchStation(currentCity) && gameState.cityHasResearchStation(destination)) {
             currentCity = destination; //do the move
             return true;
         } else {
@@ -136,16 +136,16 @@ public class Player {
 
     //build research station at current location
     //returns false if not possible
-    public boolean buildResearchStation() {
+    public boolean buildResearchStation(GameState gameState) {
         if (role == Role.OPERATION) { //if the player is an operations expert
-            GameState.placeResearchStation(currentCity);
+            gameState.placeResearchStation(currentCity);
 
             return true;
         } else if (this.isHoldingCityCard(currentCity)) { //if the player has a card of their current position
-            GameState.placeResearchStation(currentCity);
+            gameState.placeResearchStation(currentCity);
 
             PlayerCard toDiscard = takeCityCard(currentCity);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
 
             return true;
         } else {
@@ -155,11 +155,11 @@ public class Player {
 
     //destroy a disease cube at the current position
     //TODO removing cured disease is an automatic and free action for medic
-    public void treatDisease() {
-        City targetCity = GameState.getCities().get(currentCity);
+    public void treatDisease(GameState gameState) {
+        City targetCity = gameState.getCities().get(currentCity);
 
         //if disease is cured or if player is a medic
-        if (GameState.isDiseaseCured(targetCity.getColor()) || role == Role.MEDIC) {
+        if (gameState.isDiseaseCured(targetCity.getColor()) || role == Role.MEDIC) {
             targetCity.removeCubes(targetCity.getCubeCount());
         } else {
             targetCity.removeCubes(1);
@@ -211,7 +211,7 @@ public class Player {
     //cure a disease by sacrificing 5 cards of the same color at a research station
     //if player is a scientist, only 4 cards are needed, the last argument can be any string
     //returns false if it's not possible
-    public boolean discoverCure(String cardCity1, String cardCity2, String cardCity3, String cardCity4, String cardCity5) {
+    public boolean discoverCure(String cardCity1, String cardCity2, String cardCity3, String cardCity4, String cardCity5, GameState gameState) {
 
         boolean haveCards = true;
         String color = "";
@@ -241,21 +241,21 @@ public class Player {
             }
         }
 
-        if (GameState.cityHasResearchStation(currentCity) && haveCards) {
-            GameState.setCured(color);
+        if (gameState.cityHasResearchStation(currentCity) && haveCards) {
+            gameState.setCured(color);
 
             //discard cards
             PlayerCard toDiscard = takeCityCard(cardCity1);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
             toDiscard = takeCityCard(cardCity2);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
             toDiscard = takeCityCard(cardCity3);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
             toDiscard = takeCityCard(cardCity4);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
             if (role != Role.SCIENTIST) { //Don't discard the last card if you don't need to
                 toDiscard = takeCityCard(cardCity5);
-                GameState.discardPlayerCard(toDiscard);
+                gameState.discardPlayerCard(toDiscard);
             }
 
             return true;
@@ -268,12 +268,12 @@ public class Player {
     //only operations expert can do this
     //returns false if not possible
     //TODO only possible once per turn
-    public boolean operationsMove(String destination, String cityCardToDiscard) {
+    public boolean operationsMove(String destination, String cityCardToDiscard, GameState gameState) {
 
-        if (role == Role.OPERATION && GameState.cityHasResearchStation(currentCity)) {
+        if (role == Role.OPERATION && gameState.cityHasResearchStation(currentCity)) {
             currentCity = destination; //do the move
             PlayerCard toDiscard = takeCityCard(cityCardToDiscard);
-            GameState.discardPlayerCard(toDiscard);
+            gameState.discardPlayerCard(toDiscard);
 
             return true;
         } else {
@@ -284,17 +284,17 @@ public class Player {
     //move another player
     //only dispatcher can do this
     //returns false if not possible
-    public boolean dispatcherMove(Player targetPlayer, String moveType, String destination) {
+    public boolean dispatcherMove(Player targetPlayer, String moveType, String destination, GameState gameState) {
 
         if (role == Role.DISPATCHER) {
             if (moveType.equals("drive")) {
-                return targetPlayer.drive(destination);
+                return targetPlayer.drive(destination, gameState);
             } else if (moveType.equals("directflight")) {
-                return targetPlayer.directFlight(destination);
+                return targetPlayer.directFlight(destination, gameState);
             } else if (moveType.equals("charterflight")) {
-                return targetPlayer.charterFlight(destination);
+                return targetPlayer.charterFlight(destination, gameState);
             } else if (moveType.equals("shuttleflight")) {
-                return targetPlayer.shuttleFlight(destination);
+                return targetPlayer.shuttleFlight(destination, gameState);
             } else {
                 return false;
             }
@@ -330,8 +330,8 @@ public class Player {
     }
 
     //prints the fastest path to drive to destination
-    public String goDrivePrint(String destination) {
-        HashMap<String, City> cities = GameState.getCities();
+    public String goDrivePrint(String destination, GameState gameState) {
+        HashMap<String, City> cities = gameState.getCities();
 
         LinkedList<String> queue = new LinkedList<>(); //for some reason LinkedList is a queue
         ArrayList<String> visited = new ArrayList<>();
@@ -393,8 +393,8 @@ public class Player {
         return result;
     }
 
-    public ArrayList<String> goNormal(String start, String destination) {
-        HashMap<String, City> cities = GameState.getCities();
+    public ArrayList<String> goNormal(String start, String destination, GameState gameState) {
+        HashMap<String, City> cities = gameState.getCities();
 
         LinkedList<String> queue = new LinkedList<>(); //for some reason LinkedList is a queue
         ArrayList<String> visited = new ArrayList<>();
@@ -423,8 +423,8 @@ public class Player {
                 }
 
                 //shuttle flights
-                if (GameState.getStations().contains(subRootCity.getName())) { //if there is a station at current position
-                    for (String city : GameState.getStations()) {
+                if (gameState.getStations().contains(subRootCity.getName())) { //if there is a station at current position
+                    for (String city : gameState.getStations()) {
 
                         if (!visited.contains(city)) { //shuttle flights
                             meta.put(city, subRoot);
@@ -467,8 +467,8 @@ public class Player {
 
     //TODO fix doubles + add normal drive comparisons
     //prints the fastest path to get to destination
-    public String goAnyPrint(String destination) {
-        if (!GameState.getCities().containsKey(destination)) {
+    public String goAnyPrint(String destination, GameState gameState) {
+        if (!gameState.getCities().containsKey(destination)) {
             return "Invalid city";
         }
 
@@ -480,7 +480,7 @@ public class Player {
             ArrayList<ArrayList<String>> toSave = new ArrayList<>();
 
             //drive to C and then charter flight to B
-            ArrayList<String> aDriveCFlyB = goNormal(currentCity, cardCity);
+            ArrayList<String> aDriveCFlyB = goNormal(currentCity, cardCity, gameState);
             //afterwards fly is one move
             aDriveCFlyB.add("flight to " + destination);
             toSave.add(aDriveCFlyB);
@@ -491,7 +491,7 @@ public class Player {
             aFlyCDriveB.add("flight to " + cardCity);
             toSave.add(aFlyCDriveB);
 
-            ArrayList<String> temp = goNormal(cardCity, destination);
+            ArrayList<String> temp = goNormal(cardCity, destination, gameState);
 
             //append the drive path to the existing list
             for (int i = 0; i < temp.size(); i++) {
@@ -507,7 +507,7 @@ public class Player {
                 String stepCity = step.getCity();
 
                 if (!step.equals(card) && !results.containsKey(stepCity)) {
-                    ArrayList<String> stepPath = goNormal(cardCity, stepCity);
+                    ArrayList<String> stepPath = goNormal(cardCity, stepCity, gameState);
 
                     int aFlyCDriveDFlyB = 1 + stepPath.size() + 1;
 
@@ -587,7 +587,7 @@ public class Player {
 
         String toReturn = "";
 
-        ArrayList<String> drive = goNormal(currentCity, destination);
+        ArrayList<String> drive = goNormal(currentCity, destination, gameState);
 
         toReturn += "Normal drive path: ";
 
@@ -635,10 +635,10 @@ public class Player {
 
     }
 
-    public ArrayList<String> pathToClosestStation() {
+    public ArrayList<String> pathToClosestStation(GameState gameState) {
         ArrayList<ArrayList<String>> paths = new ArrayList<>();
-        for (String city : GameState.getStations()) {
-            paths.add(goNormal(currentCity, city));
+        for (String city : gameState.getStations()) {
+            paths.add(goNormal(currentCity, city, gameState));
         }
 
         int bestIndex = -1;

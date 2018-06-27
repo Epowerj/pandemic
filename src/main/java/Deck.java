@@ -108,7 +108,7 @@ public class Deck {
         ArrayList<Card> copy = new ArrayList<>();
 
         for (int i = 0; i < deck.size(); i++) {
-            copy.set(i, deck.get(i));
+            copy.add(i, deck.get(i));
         }
 
         return copy;
@@ -119,7 +119,7 @@ public class Deck {
         ArrayList<Card> copy = new ArrayList<>();
 
         for (int i = 0; i < discard.size(); i++) {
-            copy.set(i, discard.get(i));
+            copy.add(i, discard.get(i));
         }
 
         return copy;

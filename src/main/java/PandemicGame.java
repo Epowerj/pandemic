@@ -124,7 +124,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                System.out.println(player.goDrivePrint(destination));
+                System.out.println(player.goDrivePrint(destination, gamestate));
 
                 success = true;
             } else {
@@ -143,7 +143,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                System.out.println(player.goAnyPrint(destination));
+                System.out.println(player.goAnyPrint(destination, gamestate));
 
                 success = true;
             } else {
@@ -228,7 +228,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                success = player.drive(destination);
+                success = player.drive(destination, gamestate);
             } else {
                 success = false;
             }
@@ -243,7 +243,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                success = player.directFlight(destination);
+                success = player.directFlight(destination, gamestate);
             } else {
                 success = false;
             }
@@ -258,7 +258,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                success = player.charterFlight(destination);
+                success = player.charterFlight(destination, gamestate);
             } else {
                 success = false;
             }
@@ -273,7 +273,7 @@ public class PandemicGame {
             if (input.length >= 2) {
                 String destination = input[1];
 
-                success = player.shuttleFlight(destination);
+                success = player.shuttleFlight(destination, gamestate);
             } else {
                 success = false;
             }
@@ -285,7 +285,7 @@ public class PandemicGame {
         }
 
         if (move.equals("buildstation")) {
-            success = player.buildResearchStation();
+            success = player.buildResearchStation(gamestate);
             if (!success) {
                 System.out.println("Bad move");
                 System.out.println("Usage: buildstation");
@@ -293,7 +293,7 @@ public class PandemicGame {
         }
 
         if (move.equals("treat")) {
-            player.treatDisease();
+            player.treatDisease(gamestate);
             success = true;
         }
 
@@ -340,7 +340,7 @@ public class PandemicGame {
 
             if (input.length >= 6) {
 
-                success = player.discoverCure(input[1], input[2], input[3], input[4], input[5]);
+                success = player.discoverCure(input[1], input[2], input[3], input[4], input[5], gamestate);
             }
 
             if (!success) {

@@ -8,20 +8,20 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class GameState {
-    protected static HashMap<String, City> nodes = new HashMap<String, City>();
-    private static ArrayList<String> stations = new ArrayList<>();
-    protected static Deck playerdeck = new Deck();
-    protected static InfectionDeck infectiondeck = new InfectionDeck();
-    private static boolean blueCured = false;
-    private static boolean blackCured = false;
-    private static boolean redCured = false;
-    private static boolean yellowCured = false;
-    private static boolean blueEradicated = false;
-    private static boolean blackEradicated = false;
-    private static boolean redEradicated = false;
-    private static boolean yellowEradicated = false;
-    private static int outbreak = 0;
-    private static ArrayList<String> explodedCities = new ArrayList<>();
+    protected HashMap<String, City> nodes = new HashMap<String, City>();
+    protected Deck playerdeck = new Deck();
+    protected InfectionDeck infectiondeck = new InfectionDeck();
+    private ArrayList<String> stations = new ArrayList<>();
+    private boolean blueCured = false;
+    private boolean blackCured = false;
+    private boolean redCured = false;
+    private boolean yellowCured = false;
+    private boolean blueEradicated = false;
+    private boolean blackEradicated = false;
+    private boolean redEradicated = false;
+    private boolean yellowEradicated = false;
+    private int outbreak = 0;
+    private ArrayList<String> explodedCities = new ArrayList<>();
     public final int epidemicDifficulty = 4;
     protected final int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
     protected ArrayList<Player> players = new ArrayList<>();
@@ -41,29 +41,29 @@ public class GameState {
         copy(other);
     }
 
-    public static void addToExplodedCities(String city) {
+    public void addToExplodedCities(String city) {
         explodedCities.add(city);
     }
 
-    public static void placeResearchStation(String targetCity) {
+    public void placeResearchStation(String targetCity) {
         if (!stations.contains(targetCity)) { //if there isn't a station already there
             stations.add(targetCity);
         }
     }
 
-    public static boolean cityHasResearchStation(String target) {
+    public boolean cityHasResearchStation(String target) {
         return stations.contains(target);
     }
 
-    public static HashMap<String, City> getCities() {
+    public HashMap<String, City> getCities() {
         return nodes;
     }
 
-    public static void discardPlayerCard(PlayerCard toDiscard) {
+    public void discardPlayerCard(PlayerCard toDiscard) {
         playerdeck.pushToDiscard(toDiscard);
     }
 
-    public static boolean isDiseaseCured(String color) {
+    public boolean isDiseaseCured(String color) {
         if (color.equals("B")) {
             return blueCured;
         } else if (color.equals("R")) {
@@ -77,7 +77,7 @@ public class GameState {
         }
     }
 
-    public static boolean isDiseaseEradicated(String color) {
+    public boolean isDiseaseEradicated(String color) {
         if (color.equals("B")) {
             return blueEradicated;
         } else if (color.equals("R")) {
@@ -91,7 +91,7 @@ public class GameState {
         }
     }
 
-    public static void setCured(String color) {
+    public void setCured(String color) {
         if (color.equals("B")) {
             blueCured = true;
         } else if (color.equals("R")) {
@@ -103,23 +103,23 @@ public class GameState {
         }
     }
 
-    public static Deck getPlayerDeck() {
+    public Deck getPlayerDeck() {
         return playerdeck;
     }
 
-    public static Deck getInfectionDeck() {
+    public Deck getInfectionDeck() {
         return infectiondeck;
     }
 
-    public static ArrayList<String> getStations() {
+    public ArrayList<String> getStations() {
         return stations;
     }
 
-    public static void incrementOutbreaks() {
+    public void incrementOutbreaks() {
         outbreak++;
     }
 
-    public static boolean isCityExploded(String city) {
+    public boolean isCityExploded(String city) {
         for (int i = 0; i < explodedCities.size(); i++) {
             if (explodedCities.get(i).equals(city.toLowerCase())) {
                 return true;
@@ -129,7 +129,7 @@ public class GameState {
         return false;
     }
 
-    public static void clearExplodedCities() {
+    public void clearExplodedCities() {
         explodedCities.clear();
     }
 
@@ -145,7 +145,8 @@ public class GameState {
         }
 
         //copy research stations
-        for (int i = 0; i < other.getResearchStations().size(); i++) {
+        ArrayList<String> otherStations = other.getResearchStations();
+        for (int i = 0; i < otherStations.size(); i++) {
             stations.add(other.getResearchStations().get(i));
         }
 
@@ -168,7 +169,7 @@ public class GameState {
 
         // copy players
         for (int i = 0; i < other.getPlayers().size(); i++) {
-            players.set(i, new Player(other.getPlayers().get(i)));
+            players.add(i, new Player(other.getPlayers().get(i)));
         }
 
         infectionrateindex = other.getInfectionrateindex();
