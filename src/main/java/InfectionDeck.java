@@ -4,6 +4,25 @@ import java.util.Collections;
 public class InfectionDeck extends Deck {
     private ArrayList<ArrayList<InfectionCard>> shuffleBacks = new ArrayList<>();
 
+    public InfectionDeck() {
+    } //default constructor
+
+    // copy constructor
+    public InfectionDeck(InfectionDeck other) {
+        super((Deck) other); //call super's constructor
+
+        // copy shuffle back
+        for (int i = 0; i < other.getShuffleBack().size(); i++) {
+            ArrayList<InfectionCard> deep = new ArrayList<>();
+
+            for (int j = 0; j < other.getShuffleBack().get(i).size(); j++) {
+                deep.add(j, other.getShuffleBack().get(i).get(j));
+            }
+
+            shuffleBacks.add(i, deep);
+        }
+    }
+
     //shuffle the discard and put the cards back into the normal deck
     @Override
     public void shuffleBack() {

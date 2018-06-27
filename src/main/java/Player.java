@@ -15,7 +15,7 @@ public class Player {
 
     // copy constructor
     public Player(Player other) {
-        hand = other.getHand();
+        hand = (ArrayList<PlayerCard>) other.getHand().clone();
         currentCity = other.getCurrentCity();
         role = other.getRole();
     }

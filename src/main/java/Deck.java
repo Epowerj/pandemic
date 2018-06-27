@@ -11,6 +11,11 @@ public class Deck {
         discard = new ArrayList<Card>();
     }
 
+    //copy constructor
+    public Deck(Deck other) {
+        deck = other.getDeckCopy();
+        discard = other.getDiscardCopy();
+    }
 
     //retrieves the top card and returns it
     public Card pop() {
@@ -98,9 +103,14 @@ public class Deck {
 
     public ArrayList<Card> getDiscard(){ return discard; }
 
+    //returns a shallow copy of the deck
+    public ArrayList<Card> getDeckCopy() {
+        return (ArrayList<Card>) deck.clone();
+    }
 
+    //returns a shallow copy of the discard
+    public ArrayList<Card> getDiscardCopy() {
+        return (ArrayList<Card>) discard.clone();
+    }
 
 }
-
-
-

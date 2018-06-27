@@ -1,4 +1,3 @@
-import org.omg.PortableInterceptor.INACTIVE;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -135,6 +134,7 @@ public class GameState {
     }
 
     protected void copy(GameState other) {
+        //copy nodes
         for (Map.Entry<String, City> entry : other.getCities().entrySet()) {
             String cityName = entry.getKey();
             City city = entry.getValue();
@@ -144,10 +144,11 @@ public class GameState {
             nodes.put(cityName, copyCity);
         }
 
-        stations = other.getResearchStations();
+        //copy research stations
+        stations = (ArrayList<String>) other.getResearchStations().clone();
 
-        playerdeck = other.getPlayerDeck();
-        infectiondeck = other.getInfectiondeck();
+        playerdeck = new Deck(other.getPlayerDeck());
+        infectiondeck = new InfectionDeck(other.getInfectiondeck());
 
         blueCured = other.isDiseaseCured("B");
         blackCured = other.isDiseaseCured("U");
@@ -161,8 +162,9 @@ public class GameState {
 
         outbreak = other.getOutbreak();
         //exploded cities is empty
-        //epidemicDifficulty = other.getEpidemicDifficulty();
+        //epidemicDifficulty is a final value
 
+        // copy players
         for (Player otherPlayer : other.getPlayers()) {
             players.add(new Player(otherPlayer));
         }
