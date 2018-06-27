@@ -68,7 +68,7 @@ public class ComputerPlayer {
         SimulationGameState sim;
         ArrayList<Integer> toAverage = new ArrayList<>();
 
-        for (int i = 0; i < 2; i++) { // simulate many times
+        for (int i = 0; i < 25; i++) { // simulate many times
             sim = new SimulationGameState(gamestate);
             toAverage.add(sim.simulateUntilLoss());
         }
