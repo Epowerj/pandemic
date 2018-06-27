@@ -105,12 +105,24 @@ public class Deck {
 
     //returns a shallow copy of the deck
     public ArrayList<Card> getDeckCopy() {
-        return (ArrayList<Card>) deck.clone();
+        ArrayList<Card> copy = new ArrayList<>();
+
+        for (int i = 0; i < deck.size(); i++) {
+            copy.set(i, deck.get(i));
+        }
+
+        return copy;
     }
 
     //returns a shallow copy of the discard
     public ArrayList<Card> getDiscardCopy() {
-        return (ArrayList<Card>) discard.clone();
+        ArrayList<Card> copy = new ArrayList<>();
+
+        for (int i = 0; i < discard.size(); i++) {
+            copy.set(i, discard.get(i));
+        }
+
+        return copy;
     }
 
 }

@@ -145,7 +145,9 @@ public class GameState {
         }
 
         //copy research stations
-        stations = (ArrayList<String>) other.getResearchStations().clone();
+        for (int i = 0; i < other.getResearchStations().size(); i++) {
+            stations.add(other.getResearchStations().get(i));
+        }
 
         playerdeck = new Deck(other.getPlayerDeck());
         infectiondeck = new InfectionDeck(other.getInfectiondeck());
@@ -165,12 +167,12 @@ public class GameState {
         //epidemicDifficulty is a final value
 
         // copy players
-        for (Player otherPlayer : other.getPlayers()) {
-            players.add(new Player(otherPlayer));
+        for (int i = 0; i < other.getPlayers().size(); i++) {
+            players.set(i, new Player(other.getPlayers().get(i)));
         }
 
         infectionrateindex = other.getInfectionrateindex();
-        //infection rates don't change
+        //infection rates are final
         haveLost = other.haveLost;
         epochSize = other.getEpochSize();
         epochOverflow = other.getEpochOverflow();

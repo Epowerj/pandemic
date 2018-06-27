@@ -15,7 +15,11 @@ public class Player {
 
     // copy constructor
     public Player(Player other) {
-        hand = (ArrayList<PlayerCard>) other.getHand().clone();
+        // copy hand
+        for (int i = 0; i < other.getHand().size(); i++) {
+            hand.set(i, other.getHand().get(i));
+        }
+
         currentCity = other.getCurrentCity();
         role = other.getRole();
     }
