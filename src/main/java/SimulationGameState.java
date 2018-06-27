@@ -20,6 +20,13 @@ public class SimulationGameState extends GameState {
         }
     }
 
+    public int simulateUntilWin(){
+        //TODO need to be able to switch colors until gone through them all
+        int turns =0;
+        return turns;
+    }
+
+
     public int simulateUntilLoss() {
         int turns = 0;
         int player = 0;

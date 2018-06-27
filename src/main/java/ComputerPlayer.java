@@ -50,6 +50,7 @@ public class ComputerPlayer {
         //last step avg time to get to a research station
         //repeat this 4 times for each cure to get number to win based on actions
         HashMap<String,Double> playerpredictions= new HashMap<>();
+
         timeToWin = 50;
         HashMap<String,Double> predictions = gamestate.predictPlayer();
 
