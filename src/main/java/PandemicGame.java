@@ -177,6 +177,28 @@ public class PandemicGame {
             success = false; //don't want to actually count this though
         }
 
+        if (move.equals("ttl")) {
+
+            // check if the current player is an ai
+            // first find the current player index
+            int currentPlayer;
+            for (currentPlayer = 0; currentPlayer < gamestate.getPlayers().size(); currentPlayer++) {
+                if (gamestate.getPlayers().get(currentPlayer) == player) {
+                    break;
+                }
+            }
+
+            // do the check
+            String aiMove;
+            if (gamestate.isAI(currentPlayer)) {
+                System.out.println("The TTL is: " + gamestate.getAI(currentPlayer).getTimeToLose());
+            } else {
+                System.out.println("The current player doesn't have an associated AI");
+            }
+
+            success = false;
+        }
+
         if (move.equals("ai")) {
             //TODO do ai move
 

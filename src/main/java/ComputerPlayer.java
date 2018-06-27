@@ -14,8 +14,9 @@ public class ComputerPlayer {
         player = tocontrol;
     }
 
+    //should do move and returns a description of the move
+    //TODO currently just prints
     public String doMove() {
-        //TODO do move and return string description of move
 
         // calculate TTW and TTL
         calculateTime();
@@ -51,10 +52,10 @@ public class ComputerPlayer {
 
     private int calculateTTL() {
 
-        int cardsTTL = playerCardsTTL();
+        // old
+        //int cardsTTL = playerCardsTTL();
         // calculate out of cubes TTL
         // calculate 8 outbreaks TTL
-
         // return the smallest
 
         // simulate a bunch of times and average the number
@@ -73,12 +74,7 @@ public class ComputerPlayer {
         }
         simTTL = simTTL / toAverage.size();
 
-        //pick the smallest
-        if (simTTL < cardsTTL) {
-            timeToLose = simTTL;
-        } else {
-            timeToLose = cardsTTL;
-        }
+        timeToLose = simTTL;
 
         return timeToLose;
     }
@@ -213,5 +209,9 @@ public class ComputerPlayer {
         return plans;
     }
 
+    public int getTimeToLose() {
+        calculateTTL();
+        return timeToLose;
+    }
 
 }
