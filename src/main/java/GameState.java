@@ -355,9 +355,15 @@ public class GameState {
         }*/
     }
 
+    // launcher function for the real newTurn
+    public void newTurn(Player currentPlayer) {
+        newTurn(currentPlayer, true); // verbose by default
+    }
+
     //everything that needs to be done at the end of each turn
     //draw infection cards, put new cubes, handle epidemic cards
-    public void newTurn(Player currentPlayer) {
+    //if verbose is true, it'l print info
+    public void newTurn(Player currentPlayer, boolean verbose) {
 
         if (playerdeck.deckSize() < 2) { //if we can't draw cards, we've lost
             haveLost = true;
@@ -369,7 +375,9 @@ public class GameState {
             Card drawnCard = playerdeck.pop();
 
             if (drawnCard.getCardType() == Card.CardType.EPIDEMIC) {
-                System.out.println("Drew an Epidemic card!!");
+                if (verbose) {
+                    System.out.println("Drew an Epidemic card!!");
+                }
 
                 //increase the infection rate
                 if (infectionrateindex < 6) {
@@ -381,13 +389,17 @@ public class GameState {
                 nodes.get(cardToInfect.getCity()).addCubes(3, this);
                 infectiondeck.pushToDiscard(cardToInfect);
 
-                System.out.println("Added cubes to " + cardToInfect.getCity());
+                if (verbose) {
+                    System.out.println("Added cubes to " + cardToInfect.getCity());
+                }
 
                 infectiondeck.shuffleBack();
             } else {// otherwise it must be a normal player card
                 currentPlayer.addCardToHand((PlayerCard) drawnCard);
 
-                System.out.println("Player added " + drawnCard.getCardInfoString() + " to their hand");
+                if (verbose) {
+                    System.out.println("Player added " + drawnCard.getCardInfoString() + " to their hand");
+                }
             }
         }
 
@@ -396,14 +408,18 @@ public class GameState {
 
         for (int i = 0; i < amountCards; i++) { //depends on the infection rate
             Card card = infectiondeck.draw();
-            System.out.println("Drew an infection card");
+            if (verbose) {
+                System.out.println("Drew an infection card");
+            }
 
             InfectionCard infcard = (InfectionCard) card;
 
             if (!isDiseaseEradicated(infcard.getColor())) {
                 City city = nodes.get(infcard.getCity());
 
-                System.out.println("Added cubes to " + city.getName());
+                if (verbose) {
+                    System.out.println("Added cubes to " + city.getName());
+                }
                 city.incrementCubes(this); //put new cube
             }
         }
