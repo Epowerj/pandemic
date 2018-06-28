@@ -95,7 +95,7 @@ public class ComputerPlayer {
         }
         simTTL = simTTL / toAverage.size();
 
-        timeToLose = simTTL;
+        timeToLose = simTTL; //TODO make sure this is right
 
         return timeToLose;
     }
@@ -171,7 +171,7 @@ public class ComputerPlayer {
                     }
                     newTTL = newTTL / toAverage.size();
 
-                    TTLDelta = (newTTL - timeToLose) - path.size();
+                    TTLDelta = (newTTL - timeToLose) - path.size(); //TODO add actions to do the treat
 
                     plans.add(new Plan("Treat " + cubeCount + " cubes at " + cityName, 0, TTLDelta, path));
                 }
