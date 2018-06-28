@@ -9,6 +9,8 @@ public class ComputerPlayer {
     private int timeToWin;
     private int timeToLose;
 
+    final int simAccuracy = 100; // times to do simulation before average
+
     public ComputerPlayer(GameState gamestatelink, Player tocontrol) {
         gamestate = gamestatelink;
         player = tocontrol;
@@ -69,7 +71,7 @@ public class ComputerPlayer {
         SimulationGameState sim;
         ArrayList<Integer> toAverage = new ArrayList<>();
 
-        for (int i = 0; i < 25; i++) { // simulate many times
+        for (int i = 0; i < simAccuracy; i++) { // simulate many times
             sim = new SimulationGameState(gamestate);
             toAverage.add(sim.simulateUntilLoss());
         }
@@ -144,7 +146,7 @@ public class ComputerPlayer {
                     SimulationGameState sim;
                     ArrayList<Integer> toAverage = new ArrayList<>();
 
-                    for (int h = 0; h < 25; h++) { // simulate many times
+                    for (int h = 0; h < simAccuracy; h++) { // simulate many times
                         sim = new SimulationGameState(gamestate);
                         sim.treatDisease(cityName, cubeCount);
                         toAverage.add(sim.simulateUntilLoss());
@@ -159,7 +161,7 @@ public class ComputerPlayer {
 
                     TTLDelta = (newTTL - timeToLose) - path.size();
 
-                    plans.add(new Plan("Treat cubes at " + cityName, 0, TTLDelta, path));
+                    plans.add(new Plan("Treat " + cubeCount + " cubes at " + cityName, 0, TTLDelta, path));
                 }
             } else { // otherwise, that color is cured
 
@@ -167,7 +169,7 @@ public class ComputerPlayer {
                 SimulationGameState sim;
                 ArrayList<Integer> toAverage = new ArrayList<>();
 
-                for (int h = 0; h < 25; h++) { // simulate many times
+                for (int h = 0; h < simAccuracy; h++) { // simulate many times
                     sim = new SimulationGameState(gamestate);
                     sim.treatDisease(cityName, 3);
                     toAverage.add(sim.simulateUntilLoss());
@@ -182,7 +184,7 @@ public class ComputerPlayer {
 
                 TTLDelta = (newTTL - timeToLose) - path.size();
 
-                plans.add(new Plan("Treat cubes at " + cityName, 0, TTLDelta, path));
+                plans.add(new Plan("Treat all cubes at " + cityName, 0, TTLDelta, path));
             }
         }
 
