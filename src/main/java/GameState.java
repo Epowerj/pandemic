@@ -274,7 +274,10 @@ public class GameState {
             playerdeck.insert(new EpidemicCard(), random); // insert into player deck
         }
 
-        stations.add("atlanta"); // add research station
+        stations.add("atlanta"); // add default research station
+        stations.add("saopaulo"); //TODO testing stations
+        stations.add("baghdad");
+        stations.add("bangkok");
     }
 
     public void addPlayer(Player.Role role) {
