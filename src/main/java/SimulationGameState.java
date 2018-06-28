@@ -3,6 +3,10 @@ public class SimulationGameState extends GameState {
     // copy constructor
     public SimulationGameState(GameState other) {
         super(other);
+
+        Deck olddeck = new Deck(playerdeck);
+        playerdeck.reshuffleExistingDeck(this);
+        Deck newDeck = playerdeck;
     }
 
     public void copy(GameState other) { // makes copy public on this class
@@ -26,8 +30,6 @@ public class SimulationGameState extends GameState {
         return turns;
     }
 
-
-
     public int simulateUntilLoss() {
         int turns = 0;
         int player = 0;
@@ -35,7 +37,7 @@ public class SimulationGameState extends GameState {
         while (!haveLost()) {
             turns++;
 
-            newTurn(players.get(player), false); //TODO need to shuffle and copy decks!
+            newTurn(players.get(player), false);
 
             //switch to the next player
             if (player < players.size() - 1) {
