@@ -51,10 +51,22 @@ public class ComputerPlayer {
         //avergae turns to move and exchange a card
         //last step avg time to get to a research station
         //repeat this 4 times for each cure to get number to win based on actions
-        HashMap<String,Double> playerpredictions= new HashMap<>();
 
-        timeToWin = 50;
-        HashMap<String,Double> predictions = gamestate.predictPlayer();
+        int size = player.pathToClosestStation(gamestate).size();
+        ArrayList<PlayerCard> hand =  player.getHand();
+        int avg=0; int num=0; int exchange=0;
+
+        for (PlayerCard card : hand){
+           String city =  card.getCity();
+           String current = player.getCurrentCity();
+           num = player.goNormal(current,city,gamestate).size();
+           exchange++;
+
+        }
+
+        avg = num/hand.size();
+
+        timeToWin = (size + avg + exchange) * 4;
 
         return timeToWin;
     }

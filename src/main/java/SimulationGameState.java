@@ -27,6 +27,7 @@ public class SimulationGameState extends GameState {
     }
 
 
+
     public int simulateUntilLoss() {
         int turns = 0;
         int player = 0;
@@ -51,3 +52,4 @@ public class SimulationGameState extends GameState {
     }
 
 }
+

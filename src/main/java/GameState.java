@@ -603,6 +603,8 @@ public class GameState {
     }
 
 
+
+
     public HashMap<Integer, ComputerPlayer> getAiList() {
         return aiList;
     }
@@ -626,14 +628,12 @@ public class GameState {
         }
     }
 
-    public void avgPredictions(GameState gameState){
-        HashMap<String,Double> predictions = gameState.predictPlayer();
-        int avg = 0;
-
-
-
-
+    public int avgCardTime(){
+        int h = 5;
+        return h;
     }
+
+
 }
 
 
