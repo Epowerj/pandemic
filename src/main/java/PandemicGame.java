@@ -13,6 +13,7 @@ public class PandemicGame {
         gamestate.gameSetup();
 
         gamestate.makeAI(0);
+        gamestate.makeAI(1);
 
         ioloop(gamestate);
     }
