@@ -162,17 +162,44 @@ public class Deck {
         Random r = new Random();
         int random;
 
+        ArrayList<Card> result = new ArrayList<>();
+
         // insert the first one
         if (!isEpidemicDrawn || currentEpoch > 1) {
             random = r.nextInt(gameState.getEpochOverflow()); // random number from 0 to epochOverflow
-            insert(new EpidemicCard(), random); // insert into player deck
+
+            // move cards over from the current deck into the current epoch
+            ArrayList<Card> epochToAdd = new ArrayList<>();
+            for (int i = 0; i < gameState.getEpochOverflow(); i++) {
+                epochToAdd.add(deck.get(deck.size() - 1));
+                deck.remove(deck.get(deck.size() - 1));
+            }
+
+            epochToAdd.add(random, new EpidemicCard()); // insert into epoch
+
+            result.addAll(epochToAdd); // add epoch to result
         }
 
         // for each epidemic except the first one
         for (int i = 0; i < currentEpoch - 1; i++) {
             random = r.nextInt(gameState.getEpochSize()); // random number from 0 to epochSize
-            random += i * gameState.getEpochSize() + gameState.getEpochOverflow(); // epoch offset
-            insert(new EpidemicCard(), random); // insert into player deck
+
+            // move cards over from the current deck into the current epoch
+            ArrayList<Card> epochToAdd = new ArrayList<>();
+            for (int j = 0; j < gameState.getEpochSize(); j++) {
+                epochToAdd.add(deck.get(deck.size() - 1));
+                deck.remove(deck.get(deck.size() - 1));
+            }
+
+            epochToAdd.add(random, new EpidemicCard()); // insert into epoch
+
+            result.addAll(epochToAdd); // add epoch to result
+
+            //old
+            //random += (i * gameState.getEpochSize() + i) + gameState.getEpochOverflow() + 1; // epoch offset
+            //insert(new EpidemicCard(), random); // insert into player deck
         }
+
+        deck = result; //now set the deck
     }
 }
