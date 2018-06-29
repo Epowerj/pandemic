@@ -457,10 +457,13 @@ public class GameState {
     }
 
     public boolean haveLost() {
-        haveLost = (outbreak >= 8); // if 8 or more outbreaks
+        if (!haveLost) { // if we've already lost, don't do anything
+            haveLost = (outbreak >= 8); // if 8 or more outbreaks
+        }
 
-        if (!haveLost) { //if we've already lost, don't do anything
+        if (!haveLost) { // if we've already lost, don't do anything
 
+            //check if we're out of cubes
             HashMap<String, Integer> cCount = new HashMap<>();
 
             HashMap<String, Integer> cubeCounts = getCubeCounts();

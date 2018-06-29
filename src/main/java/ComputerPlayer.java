@@ -95,7 +95,7 @@ public class ComputerPlayer {
         }
         simTTL = simTTL / toAverage.size();
 
-        timeToLose = simTTL; //TODO make sure this is right
+        timeToLose = simTTL;
 
         return timeToLose;
     }
