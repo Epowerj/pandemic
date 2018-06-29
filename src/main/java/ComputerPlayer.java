@@ -27,15 +27,22 @@ public class ComputerPlayer {
         ArrayList<Plan> plans = simulateMoves();
 
         // pick the best from plans
-        //TODO doesn't take into account real TTW and TTL
         Plan currentBest = null;
-        for (Plan plan : plans) {
+        Plan secondBest = null;
+        Plan thirdBest = null;
+        for (Plan plan : plans) { //get the top 3 plans
             if (currentBest == null || plan.getDeltaValue() > currentBest.getDeltaValue()) {
                 currentBest = plan;
+            } else if (secondBest == null || plan.getDeltaValue() > secondBest.getDeltaValue()) {
+                secondBest = plan;
+            } else if (thirdBest == null || plan.getDeltaValue() > thirdBest.getDeltaValue()) {
+                thirdBest = plan;
             }
         }
 
-        String toReturn = "The best plan is:\n  " + currentBest.getDescription();
+        String toReturn = "The best plans are:\n " + currentBest.getDescription() + " -- " + currentBest.getDeltaValue();
+        toReturn += "\n " + secondBest.getDescription() + " -- " + secondBest.getDeltaValue();
+        toReturn += "\n " + thirdBest.getDescription() + " -- " + thirdBest.getDeltaValue();
 
         return toReturn;
     }
@@ -171,7 +178,7 @@ public class ComputerPlayer {
                     }
                     newTTL = newTTL / toAverage.size();
 
-                    TTLDelta = (newTTL - timeToLose) - path.size(); //TODO add actions to do the treat
+                    TTLDelta = (newTTL - timeToLose) - path.size() - i; //TODO add actions to do the treat
 
                     plans.add(new Plan("Treat " + cubeCount + " cubes at " + cityName, 0, TTLDelta, path));
                 }
@@ -194,7 +201,7 @@ public class ComputerPlayer {
                 }
                 newTTL = newTTL / toAverage.size();
 
-                TTLDelta = (newTTL - timeToLose) - path.size();
+                TTLDelta = (newTTL - timeToLose) - path.size() - 3;
 
                 plans.add(new Plan("Treat all cubes at " + cityName, 0, TTLDelta, path));
             }

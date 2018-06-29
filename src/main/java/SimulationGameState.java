@@ -4,9 +4,7 @@ public class SimulationGameState extends GameState {
     public SimulationGameState(GameState other) {
         super(other);
 
-        Deck olddeck = new Deck(playerdeck);
         playerdeck.reshuffleExistingDeck(this);
-        Deck newDeck = playerdeck;
     }
 
     public void copy(GameState other) { // makes copy public on this class
