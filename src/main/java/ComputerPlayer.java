@@ -134,7 +134,7 @@ public class ComputerPlayer {
         //have to list all the possible POIs and go to them
 
         HashMap<String, City> cities = gamestate.getCities();
-        HashMap<String, Integer> allPOIs = new HashMap<>(); //list of nodes that have cubes
+        ArrayList<String> allPOIs = new ArrayList<>(); //list of nodes that have cubes
 
         //build the list of cities that have cubes
         for (Map.Entry<String, City> entry : cities.entrySet()) {
@@ -142,28 +142,29 @@ public class ComputerPlayer {
             City city = entry.getValue();
 
             if (city.getCubeCount() > 0) {
-                allPOIs.put(cityName, 0);
+                allPOIs.add(cityName);
             }
         }
 
         ArrayList<Plan> plans = new ArrayList<>();
 
-        for (Map.Entry<String, Integer> entry : allPOIs.entrySet()) {
-            String cityName = entry.getKey();
-            int TTLDelta = entry.getValue(); // is 0
+        for (String cityName : allPOIs) {
+            int TTLDelta = 0;
 
             //find the turns needed to get there (decrease in TTL)
             ArrayList<String> path = player.goNormal(player.getCurrentCity(), cityName, gamestate);
 
             //find how it changes the TTL (increase in TTL)
+
+            //get the amount of cubes
             int cubeCount = cities.get(cityName).getCubeCount(); //TODO cube count is only for the default color
 
             if (!gamestate.isDiseaseCured(cities.get(cityName).getColor())) { // if that color isn't cured
                 //for all possible cubes removed
-                for (int i = 0; i < cubeCount; i++) {
+                for (int i = 1; i <= cubeCount; i++) {
 
                     SimulationGameState sim;
-                    ArrayList<Integer> toAverage = new ArrayList<>();
+                    ArrayList<Integer> toAverage = new ArrayList<>(); // list of numbers that we'll average later
 
                     for (int h = 0; h < simAccuracy; h++) { // simulate many times
                         sim = new SimulationGameState(gamestate);
@@ -176,11 +177,11 @@ public class ComputerPlayer {
                     for (int k : toAverage) {
                         newTTL += k;
                     }
-                    newTTL = newTTL / toAverage.size();
+                    newTTL = newTTL / toAverage.size(); // get average
 
-                    TTLDelta = (newTTL - timeToLose) - path.size() - i; //TODO add actions to do the treat
+                    TTLDelta = (newTTL - timeToLose) - path.size() - i;
 
-                    plans.add(new Plan("Treat " + cubeCount + " cubes at " + cityName, 0, TTLDelta, path));
+                    plans.add(new Plan("Treat " + i + " cubes at " + cityName, 0, TTLDelta, path));
                 }
             } else { // otherwise, that color is cured
 
