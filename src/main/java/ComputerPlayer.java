@@ -53,27 +53,37 @@ public class ComputerPlayer {
     }
 
     private int calculateTTW() {
-        //average of predictions
-        //average time to have 5 of one color in the hand
-        //avergae turns to move and exchange a card
-        //last step avg time to get to a research station
-        //repeat this 4 times for each cure to get number to win based on actions
+      //TODO figure out how to priortize the order of the cards
+        HashMap<String,Double> averages = gamestate.avgCityTime(player);
+        for (Map.Entry<String,Double> num : averages.entrySet()){
+            String color = num.getKey();
+            Double avg = num.getValue();
+            if (color.equals("B")){
+
+            }if (color.equals("R")){
+
+            }if (color.equals("Y")){
+
+            }if (color.equals("U")){
+
+            }
+        }
 
         int size = player.pathToClosestStation(gamestate).size();
-        ArrayList<PlayerCard> hand =  player.getHand();
+        //ArrayList<PlayerCard> hand =  player.getHand();
         int avg=0; int num=0; int exchange=0;
 
-        for (PlayerCard card : hand){
+      /*  for (PlayerCard card : hand){
            String city =  card.getCity();
            String current = player.getCurrentCity();
            num = player.goNormal(current,city,gamestate).size();
            exchange++;
 
-        }
+        }*/
 
-        avg = num/hand.size();
+       // avg = num/hand.size();
 
-        timeToWin = (size + avg + exchange) * 4;
+        //timeToWin = (size + avg + exchange) * 4;
 
         return timeToWin;
     }
