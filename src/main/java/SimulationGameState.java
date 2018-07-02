@@ -28,9 +28,14 @@ public class SimulationGameState extends GameState {
         return turns;
     }
 
+    // launcher method
     public int simulateUntilLoss() {
+        return simulateUntilLoss(getPlayers().get(0));
+    }
+
+    public int simulateUntilLoss(Player startingPlayer) {
         int turns = 0;
-        int player = 0;
+        int player = getPlayerNumber(startingPlayer);
 
         while (!haveLost()) {
             turns++;
@@ -49,6 +54,17 @@ public class SimulationGameState extends GameState {
 
         // |   ||
         // ||  |_
+    }
+
+    public int getPlayerNumber(Player player) {
+        int currentPlayer;
+        for (currentPlayer = 0; currentPlayer < getPlayers().size(); currentPlayer++) {
+            if (getPlayers().get(currentPlayer) == player) {
+                break;
+            }
+        }
+
+        return currentPlayer;
     }
 
 }
