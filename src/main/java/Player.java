@@ -570,7 +570,6 @@ public class Player {
                             break;
                         }
                     }
-
                 } else {
 
                     for (int i = 0; i < n; i++) {

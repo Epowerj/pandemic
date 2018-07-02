@@ -92,9 +92,11 @@ public class PandemicGame {
         boolean success = false;
 
         if (move.equals("info")) {
-            printPlayerInfo(gamestate);
-            printResearchStations(gamestate);
-            printBoardInfo(gamestate);
+           printPlayerInfo(gamestate);
+           printResearchStations(gamestate);
+           printBoardInfo(gamestate);
+           gamestate.avgCityTime(player);
+            //printAVG(gamestate,player);
 
             gamestate.predictPlayer();
             congestedCities(gamestate);
@@ -581,5 +583,17 @@ public class PandemicGame {
         System.out.println("How many cards left: " + cardsLeft);
     }
 
+    static void printAVG(GameState gameState, Player p){
+       // HashMap<String,Double> avg = gameState.avgCityTime(p);
+       /* for (Map.Entry<String,Double> stuff : avg.entrySet()){
+            String color = stuff.getKey();
+            Double average = stuff.getValue();
+            if (color.equals("U")) {  System.out.println("The average distance is" + average);}
+            if (color.equals("R")) {  }
+            if (color.equals("Y")) {  }
+            if (color.equals("B")) {  }
+        }
+*/
+    }
 }
 

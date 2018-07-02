@@ -1,4 +1,7 @@
 
+
+import com.sun.media.jfxmedia.events.PlayerTimeListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -631,9 +634,40 @@ public class GameState {
         }
     }
 
-    public int avgCardTime(){
-        int h = 5;
-        return h;
+    public HashMap<String,Double> avgCityTime(Player player){
+        HashMap<String,City> cities = getCities();
+        HashMap<String,Double> averages = new HashMap<>();
+        double blueAVG=0; double redAVG=0; double blackAVG=0; double yellowAVG=0;int goNormal=0;
+        for (Map.Entry<String,City> c : cities.entrySet()) {
+            String key = c.getKey();
+            City value = c.getValue();
+
+            if (value.getColor().equals("U")) {
+                goNormal = player.goNormal("Baghdad",key,this).size();
+                blackAVG = (double) goNormal + blackAVG;
+           }
+           if (value.getColor().equals("Y")) {
+                goNormal = player.goNormal("SaoPaulo",key,this).size();
+                yellowAVG = (double) goNormal + yellowAVG;
+            }
+            if (value.getColor().equals("R")) {
+                goNormal = player.goNormal("Bangkok",key,this).size();
+                redAVG = (double) goNormal + redAVG;
+            }
+            if (value.getColor().equals("B")) {
+                goNormal = player.goNormal("NewYork",key,this).size();
+                blueAVG = (double) goNormal + blueAVG;
+            }
+        }
+        blackAVG = blackAVG/11.0; blueAVG = blueAVG/11.0; redAVG = redAVG/11.0; yellowAVG = yellowAVG/12.0;
+       // System.out.println(blackAVG);
+
+        averages.put("U", blackAVG);
+        averages.put("B", blueAVG);
+        averages.put("R", redAVG);
+        averages.put("Y", yellowAVG);
+
+        return averages;
     }
 
 
