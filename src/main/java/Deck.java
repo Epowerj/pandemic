@@ -102,7 +102,9 @@ public class Deck {
         return discard.size();
     }
 
-    public ArrayList<Card> getDiscard(){ return discard; }
+    public ArrayList<Card> getDiscard() {
+        return discard;
+    }
 
     //returns a shallow copy of the deck
     public ArrayList<Card> getDeckCopy() {
@@ -156,6 +158,11 @@ public class Deck {
             }
         }
 
+        // if there was an epidemic in the last epoch, we've removed it
+        if (!isEpidemicDrawn) {
+            cardsLeft--;
+        }
+
         shuffle(); // shuffling only normal cards at this point
 
         //now add the epidemic cards back in
@@ -165,39 +172,54 @@ public class Deck {
         ArrayList<Card> result = new ArrayList<>();
 
         // insert the first one
-        if (!isEpidemicDrawn || currentEpoch > 1) {
-            random = r.nextInt(gameState.getEpochOverflow()); // random number from 0 to epochOverflow
 
-            // move cards over from the current deck into the current epoch
-            ArrayList<Card> epochToAdd = new ArrayList<>();
-            for (int i = 0; i < gameState.getEpochOverflow(); i++) {
-                epochToAdd.add(deck.get(deck.size() - 1));
-                deck.remove(deck.get(deck.size() - 1));
-            }
-
-            epochToAdd.add(random, new EpidemicCard()); // insert into epoch
-
-            result.addAll(epochToAdd); // add epoch to result
+        //if we are part way into the current epoch, use cardsLeft instead of epochSize
+        int cardsInEpoch;
+        if (currentEpoch > 1) {// if we have more than just one epoch
+            cardsInEpoch = gameState.getEpochOverflow();
+        } else {// current epoch is 1, so we are part way into the last epoch
+            cardsInEpoch = cardsLeft;
         }
 
+        // move cards over from the current deck into the current epoch
+        ArrayList<Card> epochToAdd = new ArrayList<>();
+        for (int i = 0; i < cardsInEpoch; i++) {
+            epochToAdd.add(deck.get(deck.size() - 1)); // add the last card in the deck to the current epoch
+            deck.remove(deck.get(deck.size() - 1)); // remove the one we copied from the deck
+        }
+
+        if (!isEpidemicDrawn) {
+            random = r.nextInt(cardsInEpoch - 1); // random number from 0 to epochOverflow
+            epochToAdd.add(random, new EpidemicCard()); // insert into epoch
+        }
+
+        result.addAll(epochToAdd); // add epoch to result
+
         // for each epidemic except the first one
-        for (int i = 0; i < currentEpoch - 1; i++) {
-            random = r.nextInt(gameState.getEpochSize()); // random number from 0 to epochSize
+        for (int i = 1; i < currentEpoch; i++) {
+
+            //if we are part way into the current epoch, use cardsLeft instead of epochSize
+            if (i != currentEpoch - 1) {
+                cardsInEpoch = gameState.getEpochSize();
+            } else {// otherwise, we are part way into the epoch
+                cardsInEpoch = cardsLeft;
+            }
 
             // move cards over from the current deck into the current epoch
-            ArrayList<Card> epochToAdd = new ArrayList<>();
-            for (int j = 0; j < gameState.getEpochSize(); j++) {
-                epochToAdd.add(deck.get(deck.size() - 1));
+            epochToAdd = new ArrayList<>();
+            for (int j = 0; j < cardsInEpoch; j++) {
+                epochToAdd.add(deck.get(deck.size() - 1)); // add the last card in the deck to the current epoch
                 deck.remove(deck.get(deck.size() - 1));
             }
 
-            epochToAdd.add(random, new EpidemicCard()); // insert into epoch
+            // if we aren't in the last epoch
+            // or if we are, then if no epidemic has been drawn
+            if (i != currentEpoch - 1 || !isEpidemicDrawn) {
+                random = r.nextInt(cardsInEpoch - 1); // random number from 0 to epochSize
+                epochToAdd.add(random, new EpidemicCard()); // insert into epoch
+            }
 
             result.addAll(epochToAdd); // add epoch to result
-
-            //old
-            //random += (i * gameState.getEpochSize() + i) + gameState.getEpochOverflow() + 1; // epoch offset
-            //insert(new EpidemicCard(), random); // insert into player deck
         }
 
         deck = result; //now set the deck
