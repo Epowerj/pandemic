@@ -206,7 +206,7 @@ public class ComputerPlayer {
                     }
                     newTTL = newTTL / toAverage.size(); // get average
 
-                    TTLDelta = (newTTL - timeToLose) - path.size() - i;
+                    TTLDelta = newTTL - timeToLose;
 
                     plans.add(new Plan("Treat " + i + " cubes at " + cityName, 0, TTLDelta, path));
                 }
@@ -231,7 +231,7 @@ public class ComputerPlayer {
                 }
                 newTTL = newTTL / toAverage.size();
 
-                TTLDelta = (newTTL - timeToLose) - path.size() - 3;
+                TTLDelta = newTTL - timeToLose;
 
                 plans.add(new Plan("Treat all cubes at " + cityName, 0, TTLDelta, path));
             }
