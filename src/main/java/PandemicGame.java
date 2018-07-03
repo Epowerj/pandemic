@@ -92,12 +92,11 @@ public class PandemicGame {
         boolean success = false;
 
         if (move.equals("info")) {
-         /*  printPlayerInfo(gamestate);
+           printPlayerInfo(gamestate);
            printResearchStations(gamestate);
            printBoardInfo(gamestate);
-           gamestate.avgCityTime(player);*/
+           gamestate.avgCityTime(player);
             //printAVG(gamestate,player);
-            gamestate.priority();
 
             gamestate.predictPlayer();
             congestedCities(gamestate);
@@ -591,13 +590,14 @@ public class PandemicGame {
     static void printPlayerPrediction(GameState gameState){
         DecimalFormat df = new DecimalFormat("#.00");
         HashMap<String,Double> predictions = gameState.predictPlayer();
-        double u; double r; double y; double b;
-        for (Map.Entry<String,Double> entries = predictions.entrySet()){
+        double u=0; double r=0; double y=0; double b=0;
+        for (Map.Entry<String,Double> entries : predictions.entrySet()){
             String color = entries.getKey();
             Double num = entries.getValue();
-            if (color.equals("B")){ b = num;
-            } if(color.equals("R")){ r = num;
-            }if(color.equals("U")){ u = num; }if(color.equals("Y")){ y = num; }
+            if (color.equals("B")){ b = num;}
+            if(color.equals("R")){ r = num;}
+            if(color.equals("U")){ u = num;}
+            if(color.equals("Y")){ y = num;}
         }
         System.out.println("Chance of black: " + df.format(u) + "%");
         System.out.println("Chance of red: " + df.format(r) + "%");

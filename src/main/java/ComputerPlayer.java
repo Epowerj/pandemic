@@ -57,8 +57,8 @@ public class ComputerPlayer {
     private int calculateTTW() {
       //TODO figure out how to priortize the order of the cards
         boolean blue; boolean black; boolean yellow; boolean red;
-        double blueAVG=0; double blackAVG; double yellowAVG; double redAVG;
-        int bTTW; int uTTW; int yTTW; int rTTW;
+        double blueAVG=0; double blackAVG=0; double yellowAVG=0; double redAVG=0;
+        int bTTW=0; int uTTW=0; int yTTW=0; int rTTW=0;
         HashMap<String,Double> averages = gamestate.avgCityTime(player);
         for (Map.Entry<String,Double> num : averages.entrySet()){
             String color = num.getKey();
@@ -80,25 +80,14 @@ public class ComputerPlayer {
                 blackAVG = avg;
             }
         }
-        //bTTW = blueAVG
+
 
         int size = player.pathToClosestStation(gamestate).size();
+        bTTW = (int) blueAVG + size + 5; rTTW = (int) redAVG + size + 6;
+        yTTW = (int) yellowAVG + size + 7; uTTW = (int) blackAVG + size + 8;
 
-        //ArrayList<PlayerCard> hand =  player.getHand();
-        int avg=0; int num=0; int exchange=0;
 
-      /*  for (PlayerCard card : hand){
-           String city =  card.getCity();
-           String current = player.getCurrentCity();
-           num = player.goNormal(current,city,gamestate).size();
-           exchange++;
-
-        }*/
-
-       // avg = num/hand.size();
-
-        //timeToWin = (size + avg + exchange) * 4;
-        //timeToWin = bTTW + uTTW + rTTW + yellowAVG;
+        timeToWin = bTTW + uTTW + rTTW + yTTW;
 
         return timeToWin;
     }

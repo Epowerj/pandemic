@@ -588,22 +588,16 @@ public class GameState {
         double u = (((uPossible / deck) * 2f) - ((uPossible / deck) * ((uPossible - 1) / deck))) * 100f;
         predictions.put("U",u);
 
-        //System.out.println("Chance of black: " + df.format(u) + "%");
-
         double r = (((rPossible / deck) * 2f) - ((rPossible / deck) * ((rPossible - 1) / deck))) * 100f;
         predictions.put("R",r);
-        //System.out.println("Chance of red: " + df.format(r) + "%");
 
         double y = (((yPossible / deck) * 2f) - ((yPossible / deck) * ((yPossible - 1) / deck))) * 100f;
         predictions.put("Y",y);
-        //System.out.println("Chance of yellow: " + df.format(y) + "%");
 
         double b = (((bPossible / deck) * 2f) - ((bPossible / deck) * ((bPossible - 1) / deck))) * 100f;
         predictions.put("B",b);
-        //System.out.println("Chance of blue: " + df.format(b) + "%");
 
         return predictions;
-
     }
 
 
@@ -668,19 +662,15 @@ public class GameState {
         return averages;
     }
 
-    public int priority(){
+   /* public int priority(){
        // HashMap<String,Double> predictPlayer = predictPlayer();
         int bCount=0; int yCount=0; int rCount=0; int uCount=0;
         ArrayList<String> priority = new ArrayList<>(); //will add the top priority colors in order for estimating
 
-
-
-
-
         int h=9;
         return h;
     }
-
+*/
 
 }
 
