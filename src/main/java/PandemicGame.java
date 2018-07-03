@@ -92,11 +92,12 @@ public class PandemicGame {
         boolean success = false;
 
         if (move.equals("info")) {
-           printPlayerInfo(gamestate);
+         /*  printPlayerInfo(gamestate);
            printResearchStations(gamestate);
            printBoardInfo(gamestate);
-           gamestate.avgCityTime(player);
+           gamestate.avgCityTime(player);*/
             //printAVG(gamestate,player);
+            gamestate.priority();
 
             gamestate.predictPlayer();
             congestedCities(gamestate);
@@ -585,6 +586,24 @@ public class PandemicGame {
 
     static void printPriority(GameState gameState){
         //TODO this is to print and test the priority function in gamestate
+    }
+
+    static void printPlayerPrediction(GameState gameState){
+        DecimalFormat df = new DecimalFormat("#.00");
+        HashMap<String,Double> predictions = gameState.predictPlayer();
+        double u; double r; double y; double b;
+        for (Map.Entry<String,Double> entries = predictions.entrySet()){
+            String color = entries.getKey();
+            Double num = entries.getValue();
+            if (color.equals("B")){ b = num;
+            } if(color.equals("R")){ r = num;
+            }if(color.equals("U")){ u = num; }if(color.equals("Y")){ y = num; }
+        }
+        System.out.println("Chance of black: " + df.format(u) + "%");
+        System.out.println("Chance of red: " + df.format(r) + "%");
+        System.out.println("Chance of yellow: " + df.format(y) + "%");
+        System.out.println("Chance of blue: " + df.format(b) + "%");
+
     }
 
 }

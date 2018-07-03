@@ -57,7 +57,7 @@ public class ComputerPlayer {
     private int calculateTTW() {
       //TODO figure out how to priortize the order of the cards
         boolean blue; boolean black; boolean yellow; boolean red;
-        double blueAVG; double blackAVG; double yellowAVG; double redAVG;
+        double blueAVG=0; double blackAVG; double yellowAVG; double redAVG;
         int bTTW; int uTTW; int yTTW; int rTTW;
         HashMap<String,Double> averages = gamestate.avgCityTime(player);
         for (Map.Entry<String,Double> num : averages.entrySet()){
@@ -80,7 +80,7 @@ public class ComputerPlayer {
                 blackAVG = avg;
             }
         }
-
+        //bTTW = blueAVG
 
         int size = player.pathToClosestStation(gamestate).size();
 
