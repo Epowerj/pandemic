@@ -583,5 +583,9 @@ public class PandemicGame {
         System.out.println("How many cards left: " + cardsLeft);
     }
 
+    static void printPriority(GameState gameState){
+        //TODO this is to print and test the priority function in gamestate
+    }
+
 }
 

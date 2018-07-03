@@ -5,6 +5,7 @@ import com.sun.media.jfxmedia.events.PlayerTimeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
@@ -13,6 +14,7 @@ import java.util.*;
 public class GameState {
     protected HashMap<String, City> nodes = new HashMap<String, City>();
     protected Deck playerdeck = new Deck();
+    protected Deck prioritydeck = new Deck();
     protected InfectionDeck infectiondeck = new InfectionDeck();
     private ArrayList<String> stations = new ArrayList<>();
     private boolean blueCured = false;
@@ -671,6 +673,22 @@ public class GameState {
     }
 
     public int priority(){
+        HashMap<String,Double> predictPlayer = predictPlayer();
+        ArrayList<String> priority = new ArrayList<>(); //will add the top priority colors in order for estimating
+        PlayerCard drawnCard = (PlayerCard) prioritydeck.pop();
+        if(drawnCard.getColor().equals("B")){
+
+        }
+        if(drawnCard.getColor().equals("R")){
+
+        }
+        if(drawnCard.getColor().equals("Y")){
+
+        }
+        if(drawnCard.getColor().equals("u")){
+
+        }
+
         int h=9;
         return h;
     }
