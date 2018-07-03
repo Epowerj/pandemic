@@ -670,6 +670,11 @@ public class GameState {
         return averages;
     }
 
+    public int priority(){
+        int h=9;
+        return h;
+    }
+
 
 }
 
