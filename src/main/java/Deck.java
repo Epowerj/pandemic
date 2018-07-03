@@ -137,7 +137,7 @@ public class Deck {
         int currentEpochSize = gameState.getEpochOverflow() + 1;
         double predictor = 0;
 
-        while (deckSize > currentEpochSize) {
+        while (deckSize > currentEpochSize) { //TODO what if it's equal
             //this isn't the epoch we're looking for; increment
 
             currentEpoch++;
@@ -154,7 +154,7 @@ public class Deck {
             Card card = deck.get(i);
 
             if (card.cardtype == Card.CardType.EPIDEMIC) {
-                deck.remove(i);
+                deck.remove(i); //TODO this messes up the loop
             }
         }
 
