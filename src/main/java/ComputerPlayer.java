@@ -5,15 +5,17 @@ import java.util.Map;
 public class ComputerPlayer {
     private GameState gamestate;
     private Player player;
+    private int playerNum; // needed for simulations
 
     private int timeToWin;
     private int timeToLose;
 
     private final int simAccuracy = 100; // times to do simulation before average
 
-    public ComputerPlayer(GameState gamestatelink, Player tocontrol) {
+    public ComputerPlayer(GameState gamestatelink, Player tocontrol, int playerNumber) {
         gamestate = gamestatelink;
         player = tocontrol;
+        playerNum = playerNumber;
     }
 
     //should do move and returns a description of the move
@@ -194,7 +196,7 @@ public class ComputerPlayer {
 
                         SimulationGameState s = sim; //TODO why is it like this
                         Runnable move = () -> s.treatDisease(cityName, cubeCount);
-                        toAverage.add(sim.simulateUntilLoss(player, path.size() + i, actionsLeftInTurn, move));
+                        toAverage.add(sim.simulateUntilLoss(playerNum, path.size() + i, actionsLeftInTurn, move));
                     }
 
                     // average
@@ -219,7 +221,7 @@ public class ComputerPlayer {
 
                     SimulationGameState s = sim;
                     Runnable move = () -> s.treatDisease(cityName, 3);
-                    toAverage.add(sim.simulateUntilLoss(player, path.size() + 3, actionsLeftInTurn, move));
+                    toAverage.add(sim.simulateUntilLoss(playerNum, path.size() + 3, actionsLeftInTurn, move));
                 }
 
                 // average

@@ -31,12 +31,11 @@ public class SimulationGameState extends GameState {
     // launcher function for the real simulate
     // this is for simulating pure TTL
     public int simulateUntilLoss() {
-        return simulateUntilLoss(players.get(0), 0, 0, null);
+        return simulateUntilLoss(0, 0, 0, null);
     }
 
-    public int simulateUntilLoss(Player startingPlayer, int actionsTillMove, int actionsLeftInTurn, Runnable move) {
-        int currentPlayer = getPlayerNumber(startingPlayer);
-        int startingPlayerNum = currentPlayer; // the player number of the player that's doing the simulation's move
+    public int simulateUntilLoss(int startingPlayer, int actionsTillMove, int actionsLeftInTurn, Runnable move) {
+        int currentPlayer = startingPlayer;
 
         // save the amount of actions the simulation has done so far
         // do the actions left in the turn first though
@@ -52,7 +51,7 @@ public class SimulationGameState extends GameState {
             actions += 4; // a turn is 4 actions
 
             // if the player that is doing the move is the current player
-            if (currentPlayer == startingPlayerNum) {
+            if (currentPlayer == startingPlayer) {
                 actionsTillMove -= 4; // we've gotten closer to when we can do the simulation's move
             }
 
@@ -80,16 +79,4 @@ public class SimulationGameState extends GameState {
         // ||  |_
     }
 
-    public int getPlayerNumber(Player player) {
-        int currentPlayer;
-        for (currentPlayer = 0; currentPlayer < getPlayers().size(); currentPlayer++) {
-            if (getPlayers().get(currentPlayer) == player) {
-                break;
-            }
-        }
-
-        return currentPlayer;
-    }
-
 }
-
