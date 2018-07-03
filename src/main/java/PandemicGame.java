@@ -58,7 +58,7 @@ public class PandemicGame {
                         looping = false;
                     } else {
                         //now do actions
-                        boolean success = doMove(input, gamestate, player);
+                        boolean success = doMove(input, gamestate, player, actionNum);
 
                         while (!success) { //keep trying until success
                             //get input again
@@ -67,7 +67,7 @@ public class PandemicGame {
                             line = reader.nextLine().toLowerCase();
                             input = line.split(" "); //list of words
 
-                            success = doMove(input, gamestate, player);
+                            success = doMove(input, gamestate, player, actionNum);
                         }
                     }
 
@@ -86,7 +86,7 @@ public class PandemicGame {
         System.out.println(" - Done - ");
     }
 
-    private static boolean doMove(String[] input, GameState gamestate, Player player) {
+    private static boolean doMove(String[] input, GameState gamestate, Player player, int actionNum) {
         String move = input[0];
 
         boolean success = false;
@@ -217,7 +217,7 @@ public class PandemicGame {
             // do the check
             String aiMove;
             if (gamestate.isAI(currentPlayer)) {
-                aiMove = gamestate.getAI(currentPlayer).doMove();
+                aiMove = gamestate.getAI(currentPlayer).doMove(actionNum);
             } else {
                 aiMove = "The current player doesn't have an associated AI";
             }

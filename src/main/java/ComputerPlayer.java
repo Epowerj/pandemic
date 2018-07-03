@@ -18,13 +18,13 @@ public class ComputerPlayer {
 
     //should do move and returns a description of the move
     //TODO currently just prints
-    public String doMove() {
+    public String doMove(int actionsLeft) {
 
         // calculate TTW and TTL
         calculateTime();
 
         // do all possible moves (abstracted)
-        ArrayList<Plan> plans = simulateMoves();
+        ArrayList<Plan> plans = simulateMoves(actionsLeft);
 
         // pick the best from plans
         Plan currentBest = null;
@@ -135,11 +135,11 @@ public class ComputerPlayer {
     }
 
     //simulate all possible moves
-    private ArrayList<Plan> simulateMoves() {
+    private ArrayList<Plan> simulateMoves(int actionsLeft) {
         //possible moves:
 
         // treat
-        ArrayList<Plan> treatPlans = simulateTreat();
+        ArrayList<Plan> treatPlans = simulateTreat(actionsLeft);
 
         // discover (+ trade cards)
         //TODO ArrayList<Plan> discoverPlans = simulateDiscover();
@@ -153,7 +153,7 @@ public class ComputerPlayer {
         return plans;
     }
 
-    private ArrayList<Plan> simulateTreat() {
+    private ArrayList<Plan> simulateTreat(int actionsLeftInTurn) {
         //have to list all the possible POIs and go to them
 
         HashMap<String, City> cities = gamestate.getCities();
@@ -191,8 +191,10 @@ public class ComputerPlayer {
 
                     for (int h = 0; h < simAccuracy; h++) { // simulate many times
                         sim = new SimulationGameState(gamestate);
-                        sim.treatDisease(cityName, cubeCount);
-                        toAverage.add(sim.simulateUntilLoss());
+
+                        SimulationGameState s = sim; //TODO why is it like this
+                        Runnable move = () -> s.treatDisease(cityName, cubeCount);
+                        toAverage.add(sim.simulateUntilLoss(player, path.size() + i, actionsLeftInTurn, move));
                     }
 
                     // average
@@ -214,8 +216,10 @@ public class ComputerPlayer {
 
                 for (int h = 0; h < simAccuracy; h++) { // simulate many times
                     sim = new SimulationGameState(gamestate);
-                    sim.treatDisease(cityName, 3);
-                    toAverage.add(sim.simulateUntilLoss());
+
+                    SimulationGameState s = sim;
+                    Runnable move = () -> s.treatDisease(cityName, 3);
+                    toAverage.add(sim.simulateUntilLoss(player, path.size() + 3, actionsLeftInTurn, move));
                 }
 
                 // average
