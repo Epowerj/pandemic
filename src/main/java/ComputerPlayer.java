@@ -10,7 +10,7 @@ public class ComputerPlayer {
     private int timeToWin;
     private int timeToLose;
 
-    private final int simAccuracy = 100; // times to do simulation before average
+    private final int simAccuracy = 200; // times to do simulation before average
 
     public ComputerPlayer(GameState gamestatelink, Player tocontrol, int playerNumber) {
         gamestate = gamestatelink;
