@@ -135,9 +135,8 @@ public class Deck {
         int deckSize = deck.size();
         int currentEpoch = 1;
         int currentEpochSize = gameState.getEpochOverflow() + 1;
-        double predictor = 0;
 
-        while (deckSize > currentEpochSize) { //TODO what if it's equal
+        while (deckSize > currentEpochSize) {
             //this isn't the epoch we're looking for; increment
 
             currentEpoch++;
@@ -149,14 +148,23 @@ public class Deck {
         boolean isEpidemicDrawn = (gameState.getInfectionrateindex() > (gameState.getEpidemicDifficulty() - currentEpoch));
         int cardsLeft = deckSize;
 
+        ArrayList<Card> noEpidemics = new ArrayList<>();
+        int epidemicCount = 0;
+
         //now remove all the epidemic cards
         for (int i = 0; i < deck.size(); i++) {
             Card card = deck.get(i);
 
-            if (card.cardtype == Card.CardType.EPIDEMIC) {
-                deck.remove(i); //TODO this messes up the loop
+            if (card.cardtype != Card.CardType.EPIDEMIC) {
+                noEpidemics.add(card);
+
+                //deck.remove(i);  this messes up the loop
+            } else {
+                epidemicCount++;
             }
         }
+
+        deck = noEpidemics;
 
         // if there was an epidemic in the last epoch, we've removed it
         if (!isEpidemicDrawn) {
@@ -171,55 +179,33 @@ public class Deck {
 
         ArrayList<Card> result = new ArrayList<>();
 
-        // insert the first one
+        for (int i = 0; i < epidemicCount; i++) { // for each epoch
+            int amountToAdd; // how many cards we have to add to the new deck, not including the epidemic card
 
-        //if we are part way into the current epoch, use cardsLeft instead of epochSize
-        int cardsInEpoch;
-        if (currentEpoch > 1) {// if we have more than just one epoch
-            cardsInEpoch = gameState.getEpochOverflow();
-        } else {// current epoch is 1, so we are part way into the last epoch
-            cardsInEpoch = cardsLeft;
-        }
+            if (i == epidemicCount - 1) { // if this is the last epoch
+                amountToAdd = deck.size(); // just add in whatever's left
 
-        // move cards over from the current deck into the current epoch
-        ArrayList<Card> epochToAdd = new ArrayList<>();
-        for (int i = 0; i < cardsInEpoch; i++) {
-            epochToAdd.add(deck.get(deck.size() - 1)); // add the last card in the deck to the current epoch
-            deck.remove(deck.get(deck.size() - 1)); // remove the one we copied from the deck
-        }
+            } else if (i == 0) { // if this is the first epoch
+                amountToAdd = gameState.getEpochOverflow();
 
-        if (!isEpidemicDrawn) {
-            random = r.nextInt(cardsInEpoch - 1); // random number from 0 to epochOverflow
-            epochToAdd.add(random, new EpidemicCard()); // insert into epoch
-        }
-
-        result.addAll(epochToAdd); // add epoch to result
-
-        // for each epidemic except the first one
-        for (int i = 1; i < currentEpoch; i++) {
-
-            //if we are part way into the current epoch, use cardsLeft instead of epochSize
-            if (i != currentEpoch - 1) {
-                cardsInEpoch = gameState.getEpochSize();
-            } else {// otherwise, we are part way into the epoch
-                cardsInEpoch = cardsLeft;
+            } else { // otherwise, it's not the first epoch
+                amountToAdd = gameState.getEpochSize();
             }
 
-            // move cards over from the current deck into the current epoch
-            epochToAdd = new ArrayList<>();
-            for (int j = 0; j < cardsInEpoch; j++) {
-                epochToAdd.add(deck.get(deck.size() - 1)); // add the last card in the deck to the current epoch
-                deck.remove(deck.get(deck.size() - 1));
-            }
+            random = r.nextInt(amountToAdd); // choose a location to insert the epidemic card
+            boolean haveAddedEpidemic = false;
 
-            // if we aren't in the last epoch
-            // or if we are, then if no epidemic has been drawn
-            if (i != currentEpoch - 1 || !isEpidemicDrawn) {
-                random = r.nextInt(cardsInEpoch - 1); // random number from 0 to epochSize
-                epochToAdd.add(random, new EpidemicCard()); // insert into epoch
+            for (int j = 0; j < amountToAdd; j++) {
+                // insert an epidemic if we're at the random position
+                if (j == random && !haveAddedEpidemic) {
+                    result.add(new EpidemicCard());
+                    haveAddedEpidemic = true;
+                    j--;
+                } else {
+                    result.add(deck.get(deck.size() - 1)); // add the last card from the deck into result
+                    deck.remove(deck.size() - 1); // remove that card from the deck
+                }
             }
-
-            result.addAll(epochToAdd); // add epoch to result
         }
 
         deck = result; //now set the deck
