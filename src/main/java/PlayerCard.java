@@ -1,3 +1,6 @@
+
+// represents a Player card
+// subclass of Card
 public class PlayerCard extends Card {
     private String city;
     private String color;
