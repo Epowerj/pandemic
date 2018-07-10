@@ -202,6 +202,28 @@ public class PandemicGame {
             success = false;
         }
 
+        if (move.equals("ttw")){
+            // check if the current player is an ai
+            // first find the current player index
+            int currentPlayer;
+            for (currentPlayer = 0; currentPlayer < gamestate.getPlayers().size(); currentPlayer++) {
+                if (gamestate.getPlayers().get(currentPlayer) == player) {
+                    break;
+                }
+            }
+
+            // do the check
+            String aiMove;
+            if (gamestate.isAI(currentPlayer)) {
+                System.out.println("The TTW is: " + gamestate.getAI(currentPlayer).getTimeToWin());
+            } else {
+                System.out.println("The current player doesn't have an associated AI");
+            }
+
+            success = false;
+        }
+
+
         if (move.equals("ai")) {
             //TODO do ai move
 
@@ -516,6 +538,7 @@ public class PandemicGame {
         return result;
     }
 
+    //This is a printer for the probability of predict Infection
     static void printPrediction(GameState gameState, String goal){
         double result = predictInfection(gameState,goal);
         DecimalFormat f = new DecimalFormat("#.000");
@@ -524,18 +547,14 @@ public class PandemicGame {
     }
 
     static void congestedCities(GameState gameState) {
-       //int infections = gameState.getInfectionRate();
-        //int outbreaks = gameState.getOutbreak();
+        //this is a tool that will print cities that have 3 cubes
         ArrayList<Double> predictions = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
-        //Predicting outbreaks for this turn and the next turn
         HashMap<String,City> cities = gameState.getCities();
-        //double rank1=0,rank2=0,rank3=0,rank4=0,rank5=0;
 
         for (Map.Entry<String, City> entry : cities.entrySet()) {
             String key = entry.getKey();
             City value = entry.getValue();
-            //System.out.println(key);
 
             HashMap<String, Integer> cubelist = value.getCubeList();
             for (Map.Entry<String, Integer> cubenum : cubelist.entrySet()){
@@ -548,9 +567,7 @@ public class PandemicGame {
             }
         }
         Collections.sort(predictions);
-        //for (int i =0; i < 6; i++){
             System.out.println("Possible outbreak: " + names + " " + predictions);
-        //}
     }
 
     static void predictEpidemic(GameState gameState) {
