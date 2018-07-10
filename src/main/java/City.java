@@ -2,12 +2,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// represents a city/node on the board
 public class City {
     private String name;
-    private String color;
+    private String color; // the color of the city
 
+    // list of cubes that this node has
+    // color string -> cube count
     private HashMap<String, Integer> cubes = new HashMap<String, Integer>();
 
+    // list of cities' names that are adjacent to this one
     private ArrayList<String> adjacent = new ArrayList<String>();
 
     public City(String cty, String clr) {
@@ -20,7 +24,7 @@ public class City {
         cubes.put("Y", 0);
     }
 
-    //copy constructor
+    // copy constructor
     public City(City other) {
         name = other.getName();
         color = other.getColor();
@@ -66,11 +70,12 @@ public class City {
         return cubes;
     }
 
-    //only for setup
+    // only for setup
     public void setCubeCount(int count, String color) {
         cubes.put(color, count);
     }
 
+    // launcher for the real increment cubes method
     public void incrementCubes(GameState gameState) {
         incrementCubes(this.color, gameState);
     }
@@ -80,8 +85,9 @@ public class City {
         incrementCubes(color, gameState, false);
     }
 
+    // this is the real increment cubes method
     public void incrementCubes(String color, GameState gameState, boolean recursing) {
-        cubes.put(color, cubes.get(color) + 1);
+        cubes.put(color, cubes.get(color) + 1); // increment cubes
 
         //check if there are more than 3 cubes there
         for (Map.Entry<String, Integer> entry : cubes.entrySet()) { //per color
@@ -89,10 +95,12 @@ public class City {
             String col = entry.getKey();
             int value = entry.getValue();
 
-            if (value > 3) {
+            if (value > 3) { // if there are more than 2 cubes
                 cubes.put(col, 3); //put back to 3
-                gameState.incrementOutbreaks();
+                gameState.incrementOutbreaks(); // we have an outbreak
 
+                // save this city so that it doesn't explode again this turn
+                // causes infinite recursion otherwise
                 gameState.addToExplodedCities(this.getName());
 
                 //infect adjacent cities
@@ -118,6 +126,7 @@ public class City {
         }
     }
 
+    // launcher for the real method
     public void addCubes(int count, GameState gameState) {
         addCubes(count, this.color, gameState);
     }
