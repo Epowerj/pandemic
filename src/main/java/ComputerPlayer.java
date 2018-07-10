@@ -261,6 +261,11 @@ public class ComputerPlayer {
         return timeToLose;
     }
 
+    public int getTimeToWin(){
+        calculateTTW();
+        return timeToWin;
+    }
+
     //TODO simulate an exchange and a meet
 
 
