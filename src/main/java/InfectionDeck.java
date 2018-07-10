@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+// represents the Infection deck and its discard pile
+// this is a special case because it keeps track of the cards that were shuffled back because of epidemics
 public class InfectionDeck extends Deck {
-    private ArrayList<ArrayList<InfectionCard>> shuffleBacks = new ArrayList<>();
+    private ArrayList<ArrayList<InfectionCard>> shuffleBacks = new ArrayList<>(); // keeps track of shuffled-back cards
 
     public InfectionDeck() {
     } //default constructor
@@ -23,7 +25,8 @@ public class InfectionDeck extends Deck {
         }
     }
 
-    //shuffle the discard and put the cards back into the normal deck
+    // shuffle the discard and put the cards back into the normal deck
+    // also keep track of the cards that were shuffled back
     @Override
     public void shuffleBack() {
         Collections.shuffle(discard);
@@ -39,6 +42,7 @@ public class InfectionDeck extends Deck {
         shuffleBacks.add(toAdd);
     }
 
+    // same as normal draw, but also updates shuffle backs
     @Override
     public Card draw() {
         InfectionCard card = (InfectionCard) pop();
