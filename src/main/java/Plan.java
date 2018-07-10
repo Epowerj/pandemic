@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+// represents an abstract plan that the AI can consider
 public class Plan {
     private String description;
     private int TTWDelta;
