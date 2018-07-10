@@ -1,3 +1,6 @@
+
+// represents an Infection card
+// subclass of Card
 public class InfectionCard extends Card {
     private String city;
     private String color;
