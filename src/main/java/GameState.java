@@ -480,6 +480,7 @@ public class GameState {
         return haveLost;
     }
 
+    //returns the amount of cubes in total for each of the colors
     public HashMap<String, Integer> getCubeCounts() {
         HashMap<String, Integer> result = new HashMap<>();
         result.put("U", 0);
@@ -528,6 +529,7 @@ public class GameState {
         return infectiondeck;
     }
 
+    //gets the total of each color in the players hands
     public HashMap<String, Integer> getPlayerColorCount() {
         ArrayList<Card> playerdiscard = playerdeck.getDiscard();
         HashMap<String, Integer> colorcount = new HashMap<>();
@@ -553,8 +555,9 @@ public class GameState {
         return colorcount;
     }
 
+    /* Predict Player gives the percentages that
+    * a certain color might be drawn from the player deck */
     public HashMap<String,Double> predictPlayer() {
-
         HashMap<String,Double> predictions = new HashMap<>();
         ArrayList<Player> players = getPlayers();
         double uCount = 0, bCount = 0, yCount = 0, rCount = 0;           //counts the color card within players hands
@@ -626,6 +629,7 @@ public class GameState {
         }
     }
 
+    //gives the average time to get to different cities starting from a designated half-way point f
     public HashMap<String,Double> avgCityTime(Player player){
         HashMap<String,City> cities = getCities();
         HashMap<String,Double> averages = new HashMap<>();
@@ -662,15 +666,6 @@ public class GameState {
         return averages;
     }
 
-   /* public int priority(){
-       // HashMap<String,Double> predictPlayer = predictPlayer();
-        int bCount=0; int yCount=0; int rCount=0; int uCount=0;
-        ArrayList<String> priority = new ArrayList<>(); //will add the top priority colors in order for estimating
-
-        int h=9;
-        return h;
-    }
-*/
 
 }
 
