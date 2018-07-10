@@ -2,8 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+// represents a deck and the discard pile for that deck
 public class Deck {
-    //These are the decks
+    // these are the decks
     protected ArrayList<Card> deck;
     protected ArrayList<Card> discard;
 
@@ -12,26 +13,30 @@ public class Deck {
         discard = new ArrayList<Card>();
     }
 
-    //copy constructor
+    // copy constructor
     public Deck(Deck other) {
         deck = other.getDeckCopy();
         discard = other.getDiscardCopy();
     }
 
-    //retrieves the top card and returns it
+    // retrieves the top card and returns it
     public Card pop() {
         return deck.remove(deck.size() - 1);
     }
 
+    // removes the top card and returns it
     public Card draw() {
         Card card = pop();
         discard.add(card);
         return card;
     }
 
+    // this is called when an epidemic card is drawn
+    // get the bottom most card that isn't an epidemic
     public Card getBottomNormalCard() {
         int current = 0;
 
+        //loop until we get to a card that isn't an epidemic
         while (deck.get(current).getCardType() == Card.CardType.EPIDEMIC) {
             current++;
         }
@@ -70,19 +75,6 @@ public class Deck {
     public void shuffle() {
         Collections.shuffle(deck);
     }
-
-    /*public Card getCardColor(String color) {
-        for (int i = 0; i < deck.size(); i++) {
-            PlayerCard card = (PlayerCard) deck.get(i);
-
-            if (card.getColor().equals(color)) {
-                deck.remove(i);
-                return card;
-            }
-        }
-
-        return null;
-    }*/
 
     //used for debug - prints everything to console
     public void printAllCards() {
@@ -148,17 +140,15 @@ public class Deck {
         boolean isEpidemicDrawn = (gameState.getInfectionrateindex() > (gameState.getEpidemicDifficulty() - currentEpoch));
         int cardsLeft = deckSize;
 
-        ArrayList<Card> noEpidemics = new ArrayList<>();
+        ArrayList<Card> noEpidemics = new ArrayList<>(); // list of everything except the epidemics
         int epidemicCount = 0;
 
-        //now remove all the epidemic cards
+        //now 'remove' all the epidemic cards
         for (int i = 0; i < deck.size(); i++) {
             Card card = deck.get(i);
 
             if (card.cardtype != Card.CardType.EPIDEMIC) {
                 noEpidemics.add(card);
-
-                //deck.remove(i);  this messes up the loop
             } else {
                 epidemicCount++;
             }
@@ -173,7 +163,7 @@ public class Deck {
 
         shuffle(); // shuffling only normal cards at this point
 
-        //now add the epidemic cards back in
+        // now we need to add the epidemic cards back in
         Random r = new Random();
         int random;
 
