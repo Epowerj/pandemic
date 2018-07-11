@@ -243,12 +243,13 @@ public class ComputerPlayer {
             if (count >= 5) {
                 //TODO try making a plan to cure this and add it to plans
                 ArrayList<String> path = player.pathToClosestStation(gamestate);
-                String destination = path.get(path.size() - 1);
+                String destination = path.get(path.size() + 1);
 
                 Plan curePlan = new Plan(("Drive to " + destination + " and cure " + color), -20, -(path.size() + 1), path);
                 plans.add(curePlan);
             }
         }
+
 
         // can always try trading cards??
         //TODO do trades and add generated plans
