@@ -26,7 +26,7 @@ public class Plan {
         return TTLDelta;
     }
 
-    public int getDeltaValue() {
+    public int getDeltaValue() { //TODO make this take into account base TTL and TTW
         //want to make TTWDelta smaller and TTLDelta larger
         return TTLDelta - TTWDelta;
     }
