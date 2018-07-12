@@ -29,22 +29,71 @@ public class ComputerPlayer {
         ArrayList<Plan> plans = simulateMoves(actionsLeft);
 
         // pick the best from plans
-        Plan currentBest = null;
-        Plan secondBest = null;
-        Plan thirdBest = null;
-        for (Plan plan : plans) { //get the top 3 plans
-            if (currentBest == null || plan.getDeltaValue() > currentBest.getDeltaValue()) {
-                currentBest = plan;
-            } else if (secondBest == null || plan.getDeltaValue() > secondBest.getDeltaValue()) {
-                secondBest = plan;
-            } else if (thirdBest == null || plan.getDeltaValue() > thirdBest.getDeltaValue()) {
-                thirdBest = plan;
+
+        ArrayList<Plan> loosingPlans = new ArrayList<>();
+        ArrayList<Plan> winningPlans = new ArrayList<>();
+
+        for (Plan plan : plans) {
+            // calculate the real new TTW and TTL
+            int newTTL = timeToLose + plan.getTTLDelta();
+            int newTTW = timeToWin + plan.getTTWDelta();
+
+            // divide up all the plans into two groups:
+            // those that have TTW < TTL and those that have TTW >= TTL
+            if (newTTW < newTTL) {
+                winningPlans.add(plan);
+            } else {
+                loosingPlans.add(plan);
             }
         }
 
-        String toReturn = "The best plans are:\n " + currentBest.getDescription() + " -- " + currentBest.getDeltaValue();
-        toReturn += "\n " + secondBest.getDescription() + " -- " + secondBest.getDeltaValue();
-        toReturn += "\n " + thirdBest.getDescription() + " -- " + thirdBest.getDeltaValue();
+        // there are two general cases:
+        // all plans have TTL < TTW, so all plans are doomed and we just pick which one we try to improve
+        // or at least one plan is TTW < TTL so we pick the plan with the best 'cushion'
+
+        String toReturn;
+
+        if (winningPlans.size() == 0) { // we're doomed
+            // pick the plan with the best TTL
+
+            // pick the best from plans
+            Plan currentBest = null;
+            Plan secondBest = null;
+            Plan thirdBest = null;
+            for (Plan plan : plans) { //get the top 3 plans
+                if (currentBest == null || plan.getDeltaValue() > currentBest.getDeltaValue()) {
+                    currentBest = plan;
+                } else if (secondBest == null || plan.getDeltaValue() > secondBest.getDeltaValue()) {
+                    secondBest = plan;
+                } else if (thirdBest == null || plan.getDeltaValue() > thirdBest.getDeltaValue()) {
+                    thirdBest = plan;
+                }
+            }
+
+            toReturn = "The best plans are:\n " + currentBest.getDescription() + " -- " + currentBest.getDeltaValue();
+            toReturn += "\n " + secondBest.getDescription() + " -- " + secondBest.getDeltaValue();
+            toReturn += "\n " + thirdBest.getDescription() + " -- " + thirdBest.getDeltaValue();
+
+        } else { // we have at least one winning plan
+            // pick the plan with the largest difference
+
+            Plan currentBest = null;
+            int currentBestCushion = -1;
+
+            for (Plan plan : plans) {
+                // calculate the real new TTW and TTL
+                int newTTL = timeToLose + plan.getTTLDelta();
+                int newTTW = timeToWin + plan.getTTWDelta();
+                int cushion = newTTL - newTTW;
+
+                if (currentBest == null || cushion > currentBestCushion) {
+                    currentBest = plan;
+                    currentBestCushion = cushion;
+                }
+            }
+
+            toReturn = "The best plan is:\n " + currentBest.getDescription() + " -- " + currentBestCushion + " " + currentBest.getDeltaValue();
+        }
 
         return toReturn;
     }
