@@ -312,17 +312,19 @@ public class ComputerPlayer {
                 String card1=null; String card2 = null; String card3=null; String card4 = null; String card5 = null;
                     for (int i = 0; i < hand.size(); i++) {
                         if (hand.get(i).getColor().equals(color)) {
-                            card1 = hand.get(i).getCity();
                             if (card1 != null) {
+                                card1 = hand.get(i).getCity();
+                            }
+                             else if (card2 != null) {
                                 card2 = hand.get(i).getCity();
                             }
-                            if (card2 != null) {
+                            else if (card3 != null) {
                                 card3 = hand.get(i).getCity();
                             }
-                            if (card3 != null) {
+                            else if (card4 != null) {
                                 card4 = hand.get(i).getCity();
                             }
-                            if (card4 != null) {
+                            else{
                                 card5 = hand.get(i).getCity();
                             }
                         }
