@@ -281,22 +281,27 @@ public class ComputerPlayer {
 
     private ArrayList<Plan> simulateDiscover() {
         ArrayList<Plan> plans = new ArrayList<>();
-        boolean eradicated=false;
         // if have 5 cards of the same color, can try going for cure
-
         // check if player has the right cards for curing
         HashMap<String, Integer> cardCount = player.colorCount();
         for (Map.Entry<String, Integer> entry : cardCount.entrySet()) {
             String color = entry.getKey();
             int count = entry.getValue();
-            eradicated = gamestate.isDiseaseEradicated(color);
 
-            if (count >= 5 && eradicated!=true) {
+            if (count >= 5 && !gamestate.isDiseaseEradicated(color)) {
                 //TODO try making a plan to cure this and add it to plans
                 ArrayList<String> path = player.pathToClosestStation(gamestate);
                 String destination = path.get(path.size() + 1);
 
-                Plan curePlan = new Plan(("Drive to " + destination + " and cure " + color), -20, -(path.size() + 1), path);
+                SimulationGameState sim = new SimulationGameState(gamestate);
+
+                sim.getPlayers().get(playerNum).discoverCure(card1, card2, card3, card4, crad5, sim);
+
+                int newTTW = calculateTTW(sim);
+
+                int TTWDelta = timeToWin - newTTW;
+
+                Plan curePlan = new Plan(("Drive to " + destination + " and cure " + color), TTWDelta, -(path.size() + 1), path);
                 plans.add(curePlan);
             }
         }
@@ -314,6 +319,7 @@ public class ComputerPlayer {
 
     public int getTimeToWin(){
         calculateTTW(gamestate);
+
         return timeToWin;
     }
 
