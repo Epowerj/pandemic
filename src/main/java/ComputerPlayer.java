@@ -282,8 +282,9 @@ public class ComputerPlayer {
     private ArrayList<Plan> simulateDiscover() {
         ArrayList<Plan> plans = new ArrayList<>();
         boolean eradicated=false;
+        int TTWDelta=0; int newTTW=0;
         // if have 5 cards of the same color, can try going for cure
-
+        SimulationGameState sim;
         // check if player has the right cards for curing
         HashMap<String, Integer> cardCount = player.colorCount();
         for (Map.Entry<String, Integer> entry : cardCount.entrySet()) {
@@ -300,6 +301,7 @@ public class ComputerPlayer {
                 plans.add(curePlan);
             }
         }
+        sim = new SimulationGameState(gamestate);
 
         // can always try trading cards??
         //TODO do trades and add generated plans
@@ -314,6 +316,7 @@ public class ComputerPlayer {
 
     public int getTimeToWin(){
         calculateTTW(gamestate);
+
         return timeToWin;
     }
 
