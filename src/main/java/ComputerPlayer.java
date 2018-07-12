@@ -143,7 +143,6 @@ public class ComputerPlayer {
             }
         }
 
-
         int size = player.pathToClosestStation(gamestate).size();
         bTTW = (int) blueAVG + size + 5;
         rTTW = (int) redAVG + size + 6;
@@ -324,7 +323,7 @@ public class ComputerPlayer {
                             else if (card4 != null) {
                                 card4 = hand.get(i).getCity();
                             }
-                            else{
+                            else if (card5!=null){
                                 card5 = hand.get(i).getCity();
                             }
                         }
