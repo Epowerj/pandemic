@@ -88,7 +88,6 @@ public class ComputerPlayer {
         bTTW = (int) blueAVG + size + 5; rTTW = (int) redAVG + size + 6;
         yTTW = (int) yellowAVG + size + 7; uTTW = (int) blackAVG + size + 8;
 
-
         timeToWin = bTTW + uTTW + rTTW + yTTW;
 
         return timeToWin;
@@ -135,13 +134,13 @@ public class ComputerPlayer {
         ArrayList<Plan> treatPlans = simulateTreat(actionsLeft);
 
         // discover (+ trade cards)
-        //TODO ArrayList<Plan> discoverPlans = simulateDiscover();
+        ArrayList<Plan> discoverPlans = simulateDiscover();
 
         //TODO build research station (skipping)
 
         ArrayList<Plan> plans = new ArrayList<>();
         plans.addAll(treatPlans);
-        //plans.addAll(discoverPlans);
+        plans.addAll(discoverPlans);
 
         return plans;
     }
