@@ -618,7 +618,6 @@ public class Player {
         colorCount.put("R", 0);
         colorCount.put("Y", 0);
 
-
         for (PlayerCard c : hand) {
             if (c.getColor().equals("U")) {
                 colorCount.put("U", colorCount.get("U") + 1);

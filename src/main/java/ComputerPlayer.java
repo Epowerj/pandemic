@@ -105,7 +105,6 @@ public class ComputerPlayer {
 
     private int calculateTTW(GameState gamestate) {
       //TODO figure out how to priortize the order of the cards
-        boolean blue; boolean black; boolean yellow; boolean red;
         double blueAVG=0; double blackAVG=0; double yellowAVG=0; double redAVG=0;
         int bTTW=0; int uTTW=0; int yTTW=0; int rTTW=0;
 
@@ -115,27 +114,41 @@ public class ComputerPlayer {
             Double avg = num.getValue();
 
             if (color.equals("B")){
-               blue = gamestate.isDiseaseCured(color); if(blue==true){ bTTW=0; }
+               boolean blue = gamestate.isDiseaseCured(color);
+               if(blue==true){
+                   bTTW=0;
+               }
                blueAVG = avg;
 
             }if (color.equals("R")){
-                red = gamestate.isDiseaseCured(color); if(red==true){rTTW=0; }
+                boolean red = gamestate.isDiseaseCured(color);
+                if(red==true){
+                    rTTW=0;
+                }
                 redAVG = avg;
 
             }if (color.equals("Y")){
-                yellow = gamestate.isDiseaseCured(color); if (yellow==true){ yTTW=0;}
+                boolean yellow = gamestate.isDiseaseCured(color);
+                if (yellow==true){
+                    yTTW=0;
+                }
                 yellowAVG = avg;
 
             }if (color.equals("U")){
-                black = gamestate.isDiseaseCured(color); if (black==true){ uTTW=0;}
+                boolean black = gamestate.isDiseaseCured(color);
+                if (black==true){
+                    uTTW=0;
+                }
                 blackAVG = avg;
             }
         }
 
 
         int size = player.pathToClosestStation(gamestate).size();
-        bTTW = (int) blueAVG + size + 5; rTTW = (int) redAVG + size + 6;
-        yTTW = (int) yellowAVG + size + 7; uTTW = (int) blackAVG + size + 8;
+        bTTW = (int) blueAVG + size + 5;
+        rTTW = (int) redAVG + size + 6;
+        yTTW = (int) yellowAVG + size + 7;
+        uTTW = (int) blackAVG + size + 8;
 
         timeToWin = bTTW + uTTW + rTTW + yTTW;
 
@@ -288,14 +301,33 @@ public class ComputerPlayer {
             String color = entry.getKey();
             int count = entry.getValue();
 
+
             if (count >= 5 && !gamestate.isDiseaseEradicated(color)) {
                 //TODO try making a plan to cure this and add it to plans
                 ArrayList<String> path = player.pathToClosestStation(gamestate);
                 String destination = path.get(path.size() + 1);
 
                 SimulationGameState sim = new SimulationGameState(gamestate);
-
-                sim.getPlayers().get(playerNum).discoverCure(card1, card2, card3, card4, crad5, sim);
+                ArrayList<PlayerCard> hand = player.getHand();
+                String card1=null; String card2 = null; String card3=null; String card4 = null; String card5 = null;
+                    for (int i = 0; i < hand.size(); i++) {
+                        if (hand.get(i).getColor().equals(color)) {
+                            card1 = hand.get(i).getCity();
+                            if (card1 != null) {
+                                card2 = hand.get(i).getCity();
+                            }
+                            if (card2 != null) {
+                                card3 = hand.get(i).getCity();
+                            }
+                            if (card3 != null) {
+                                card4 = hand.get(i).getCity();
+                            }
+                            if (card4 != null) {
+                                card5 = hand.get(i).getCity();
+                            }
+                        }
+                    }
+                sim.getPlayers().get(playerNum).discoverCure(card1, card2, card3, card4, card5, sim);
 
                 int newTTW = calculateTTW(sim);
 
