@@ -50,19 +50,21 @@ public class ComputerPlayer {
     }
 
     private void calculateTime() {
-        calculateTTW();
+        calculateTTW(gamestate);
         calculateTTL();
     }
 
-    private int calculateTTW() {
+    private int calculateTTW(GameState gamestate) {
       //TODO figure out how to priortize the order of the cards
         boolean blue; boolean black; boolean yellow; boolean red;
         double blueAVG=0; double blackAVG=0; double yellowAVG=0; double redAVG=0;
         int bTTW=0; int uTTW=0; int yTTW=0; int rTTW=0;
+
         HashMap<String,Double> averages = gamestate.avgCityTime(player);
         for (Map.Entry<String,Double> num : averages.entrySet()){
             String color = num.getKey();
             Double avg = num.getValue();
+
             if (color.equals("B")){
                blue = gamestate.isDiseaseCured(color); if(blue==true){ bTTW=0; }
                blueAVG = avg;
@@ -231,7 +233,7 @@ public class ComputerPlayer {
 
     private ArrayList<Plan> simulateDiscover() {
         ArrayList<Plan> plans = new ArrayList<>();
-
+        boolean eradicated=false;
         // if have 5 cards of the same color, can try going for cure
 
         // check if player has the right cards for curing
@@ -239,8 +241,9 @@ public class ComputerPlayer {
         for (Map.Entry<String, Integer> entry : cardCount.entrySet()) {
             String color = entry.getKey();
             int count = entry.getValue();
+            eradicated = gamestate.isDiseaseEradicated(color);
 
-            if (count >= 5) {
+            if (count >= 5 && eradicated!=true) {
                 //TODO try making a plan to cure this and add it to plans
                 ArrayList<String> path = player.pathToClosestStation(gamestate);
                 String destination = path.get(path.size() + 1);
@@ -249,7 +252,6 @@ public class ComputerPlayer {
                 plans.add(curePlan);
             }
         }
-
 
         // can always try trading cards??
         //TODO do trades and add generated plans
@@ -263,7 +265,7 @@ public class ComputerPlayer {
     }
 
     public int getTimeToWin(){
-        calculateTTW();
+        calculateTTW(gamestate);
         return timeToWin;
     }
 
