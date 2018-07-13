@@ -25,7 +25,7 @@ Y Khartoum Johannesburg Kinshasa Cairo Lagos
 U Algiers Cairo Istanbul Madrid Paris
 U Cairo Algiers Riyadh Baghdad Istanbul Khartoum
 U Riyadh Cairo Baghdad Karachi
-U Baghdad Cairo Riyadh Istanbul Tehran Tehran
+U Baghdad Cairo Riyadh Istanbul Tehran Karachi
 U Istanbul Milan Algiers Cairo Baghdad Moscow StPetersburg
 U Moscow StPetersburg Istanbul Tehran
 U Tehran Moscow Baghdad Karachi Delhi
