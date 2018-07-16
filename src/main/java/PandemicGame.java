@@ -449,6 +449,9 @@ public class PandemicGame {
 
     static void printBoardInfo(GameState gameState) {
 
+        if (gameState.haveLost) {
+            System.out.println("----GAME OVER----");
+        }
         System.out.println("Outbreaks: " + gameState.getOutbreak());
         System.out.println("Infection rate: " + gameState.getInfectionRate());
         //TODO cured status System.out.println("");
