@@ -3,7 +3,7 @@
 This is an AI for the board game Pandemic. 
 Made for a SSRP research project  at Ohio Wesleyan University.
 
-##Buiding
+## Buiding
 
 This project uses the Gradle build system. 
 
