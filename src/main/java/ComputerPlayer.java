@@ -117,6 +117,7 @@ public class ComputerPlayer {
                boolean blue = gamestate.isDiseaseCured(color);
                if(blue==true){
                    bTTW=0;
+                   System.out.println("Blue is eradicated");
                }
                blueAVG = avg;
 
@@ -124,6 +125,7 @@ public class ComputerPlayer {
                 boolean red = gamestate.isDiseaseCured(color);
                 if(red==true){
                     rTTW=0;
+                    System.out.println("red is eradicated");
                 }
                 redAVG = avg;
 
@@ -131,6 +133,7 @@ public class ComputerPlayer {
                 boolean yellow = gamestate.isDiseaseCured(color);
                 if (yellow==true){
                     yTTW=0;
+                    System.out.println("yellow is eradicated");
                 }
                 yellowAVG = avg;
 
@@ -138,6 +141,7 @@ public class ComputerPlayer {
                 boolean black = gamestate.isDiseaseCured(color);
                 if (black==true){
                     uTTW=0;
+                    System.out.println("Black is eradicated");
                 }
                 blackAVG = avg;
             }
@@ -195,13 +199,13 @@ public class ComputerPlayer {
         ArrayList<Plan> treatPlans = simulateTreat(actionsLeft);
 
         // discover (+ trade cards)
-        ArrayList<Plan> discoverPlans = simulateDiscover();
+        //ArrayList<Plan> discoverPlans = simulateDiscover();
 
         //TODO build research station (skipping)
 
         ArrayList<Plan> plans = new ArrayList<>();
         plans.addAll(treatPlans);
-        plans.addAll(discoverPlans);
+        //plans.addAll(discoverPlans);
 
         return plans;
     }
@@ -291,7 +295,7 @@ public class ComputerPlayer {
         return plans;
     }
 
-    private ArrayList<Plan> simulateDiscover() {
+    /*private ArrayList<Plan> simulateDiscover() {
         ArrayList<Plan> plans = new ArrayList<>();
         // if have 5 cards of the same color, can try going for cure
         // check if player has the right cards for curing
@@ -343,7 +347,7 @@ public class ComputerPlayer {
         //TODO do trades and add generated plans
 
         return plans;
-    }
+    }*/
 
     public int getTimeToLose() {
         calculateTTL();
