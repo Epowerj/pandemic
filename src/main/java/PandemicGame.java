@@ -98,9 +98,9 @@ public class PandemicGame {
            gamestate.avgCityTime(player);
             //printAVG(gamestate,player);
 
-            gamestate.predictPlayer();
-            congestedCities(gamestate);
-            predictEpidemic(gamestate);
+            //gamestate.predictPlayer();
+            //congestedCities(gamestate);
+            //predictEpidemic(gamestate);
 
 
           /*  if (input.length > 1) {
