@@ -14,6 +14,14 @@ To compile a .jar file, do `./gradlew dist`
 Most IDEs have support for importing gradle projects, which is probably a good idea for this project.
 We used Intellij Idea.
 
+## Data
+
+Static map data is saved as a text in `cities.txt`
+
+The format is `<Color Char> <City name> <City names of adjacent cities>`
+
+The 'U' color code stands for black.
+
 ## Documents
 
-Take a look at the `/doc` folder for the documents related to this research 
+Take a look at the `/doc` folder for the documents related to this research.
