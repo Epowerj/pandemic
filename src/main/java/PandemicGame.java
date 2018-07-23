@@ -1,6 +1,6 @@
+
 import java.text.DecimalFormat;
 import java.util.*;
-
 
 //Main Game
 public class PandemicGame {
@@ -8,23 +8,23 @@ public class PandemicGame {
     public static void main(String[] args) {
         System.out.println("- Start -");
 
-        GameState gamestate = new GameState("cities.txt");
+        GameState gamestate = new GameState("cities.txt"); // load the data file and create the game state
 
         gamestate.gameSetup();
 
+        // register two players as computer players
+        // allows the use of the 'ai' command
         gamestate.makeAI(0);
         gamestate.makeAI(1);
 
-        ioloop(gamestate);
+        ioloop(gamestate); // launch the input - output loop
     }
 
     private static void ioloop(GameState gamestate) {
         System.out.print("\n\n");
         Scanner reader = new Scanner(System.in);
 
-        String commandlist = "\n{godrive, info, cubeinfo, deckinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n";
-
-        boolean looping = true;
+        String commandlist = "\n{ai, go, info, cubeinfo, deckinfo, drive, directflight, charterflight, shuttleflight, buildstation, treat, share, take, discover} \nYour input: \n";
 
         ArrayList<Player> players = gamestate.getPlayers();
 
@@ -32,28 +32,29 @@ public class PandemicGame {
         printResearchStations(gamestate);
         printCubeInfo(gamestate);
 
+        boolean looping = true;
 
         while (looping) { //each turn
 
-            for (int playerNum = 0; playerNum < players.size() && looping; playerNum++) { //each player
+            for (int playerNum = 0; playerNum < players.size() && looping; playerNum++) { // for each player
 
                 Player player = players.get(playerNum);
 
                 System.out.println("Its player " + playerNum + "s turn!");
 
-                for (int actionNum = 4; actionNum > 0 && looping; actionNum--) { //4 actions per player
+                for (int actionNum = 4; actionNum > 0 && looping; actionNum--) { // 4 actions per player
 
                     discardExtra(player, playerNum, gamestate, reader);
 
                     System.out.println("Player " + playerNum + " has " + actionNum + " actions left");
 
-                    //get input
+                    // get input
                     System.out.print(commandlist);
-                    String line = reader.nextLine().toLowerCase(); //TODO no next line error
-                    String[] input = line.split(" "); //list of words
+                    String line = reader.nextLine().toLowerCase(); // intellij sometimes crashes here for some reason
+                    String[] input = line.split(" "); // list of words
 
-                    //quit
-                    //TODO doesn't work
+                    // quit
+                    //TODO doesn't always work
                     if (input[0].equals("exit") || input[0].equals("quit") || input[0].equals("q")) {
                         looping = false;
                     } else {
@@ -71,14 +72,14 @@ public class PandemicGame {
                         }
                     }
 
-                    discardExtra(player, playerNum, gamestate, reader);
+                    discardExtra(player, playerNum, gamestate, reader); // check if player has over 7 cards
                 }
 
                 //at the end of each player's moves
 
-                gamestate.newTurn(player);
+                gamestate.newTurn(player); // draw cards, etc
 
-                discardExtra(player, playerNum, gamestate, reader);
+                discardExtra(player, playerNum, gamestate, reader); // check if player has over 7 cards
 
             }
         }
@@ -86,16 +87,18 @@ public class PandemicGame {
         System.out.println(" - Done - ");
     }
 
+    // handles commands
     private static boolean doMove(String[] input, GameState gamestate, Player player, int actionNum) {
         String move = input[0];
 
         boolean success = false;
 
+        // print info
         if (move.equals("info")) {
-           printPlayerInfo(gamestate);
-           printResearchStations(gamestate);
-           printBoardInfo(gamestate);
-           gamestate.avgCityTime(player);
+            printPlayerInfo(gamestate);
+            printResearchStations(gamestate);
+            printBoardInfo(gamestate);
+            gamestate.avgCityTime(player);
             //printAVG(gamestate,player);
 
             //gamestate.predictPlayer();
@@ -111,18 +114,22 @@ public class PandemicGame {
             success = false;*/
         }
 
+        // print info on cubes
         if (move.equals("cubeinfo")) {
             printCubeInfo(gamestate);
 
             success = false;
         }
 
+        // print info on decks
         if (move.equals("deckinfo")) {
             printDeckInfo(gamestate);
 
             success = false;
         }
 
+        // print the fastest way to drive anywhere
+        // deprecated; use 'go' instead
         if (move.equals("godrive")) {
             if (input.length >= 2) {
                 String destination = input[1];
@@ -142,6 +149,7 @@ public class PandemicGame {
             success = false; //don't want to actually count this though
         }
 
+        // print the fastest way to get to somewhere
         if (move.equals("go")) {
             if (input.length >= 2) {
                 String destination = input[1];
@@ -161,6 +169,7 @@ public class PandemicGame {
             success = false; //don't want to actually count this though
         }
 
+        // print the chance of infection
         if (move.equals("infchance")) {
             if (input.length >= 2) {
                 String destination = input[1];
@@ -180,6 +189,7 @@ public class PandemicGame {
             success = false; //don't want to actually count this though
         }
 
+        // print the time to lose
         if (move.equals("ttl")) {
 
             // check if the current player is an ai
@@ -202,6 +212,7 @@ public class PandemicGame {
             success = false;
         }
 
+        // print the time to win
         if (move.equals("ttw")){
             // check if the current player is an ai
             // first find the current player index
@@ -223,10 +234,8 @@ public class PandemicGame {
             success = false;
         }
 
-
+        // print what the ai thinks is the best move
         if (move.equals("ai")) {
-            //TODO do ai move
-
             // check if the current player is an ai
             // first find the current player index
             int currentPlayer;
@@ -309,6 +318,7 @@ public class PandemicGame {
             }
         }
 
+        // build a research station at current location
         if (move.equals("buildstation")) {
             success = player.buildResearchStation(gamestate);
             if (!success) {
@@ -317,11 +327,13 @@ public class PandemicGame {
             }
         }
 
+        // get rid of one cube at current location
         if (move.equals("treat")) {
             player.treatDisease(gamestate);
             success = true;
         }
 
+        // give a card to another player
         if (move.equals("share")) {
             ArrayList<Player> players = gamestate.getPlayers();
 
@@ -341,6 +353,7 @@ public class PandemicGame {
             }
         }
 
+        // take a card from another player
         if (move.equals("take")) {
 
             ArrayList<Player> players = gamestate.getPlayers();
@@ -361,6 +374,7 @@ public class PandemicGame {
             }
         }
 
+        // discover a cure by using 5 cards
         if (move.equals("discover")) {
 
             if (input.length >= 6) {
@@ -379,7 +393,6 @@ public class PandemicGame {
 
     //discard extra cards from a players hand if they have more than 7
     static private void discardExtra(Player player, int playerNum, GameState gamestate, Scanner reader) {
-        //TODO only runs twice for 3
         //if there are more than 7 cards in this player's hand, the user must discard
         if (player.getHand().size() > 7) {
             System.out.println("Player " + playerNum + " has over 7 cards!");
@@ -435,8 +448,9 @@ public class PandemicGame {
                 }
             }
         }
-    }
 
+        System.out.print("\n");
+    }
 
     static void printDeckInfo(GameState gameState) {
         ArrayList<Player> players = gameState.getPlayers();
@@ -445,6 +459,7 @@ public class PandemicGame {
         System.out.println("Infection deck: ");
         gameState.getInfectionDeck().printAllCards();
 
+        System.out.print("\n");
     }
 
     static void printBoardInfo(GameState gameState) {
@@ -454,7 +469,7 @@ public class PandemicGame {
         }
         System.out.println("Outbreaks: " + gameState.getOutbreak());
         System.out.println("Infection rate: " + gameState.getInfectionRate());
-        //TODO cured status System.out.println("");
+        // probably should print cured status
     }
 
     static void printResearchStations(GameState gameState) {
