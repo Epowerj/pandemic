@@ -1,3 +1,5 @@
+
+// a subclass of GameState that is used to simulate the game to calculate TTL
 public class SimulationGameState extends GameState {
 
     // copy constructor
@@ -22,18 +24,17 @@ public class SimulationGameState extends GameState {
         }
     }
 
-    public int simulateUntilWin(){
-        //TODO need to be able to switch colors until gone through them all
-        int turns =0;
-        return turns;
-    }
-
     // launcher function for the real simulate
-    // this is for simulating pure TTL
+    // this is for simulating pure TTL (rather than calculating move costs)
     public int simulateUntilLoss() {
         return simulateUntilLoss(0, 0, 0, null);
     }
 
+    // does the simulation until the game is over
+    // startingPlayer is the player number of the player that does the move
+    // actionsTillMove is how many actions it will take for the player to reach the destination before the actual move
+    // actionsLeftInTurn is how many actions are left in the current turn when the simulation is called
+    // move is a function that does the actual move (lambda expression)
     public int simulateUntilLoss(int startingPlayer, int actionsTillMove, int actionsLeftInTurn, Runnable move) {
         int currentPlayer = startingPlayer;
 
@@ -59,9 +60,9 @@ public class SimulationGameState extends GameState {
             if (actionsTillMove <= 0 && !haveDoneMove) {
                 haveDoneMove = true;
 
-                //TODO do the move
+                // do the move
                 if (move != null) {
-                    move.run();
+                    move.run(); // execute the move
                 }
             }
 
