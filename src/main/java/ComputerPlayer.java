@@ -12,14 +12,15 @@ public class ComputerPlayer {
 
     private final int simAccuracy = 200; // times to do simulation before average
 
+    // constructor
     public ComputerPlayer(GameState gamestatelink, Player tocontrol, int playerNumber) {
         gamestate = gamestatelink;
         player = tocontrol;
         playerNum = playerNumber;
     }
 
-    //should do move and returns a description of the move
-    //TODO currently just prints
+    //should execute move and returns a description of the move
+    //TODO currently just prints the move
     public String doMove(int actionsLeft) {
 
         // calculate TTW and TTL
@@ -30,8 +31,8 @@ public class ComputerPlayer {
 
         // pick the best from plans
 
-        ArrayList<Plan> loosingPlans = new ArrayList<>();
-        ArrayList<Plan> winningPlans = new ArrayList<>();
+        ArrayList<Plan> loosingPlans = new ArrayList<>(); // plans where TTW > TTL
+        ArrayList<Plan> winningPlans = new ArrayList<>(); // plans where TTW < TTL
 
         for (Plan plan : plans) {
             // calculate the real new TTW and TTL
@@ -159,12 +160,7 @@ public class ComputerPlayer {
     }
 
     private int calculateTTL() {
-
-        // old
-        //int cardsTTL = playerCardsTTL();
-        // calculate out of cubes TTL
-        // calculate 8 outbreaks TTL
-        // return the smallest
+        // calculates TTL by simulating and counting how many turns it would take to lose if we didn't do anything
 
         // simulate a bunch of times and average the number
         SimulationGameState sim;
@@ -175,7 +171,7 @@ public class ComputerPlayer {
             toAverage.add(sim.simulateUntilLoss());
         }
 
-        // average
+        // average the results
         int simTTL = 0;
         for (int i : toAverage) {
             simTTL += i;
@@ -187,10 +183,6 @@ public class ComputerPlayer {
         return timeToLose;
     }
 
-    private int playerCardsTTL() {
-        return gamestate.getPlayerDeck().deckSize() * 2; // how many actions till we run out of player cards
-    }
-
     //simulate all possible moves
     private ArrayList<Plan> simulateMoves(int actionsLeft) {
         //possible moves:
@@ -198,7 +190,7 @@ public class ComputerPlayer {
         // treat
         ArrayList<Plan> treatPlans = simulateTreat(actionsLeft);
 
-        // discover (+ trade cards)
+        //TODO discover (+ trade cards)
         //ArrayList<Plan> discoverPlans = simulateDiscover();
 
         //TODO build research station (skipping)
@@ -210,6 +202,7 @@ public class ComputerPlayer {
         return plans;
     }
 
+    // return all the possible plans for treating cubes
     private ArrayList<Plan> simulateTreat(int actionsLeftInTurn) {
         //have to list all the possible POIs and go to them
 
@@ -237,7 +230,7 @@ public class ComputerPlayer {
             //find how it changes the TTL (increase in TTL)
 
             //get the amount of cubes
-            int cubeCount = cities.get(cityName).getCubeCount(); //TODO cube count is only for the default color
+            int cubeCount = cities.get(cityName).getCubeCount(); //TODO cube count is only for the default color - doesn't consider different-color cubes that have spread here
 
             if (!gamestate.isDiseaseCured(cities.get(cityName).getColor())) { // if that color isn't cured
                 //for all possible cubes removed
@@ -249,8 +242,9 @@ public class ComputerPlayer {
                     for (int h = 0; h < simAccuracy; h++) { // simulate many times
                         sim = new SimulationGameState(gamestate);
 
-                        SimulationGameState s = sim; //TODO why is it like this
-                        Runnable move = () -> s.treatDisease(cityName, cubeCount);
+                        // yay, lambda expressions!
+                        SimulationGameState s = sim;
+                        Runnable move = () -> s.treatDisease(cityName, cubeCount); // java isn't good for this
                         toAverage.add(sim.simulateUntilLoss(playerNum, path.size() + i, actionsLeftInTurn, move));
                     }
 
@@ -274,6 +268,7 @@ public class ComputerPlayer {
                 for (int h = 0; h < simAccuracy; h++) { // simulate many times
                     sim = new SimulationGameState(gamestate);
 
+                    // similar to the other case
                     SimulationGameState s = sim;
                     Runnable move = () -> s.treatDisease(cityName, 3);
                     toAverage.add(sim.simulateUntilLoss(playerNum, path.size() + 3, actionsLeftInTurn, move));
