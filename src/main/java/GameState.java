@@ -623,7 +623,6 @@ public class GameState {
         }
     }
 
-
     public HashMap<String,Double> avgCityTime(Player player){
         /*
         This will say the average distance from every city to a designated
