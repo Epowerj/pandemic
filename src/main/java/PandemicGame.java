@@ -99,11 +99,6 @@ public class PandemicGame {
             printResearchStations(gamestate);
             printBoardInfo(gamestate);
             gamestate.avgCityTime(player);
-            //printAVG(gamestate,player);
-
-            //gamestate.predictPlayer();
-            //congestedCities(gamestate);
-            //predictEpidemic(gamestate);
 
 
           /*  if (input.length > 1) {
@@ -486,6 +481,7 @@ public class PandemicGame {
 
 
     static double predictInfection(GameState gameState, String target) {
+        //chance that an outbreak might happen by using the shuffle back method
         DecimalFormat f = new DecimalFormat("#.000");
 
         ArrayList<ArrayList<InfectionCard>> shuffleBacks = gameState.getInfectiondeck().getShuffleBack();
@@ -546,7 +542,6 @@ public class PandemicGame {
                     }
                 }
             } else {
-                //System.out.println(gameState.getInfectionSize());
                 result = (1f / gameState.getInfectionSize()) * infectionrate;
             }
         } else {
@@ -556,7 +551,7 @@ public class PandemicGame {
         return result;
     }
 
-    //This is a printer for the probability of predict Infection
+    //This is a printer for the probability of predict Infection used for testing
     static void printPrediction(GameState gameState, String goal){
         double result = predictInfection(gameState,goal);
         DecimalFormat f = new DecimalFormat("#.000");
@@ -565,7 +560,10 @@ public class PandemicGame {
     }
 
     static void congestedCities(GameState gameState) {
-        //this is a tool that will print cities that have 3 cubes
+        /*
+        Takes in the list of cities and the cube list and checks
+        which cities have 3 or more cubes this value can be changed
+         */
         ArrayList<Double> predictions = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
         HashMap<String,City> cities = gameState.getCities();
@@ -618,11 +616,10 @@ public class PandemicGame {
         System.out.println("How many cards left: " + cardsLeft);
     }
 
-    static void printPriority(GameState gameState){
-        //TODO this is to print and test the priority function in gamestate
-    }
-
     static void printPlayerPrediction(GameState gameState){
+        /* This will print the player prediction method
+        it tells you which color card might show up the next play
+         */
         DecimalFormat df = new DecimalFormat("#.00");
         HashMap<String,Double> predictions = gameState.predictPlayer();
         double u=0; double r=0; double y=0; double b=0;

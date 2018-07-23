@@ -9,7 +9,6 @@ import java.util.*;
 public class GameState {
     protected HashMap<String, City> nodes = new HashMap<String, City>();
     protected Deck playerdeck = new Deck();
-    protected Deck prioritydeck = new Deck();
     protected InfectionDeck infectiondeck = new InfectionDeck();
     private ArrayList<String> stations = new ArrayList<>();
     private boolean blueCured = false;
@@ -517,14 +516,6 @@ public class GameState {
         return infectionrateindex;
     }
 
-    public boolean isInInfectionDeck(String target) {
-        return infectiondeck.isInDeck(target);
-    }
-
-    public boolean isInfectionDiscard(String target) {
-        return infectiondeck.isInDiscard(target);
-    }
-
     public InfectionDeck getInfectiondeck() {
         return infectiondeck;
     }
@@ -562,13 +553,14 @@ public class GameState {
         ArrayList<Player> players = getPlayers();
         double uCount = 0, bCount = 0, yCount = 0, rCount = 0;           //counts the color card within players hands
         double uDiscard = 0, rDiscard = 0, yDiscard = 0, bDiscard = 0;   //counts the color card within the discard pile
-        double uPossible = 0, rPossible = 0, yPossible = 0, bPossible = 0; //this will reprsent 12-count-discard
+        double uPossible = 0, rPossible = 0, yPossible = 0, bPossible = 0; //this will represent 12-count-discard
         double deck = getPlayerDeck().deckSize();
         for (Player c : players) {
             HashMap<String, Integer> counter = c.colorCount();
             for (Map.Entry<String, Integer> cubes : counter.entrySet()) {
                 String key = cubes.getKey();
                 Integer value = cubes.getValue();
+                //number of cards in the players hands and what colors
                 if (key.equals("U")) { uCount += value; }
                 if (key.equals("R")) { rCount += value; }
                 if (key.equals("Y")) { yCount += value; }
@@ -577,6 +569,7 @@ public class GameState {
             HashMap<String, Integer> discardCounter = getPlayerColorCount();
             for (Map.Entry<String, Integer> num : discardCounter.entrySet()) {
                 String key = num.getKey();
+                //counts number of cards in the discard
                 Integer value = num.getValue();
                 if (key.equals("U")) { uDiscard += value; }
                 if (key.equals("R")) { rDiscard += value; }
@@ -584,6 +577,7 @@ public class GameState {
                 if (key.equals("B")) { bDiscard += value; }
             }
         }
+        //calculates the percentages and puts them in the hashmap
         uPossible = 12 - uCount - uDiscard;
         rPossible = 12 - rCount - rDiscard;
         yPossible = 12 - yCount - yDiscard;
@@ -629,8 +623,13 @@ public class GameState {
         }
     }
 
-    //gives the average time to get to different cities starting from a designated half-way point f
+
     public HashMap<String,Double> avgCityTime(Player player){
+        /*
+        This will say the average distance from every city to a designated
+        research station. Used to help TTW when it was done using only math.
+        In the future it should avg the distance from cities to each other for every color
+         */
         HashMap<String,City> cities = getCities();
         HashMap<String,Double> averages = new HashMap<>();
         double blueAVG=0; double redAVG=0; double blackAVG=0; double yellowAVG=0;int goNormal=0;
