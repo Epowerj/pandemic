@@ -3,15 +3,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class GameState {
-    protected HashMap<String, City> nodes = new HashMap<String, City>();
+    public final int epidemicDifficulty = 4; // amount of epidemic cards in the deck
     protected Deck playerdeck = new Deck();
     protected InfectionDeck infectiondeck = new InfectionDeck();
-    private ArrayList<String> stations = new ArrayList<>();
-    private boolean blueCured = false;
+    protected final int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4}; // list of infection rates
+    protected HashMap<String, City> nodes = new HashMap<String, City>(); // list of cities
     private boolean blackCured = false;
     private boolean redCured = false;
     private boolean yellowCured = false;
@@ -19,16 +18,16 @@ public class GameState {
     private boolean blackEradicated = false;
     private boolean redEradicated = false;
     private boolean yellowEradicated = false;
-    private int outbreak = 0;
-    private ArrayList<String> explodedCities = new ArrayList<>();
-    public final int epidemicDifficulty = 4;
-    protected final int[] infectionrates = new int[]{2, 2, 2, 3, 3, 4, 4};
-    protected ArrayList<Player> players = new ArrayList<>();
-    protected int infectionrateindex = 0;
-    protected boolean haveLost = false;
-    private int epochSize;
-    private int epochOverflow;
-    private HashMap<Integer, ComputerPlayer> aiList = new HashMap<>();
+    protected ArrayList<Player> players = new ArrayList<>(); // list of players
+    protected int infectionrateindex = 0; // index for the infection rates
+    protected boolean haveLost = false; // is true if we have a game over
+    private ArrayList<String> stations = new ArrayList<>(); // list of research stations
+    private boolean blueCured = false; // booleans for whether a certain color is cured and eradicated
+    private int outbreak = 0; // outbreak count
+    private ArrayList<String> explodedCities = new ArrayList<>(); // used for spreading cubes
+    private int epochSize; // amount of cards in each epoch of the player deck (not counting epidemics?)
+    private int epochOverflow; // amount of cards in the last epoch (only different in certain cases)
+    private HashMap<Integer, ComputerPlayer> aiList = new HashMap<>(); // list of computer players
 
     // constructor
     public GameState(String info_file) {
@@ -40,6 +39,7 @@ public class GameState {
         copy(other);
     }
 
+    // used for doing outbreaks (in the city class)
     public void addToExplodedCities(String city) {
         explodedCities.add(city);
     }
@@ -90,6 +90,7 @@ public class GameState {
         }
     }
 
+    // color is a color char
     public void setCured(String color) {
         if (color.equals("B")) {
             blueCured = true;
@@ -118,6 +119,7 @@ public class GameState {
         outbreak++;
     }
 
+    // used by the city class for doing outbreaks
     public boolean isCityExploded(String city) {
         for (int i = 0; i < explodedCities.size(); i++) {
             if (explodedCities.get(i).equals(city.toLowerCase())) {
@@ -132,6 +134,8 @@ public class GameState {
         explodedCities.clear();
     }
 
+    // used in the copy constructor
+    // sometimes we want to copy without having to create a new gamestate object (java is slow at creating objects)
     protected void copy(GameState other) {
         //copy nodes
         for (Map.Entry<String, City> entry : other.getCities().entrySet()) {
@@ -247,6 +251,7 @@ public class GameState {
         playerdeck.shuffle();
     }
 
+    // sets up the game
     public void gameSetup() {
         //create players
         addPlayer(Player.Role.DISPATCHER);
@@ -259,8 +264,10 @@ public class GameState {
         setupInfectedCities(); // distribute cubes
 
         // shuffle in epidemic cards AFTER dealing cards to players
+        // this takes into account cases where the deck isn't divisible
         playerdeck.shuffle();
         epochSize = playerdeck.deckSize() / epidemicDifficulty;
+        // the last epoch may be a different size if the player deck isn't divisible by epidemic difficulty
         epochOverflow = playerdeck.deckSize() - epochSize * (epidemicDifficulty - 1);
         // add the first epidemic card
         Random r = new Random();
@@ -274,7 +281,7 @@ public class GameState {
         }
 
         stations.add("atlanta"); // add default research station
-        stations.add("saopaulo"); //TODO testing stations
+        stations.add("saopaulo"); // extra research stations for testing
         stations.add("baghdad");
         stations.add("bangkok");
     }
@@ -327,6 +334,7 @@ public class GameState {
         return epochOverflow;
     }
 
+    // deal cards to players
     public void dealCards() {
         int cardstodeal = 0;
         int playercount = players.size();
@@ -344,17 +352,10 @@ public class GameState {
 
         for (Player player : players) { //for each player
             for (int i = 0; i < cardstodeal; i++) { //loop cardstodeal amount of times
-                PlayerCard newCard = (PlayerCard) playerdeck.pop(); //at this point there should be no epidemic cards
+                PlayerCard newCard = (PlayerCard) playerdeck.pop(); // assumes that this is done before epidemics are added
                 player.addCardToHand(newCard);
             }
         }
-
-        /*for (Player player : players) { //for each player
-            for (int i = 0; i < 6; i++) { //loop cardstodeal amount of times
-                PlayerCard newCard = (PlayerCard) playerdeck.getCardColor("B"); //at this point there should be no epidemic cards
-                player.addCardToHand(newCard);
-            }
-        }*/
     }
 
     // launcher function for the real newTurn
@@ -429,6 +430,7 @@ public class GameState {
         updateEradicated();
     }
 
+    // updates if all cubes of a certain color are gone
     protected void updateEradicated() {
         HashMap<String, Integer> cubeCounts = getCubeCounts();
         for (Map.Entry<String, Integer> entry : cubeCounts.entrySet()) {
@@ -455,6 +457,7 @@ public class GameState {
         }
     }
 
+    // checks if we've reached a game over
     public boolean haveLost() {
         if (!haveLost) { // if we've already lost, don't do anything
             haveLost = (outbreak >= 8); // if 8 or more outbreaks
@@ -597,9 +600,6 @@ public class GameState {
         return predictions;
     }
 
-
-
-
     public HashMap<Integer, ComputerPlayer> getAiList() {
         return aiList;
     }
@@ -664,7 +664,6 @@ public class GameState {
 
         return averages;
     }
-
 
 }
 
