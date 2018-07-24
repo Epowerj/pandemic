@@ -25,3 +25,21 @@ The 'U' color code stands for black.
 ## Documents
 
 Take a look at the `/doc` folder for the documents related to this research.
+The poster is probably the best way to get a quick understanding of how the program works.
+
+## Future Work
+
+There's definitely a lot more work to do. A good way to find stuff that needs work is to search
+for the `//TODO` comments.
+ 
+ - Certain game mechanics are ignored
+   - Player roles are ignored by the ai even though many are supported by code
+   - Event cards are not in the code, but it should be relatively easy to add by extending Card
+ - The game starts with a bunch of extra research stations for debugging
+ - The game uses 4 epidemic cards by default, but the code should automatically support up to 6
+ - The current AI is limited to certain actions
+   - The AI calculates time to lose using simulation and time to lose using probability
+   - Both TTW and TTL could be improved
+   - The AI can treat cubes and go for a cure
+   - It can't place research stations or trade
+ 
