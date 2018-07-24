@@ -160,7 +160,7 @@ public class Player {
 
         //if disease is cured or if player is a medic
         if (gameState.isDiseaseCured(targetCity.getColor()) || role == Role.MEDIC) {
-            targetCity.removeCubes(targetCity.getCubeCount());
+            targetCity.removeCubes(targetCity.getCubeCount()); //TODO only works on the cubes of the same color as city
         } else {
             targetCity.removeCubes(1);
         }
@@ -393,6 +393,7 @@ public class Player {
         return result;
     }
 
+    // figures out the fastest path to drive to destination
     public ArrayList<String> goNormal(String start, String destination, GameState gameState) {
         HashMap<String, City> cities = gameState.getCities();
 
@@ -441,6 +442,7 @@ public class Player {
         return null;
     }
 
+    // helper function for goAny
     private ArrayList<String> goNormalConstruct(String state, HashMap<String, String> meta) {
         String destination = state;
 
@@ -465,8 +467,7 @@ public class Player {
         return resultList;
     }
 
-    //TODO fix doubles + add normal drive comparisons
-    //prints the fastest path to get to destination
+    //prints the fastest path to get to destination with and without using cards
     public String goAnyPrint(String destination, GameState gameState) {
         if (!gameState.getCities().containsKey(destination)) {
             return "Invalid city";
@@ -611,6 +612,7 @@ public class Player {
         return toReturn;
     }
 
+    // returns the list of card colors in the player's hand
     public HashMap<String, Integer> colorCount() {
         HashMap<String, Integer> colorCount = new HashMap<>();
         colorCount.put("U", 0);

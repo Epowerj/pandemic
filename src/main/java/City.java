@@ -132,7 +132,7 @@ public class City {
     }
 
     public void removeCubes(int amount, String color) {
-        cubes.put(color, cubes.get(color) - 1);
+        cubes.put(color, cubes.get(color) - amount);
 
         if (cubes.get(color) < 0) {
             cubes.put(color, 0);
