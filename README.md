@@ -42,4 +42,4 @@ for the `//TODO` comments.
    - Both TTW and TTL could be improved
    - The AI can treat cubes and go for a cure
    - It can't place research stations or trade
- 
+ - In general, there needs to be more testing done to find out how the AI acts in different situations
