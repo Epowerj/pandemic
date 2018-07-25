@@ -86,6 +86,7 @@ public class City {
     }
 
     // this is the real increment cubes method
+    // handles outbreaks
     public void incrementCubes(String color, GameState gameState, boolean recursing) {
         cubes.put(color, cubes.get(color) + 1); // increment cubes
 

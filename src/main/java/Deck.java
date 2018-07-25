@@ -8,6 +8,7 @@ public class Deck {
     protected ArrayList<Card> deck;
     protected ArrayList<Card> discard;
 
+    // constructor
     public Deck() {
         deck = new ArrayList<Card>();
         discard = new ArrayList<Card>();
@@ -69,7 +70,6 @@ public class Deck {
     public void pushToDiscard(Card card) {
         discard.add(card);
     }
-
 
     //used for shuffling the deck
     public void shuffle() {

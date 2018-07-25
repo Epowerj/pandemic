@@ -292,6 +292,7 @@ public class GameState {
         players.add(newplayer);
     }
 
+    // puts cubes on the board at the beginning of the game
     public void setupInfectedCities() {
         for (int i = 0; i < 3; i++) {
             InfectionCard card = (InfectionCard) infectiondeck.draw();
@@ -334,7 +335,7 @@ public class GameState {
         return epochOverflow;
     }
 
-    // deal cards to players
+    // deal cards to players at the beginning of the game
     public void dealCards() {
         int cardstodeal = 0;
         int playercount = players.size();
@@ -365,7 +366,7 @@ public class GameState {
 
     //everything that needs to be done at the end of each turn
     //draw infection cards, put new cubes, handle epidemic cards
-    //if verbose is true, it'l print info
+    //if verbose is true, it'l print info (should be false for simulations)
     public void newTurn(Player currentPlayer, boolean verbose) {
 
         if (playerdeck.deckSize() < 2) { //if we can't draw cards, we've lost

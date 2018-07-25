@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// represents an AI player
 public class ComputerPlayer {
     private GameState gamestate;
-    private Player player;
+    private Player player; // the player object that the AI controls
     private int playerNum; // needed for simulations
 
     private int timeToWin;
@@ -20,7 +21,7 @@ public class ComputerPlayer {
     }
 
     //should execute move and returns a description of the move
-    //TODO currently just prints the move
+    //TODO currently just prints the move, doesn't actually execute it
     public String doMove(int actionsLeft) {
 
         // calculate TTW and TTL
@@ -99,13 +100,14 @@ public class ComputerPlayer {
         return toReturn;
     }
 
+    // calculates and updates TTW and TTL
     private void calculateTime() {
         calculateTTW(gamestate);
         calculateTTL();
     }
 
     private int calculateTTW(GameState gamestate) {
-      //TODO figure out how to priortize the order of the cards
+        //TODO figure out how to priortize the order of the cards
         double blueAVG=0; double blackAVG=0; double yellowAVG=0; double redAVG=0;
         int bTTW=0; int uTTW=0; int yTTW=0; int rTTW=0;
 
@@ -115,12 +117,12 @@ public class ComputerPlayer {
             Double avg = num.getValue();
 
             if (color.equals("B")){
-               boolean blue = gamestate.isDiseaseCured(color);
-               if(blue==true){
-                   bTTW=0;
-                   System.out.println("Blue is eradicated");
-               }
-               blueAVG = avg;
+                boolean blue = gamestate.isDiseaseCured(color);
+                if(blue==true){
+                    bTTW=0;
+                    System.out.println("Blue is eradicated");
+                }
+                blueAVG = avg;
 
             }if (color.equals("R")){
                 boolean red = gamestate.isDiseaseCured(color);
@@ -290,7 +292,7 @@ public class ComputerPlayer {
         return plans;
     }
 
-    /*private ArrayList<Plan> simulateDiscover() {
+    private ArrayList<Plan> simulateDiscover() {
         ArrayList<Plan> plans = new ArrayList<>();
         // if have 5 cards of the same color, can try going for cure
         // check if player has the right cards for curing
@@ -301,32 +303,27 @@ public class ComputerPlayer {
 
 
             if (count >= 5 && !gamestate.isDiseaseEradicated(color)) {
-                //TODO try making a plan to cure this and add it to plans
                 ArrayList<String> path = player.pathToClosestStation(gamestate);
                 String destination = path.get(path.size() + 1);
 
                 SimulationGameState sim = new SimulationGameState(gamestate);
                 ArrayList<PlayerCard> hand = player.getHand();
                 String card1=null; String card2 = null; String card3=null; String card4 = null; String card5 = null;
-                    for (int i = 0; i < hand.size(); i++) {
-                        if (hand.get(i).getColor().equals(color)) {
-                            if (card1 != null) {
-                                card1 = hand.get(i).getCity();
-                            }
-                             else if (card2 != null) {
-                                card2 = hand.get(i).getCity();
-                            }
-                            else if (card3 != null) {
-                                card3 = hand.get(i).getCity();
-                            }
-                            else if (card4 != null) {
-                                card4 = hand.get(i).getCity();
-                            }
-                            else if (card5!=null){
-                                card5 = hand.get(i).getCity();
-                            }
+                for (int i = 0; i < hand.size(); i++) {
+                    if (hand.get(i).getColor().equals(color)) {
+                        if (card1 != null) {
+                            card1 = hand.get(i).getCity();
+                        } else if (card2 != null) {
+                            card2 = hand.get(i).getCity();
+                        } else if (card3 != null) {
+                            card3 = hand.get(i).getCity();
+                        } else if (card4 != null) {
+                            card4 = hand.get(i).getCity();
+                        } else if (card5!=null){
+                            card5 = hand.get(i).getCity();
                         }
                     }
+                }
                 sim.getPlayers().get(playerNum).discoverCure(card1, card2, card3, card4, card5, sim);
 
                 int newTTW = calculateTTW(sim);
@@ -342,7 +339,7 @@ public class ComputerPlayer {
         //TODO do trades and add generated plans
 
         return plans;
-    }*/
+    }
 
     public int getTimeToLose() {
         calculateTTL();
@@ -354,8 +351,5 @@ public class ComputerPlayer {
 
         return timeToWin;
     }
-
-    //TODO simulate an exchange and a meet
-
 
 }
