@@ -200,7 +200,7 @@ public class Deck {
                         if (deck.size() != 0) {
                             result.add(deck.get(deck.size() - 1)); // add the last card from the deck into result
                             deck.remove(deck.size() - 1); // remove that card from the deck
-                        } else { //TODO still crashes here
+                        } else { //TODO still crashes here in really rare cases
                             System.out.println("OH NO THIS WOULD HAVE CRASHED");
                             System.out.println("i = " + i);
                             System.out.println("j = " + j);

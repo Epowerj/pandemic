@@ -39,7 +39,7 @@ for the `//TODO` comments.
  - The game uses 4 epidemic cards by default, but the code should automatically support up to 6
  - The current AI is limited to certain actions
    - The AI calculates time to lose using simulation and time to lose using probability
-   - Both TTW and TTL could be improved
+   - Both TTW and TTL could be improved, especially TTW
    - The AI can treat cubes and go for a cure
    - It can't place research stations or trade
  - In general, there needs to be more testing done to find out how the AI acts in different situations
